@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facade", "Facade\Facade.csproj", "{88A17E32-3AF6-446A-AD43-EEC2A8E54BAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonPackage", "MonPackage\MonPackage.csproj", "{05A7DDAC-D70B-41BB-A0F5-FA1F280BC954}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88A17E32-3AF6-446A-AD43-EEC2A8E54BAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88A17E32-3AF6-446A-AD43-EEC2A8E54BAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88A17E32-3AF6-446A-AD43-EEC2A8E54BAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88A17E32-3AF6-446A-AD43-EEC2A8E54BAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05A7DDAC-D70B-41BB-A0F5-FA1F280BC954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05A7DDAC-D70B-41BB-A0F5-FA1F280BC954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05A7DDAC-D70B-41BB-A0F5-FA1F280BC954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05A7DDAC-D70B-41BB-A0F5-FA1F280BC954}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B1EC42DA-9989-441B-8472-261C80D00500}
+	EndGlobalSection
+EndGlobal

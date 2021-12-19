@@ -1,0 +1,202 @@
+\documentclass[a4paper,12pt,twoside]{article}
+
+%% packages
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,mathrsfs} 
+%\usepackage{import}
+%\usepackage{amssymb,mathrsfs} 
+\usepackage{float, subfig, caption}
+\usepackage{libertine}
+\usepackage{fancybox}
+\usepackage{graphicx}
+%\usepackage[hypertexnames=false]{hyperref}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=red}
+\urlstyle{same}
+%\usepackage[french]{minitoc}
+\usepackage[acronym,toc,automake]{glossaries} % acronym pour les acronymes et toc pour inclusion des glossary dans la table des matières
+\usepackage{glossaries-extra} % pour unsrtglossaries
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+
+%% Macros
+\newcommand{\incode}[1]{{\footnotesize\ttfamily #1}} % pour du pseudo-code simple
+\newcommand{\rem}[2]{\noindent\underline{Remarque} : \textit{#1}\\ \indent #2}
+\newcommand{\note}[1]{\noindent\underline{Note} : \\ \indent #1}
+\newcommand{\defi}[2]{\noindent\underline{Définition} : \textbf{#1},\\ \indent #2}
+\newcommand{\slide}[2]{\textbullet ~ Slide n°#1 : \indent #2}
+
+%% Infos document
+% Titre
+\title{Notes sur le module : \textit{UML}}
+% auteur
+\author{Armel Pitelet}
+% date de création du document
+\date{\today}
+
+%% Glossaire, Acronymes et index
+\makeglossaries
+% UML
+\newglossaryentry{gl-uml} % glossaire
+{
+name={UML}, 
+description={L'\textit{Unified Modeling Language} (UML) est un langage de modélisation orienté objet. Il s'agit d'un ensemble de représentations graphiques l'analyse et la réflexion pré-développement. Son but est d'aider à la conception d'applications, en spécifiant les différents éléments participant à celle-ci. Il permet de formaliser au mieux le besoin du client à travers un ensemble de représentations graphiques permettant d'expliquer les différentes fonctionnalité du processus que l'on souhaite concevoir ainsi que de gagner du temps. UML est aussi utile pour exposer le projet à d'autres développeurs}
+}
+\newglossaryentry{ac-uml} % acronyme
+{
+type = \acronymtype, name = {UML}, 
+description = {\textit{Unified Modeling Language} (Langage de Modélisation Unifié)}, 
+first = {Unified Modeling Language (UML)\glsadd{gl-uml}}, 
+see = [Glossaire:]{gl-uml}
+}
+% POO
+\newglossaryentry{gl-poo} % glossaire
+{
+name={POO}, 
+description={La Programmation Orientée Objet (POO) est un paradigme de programmation. Représentation numérique de la vie courante. Un  objet est composé de ses attributs (caractéristiques) et méthodes (fonctionnalité)}
+}
+\newglossaryentry{ac-poo} % acronyme
+{
+type = \acronymtype, name = {POO}, 
+description = {Programmation Orientée Objet}, 
+first = {Programmation Orientée Objet (POO)\glsadd{gl-poo}}, 
+see = [Glossaire:]{gl-poo}
+}
+% Use case diagram
+\newglossaryentry{gl-ucd} % glossaire
+{
+name={UCD}, 
+description={Le \textit{Use Case Diagram} (UCD) est une  représentation graphique qui expose les acteurs d'un système (utilisateurs) et les actions (fonctionnalités, objectifs) possibles pour ces acteurs (c'est à dire les interactions avec le système). Cette représentation est axée sur les fonctionnalités du système utilisables par l'utilisateur.  L'intérêt est d'identifier les fonctionnalités principale du système et le cheminement d'action nécessaire pour y accéder. Cela permet de structurer au mieux les besoins utilisateurs et les objectifs correspondants d'un système}
+}
+\newglossaryentry{ac-ucd} % acronyme
+{
+type = \acronymtype, name = {UCD}, 
+description = {\textit{Use Case Diagram} (Diagramme de Cas d'utilisation)}, 
+first = {Use Case Diagram (UCD)\glsadd{gl-ucd}}, 
+plural = {UCDs},
+firstplural = {Use Case Diagrams (UCDs)\glsadd{gl-ucd}},
+see = [Glossaire:]{gl-ucd}
+}
+% Diagramme de classe
+\newglossaryentry{gl-ddc} % glossaire
+{
+name={DdC}, 
+description={Le Diagramme de classe (DdC) est une  représentation graphique qui modélise les différentes classes (entités du systême) et leurs relations (association, agrégation, composition, généralisation).}
+}
+\newglossaryentry{ac-ddc} % acronyme
+{
+type = \acronymtype, name = {DdC}, 
+description = {Diagramme de Classes}, 
+first = {Diagramme de Classe (DdC)\glsadd{gl-ddc}}, 
+plural = {DdC},
+firstplural = {Diagrammes de Classe (DdC)\glsadd{gl-ddc}},
+see = [Glossaire:]{gl-ddc}
+}
+
+\begin{document}
+%\setcounter{secnumdepth}{3}
+%% Informations Générale
+\maketitle
+\author{}
+\date{}
+%% Organisation 
+\tableofcontents%\addcontentsline{toc}{section}{Table des matières}
+\newpage
+
+Document compagnon des slides de cours. Le cours présente l'\gls{ac-uml} (qui n'existe que dans le contexte de la \gls{ac-poo}) et se focalise sur la création et l'utilisation des \glspl{ac-ucd} et \glspl{ac-ddc}.   
+
+\section{Modélisation des cas d'utilisation}
+
+\slide{4}{Le but de la modélisation orientée objet est de représenter un objet de la vie courant, en objet ``code'', que l'on pourra utiliser dans une application. Voir \gls{ac-poo}.}\\
+
+\slide{8}{Un trait simple entre un acteur et une action représente la possibilité pour l'acteur d'effectuer cette action.} \\
+
+\slide{9 et 12}{Une flèche à tête complète mais non pleine indique la notion d'héritage. L'objet $A$ pointé est le parent de l'objet $B$ pointé.} \\
+
+\slide{10}{Le ``include'' d'une action $A$ vers une action $B$ indique une obligation de devoir réaliser l'action $B$ pour pouvoir réaliser l'action $A$. C'est une \textbf{obligation}, ici $A$ implique forcément d'avoir réalisé $B$.} \\
+
+\slide{11}{Le ``extend'' d'une action $A$ vers une action $B$ indique que la réalisation de l'action $B$ peut entrainer (possiblement mais pas obligatoirement) la réalisation de l'action $A$. Il s'agit d'une relation \textbf{d'implication}, ici $B$ implique (peut être) $A$.} \\
+
+\note{Dans le doute entre ``extend'' et ``include'', une relation d'obligation forcé peut permettre de faire le choix entre les deux.}
+
+\slide{13-1}{Pour réaliser un \gls{ac-ucd} il faut se demander \begin{itemize}\item qui sont les acteurs (utilisateurs), \item quelles sont les taches réalisables par ces acteurs (fonctionnalités, objectifs).\end{itemize}}$~$
+
+
+\slide{13-2}{Il est également utile de distinguer les cas :}
+\begin{itemize}
+\item d'utilisation global : dans lesquels on cherchera à associer les actions et acteurs le plus directement possible,
+\item d'utilisation par acteur : dans lesquels on peut se permettre plus de souplesse sur les liens actions/acteurs afin de mettre en valeurs les cheminement d'actions impliqué par les fonctionnalités du système.\end{itemize} $~$\\
+\note{Il n'y a pas de solution unique pour représenter un système!}
+
+\section{Diagramme de classe}
+
+Le \gls{ac-ddc} représente les objets et leurs relations. Il peut être vu 
+comme le squelette d'une application. \\
+
+\defi{Classe}{Description abstraite d'un objet en langage informatique. C'est un \textit{blueprint} permettant l'instantiation d'un objet. Voir \gls{ac-poo} pour les objets.}\\
+
+
+\slide{17}{En \gls{ac-uml} on doit donner à un attribut une visibilité, un nom, un type}\\
+
+\slide{18}{L'identifiant unique reste un simple attribut d'instance. Il est plus utile dans le code que dans le cadre de la modélisation \gls{ac-uml}.} \\
+
+\slide{19}{En \gls{ac-uml} on doit donner à une méthode une visibilité, un nom, un type de retour. Les arguments doivent aussi être nommés et typés.}\\
+
+\slide{20}{Il manque les ``getter'' et ``setter''. Mais en générale on ne les mets pas dans les \gls{ac-ddc} : leur présence est implicite.} \\
+
+\slide{22}{Il est important de spécifier la multiplicité dans les deux sens. Il est également possible de nommer le lien pour être plus précis dans la description. Si l'on nomme le lien du coté de Artist en mettant -Country cela signifie que Artist aura un attribut Country.} \textcolor{red}{schéma à faire pour exemple} \\
+
+\textcolor{red}{\note{Slide 23 à 26 à compléter via StarUML!}}\\
+
+\defi{Association}{Les deux objets sont indépendants mais partage une relation (souvent par l'intermédiaire d'une troisième classe agrégat ou bien par un simple transfert d'attribut).} \\
+
+\defi{Multiplicité}{Nombre d'instance de l'association pour une instance de classe. La multiplicité de $A$ vers $B$ se lie du coté de $B$. En association simple on sous entend que les deux classes partagent des informations (voir attribut) c'est çà dire qu'elles sont chacune ``au courant'' de l'existence des instance de l'autre.} \\
+
+\note{On peut spécifier le transfert d'attribut via association au dessus de la multiplicité associé à chaque instance. Si $B$ est lié à une instance de $A$ on pourra noter au dessus du 1 de la multiplicité le nom de l'attribut de $A$ partagé à $B$ en fournissant également sa visibilité.}\\
+
+\defi{Association avec navigation}{Association dans lequel une des classe ne connait pas les instances de l'autre. Elle est représentée par une flèche allant de la classe ``sachante'' à la classe ``ignorante''.}\\
+
+\defi{Classes d'associations}{Il s'agit d'une classe porteuse d'attributs entre deux autres classes. $C$ (classe d'association met par exemple en relation $A$ et $B$.)}\\
+
+\note{Bien que pas réellement codé sous forme de classe (mais plutôt comme des dicos), ces classes d'associations sont conceptuellement importantes dans \gls{ac-uml}. Elles sont systématiques dans les relations de types ``étoile/étoile''.}\\
+
+\rem{Sur la représentation en ligne}{Représenter ``en ligne'' on parle d'une classe (simple) et non plus de classe d'association. De plus, il ne faut pas oublier qu'il faut une instance de la classe d'association pour porter chaque instances des classes associées. Une classe d'association n'est pas un tableau regoupant les liens de toutes les instances de $A$ et $B$!}\\
+
+\defi{Agrégat}{L'objet contenant l'autre est nommé \textbf{agrégateur} ou \textbf{agrégat}.} \\
+
+\defi{Agrégé}{L'objet contenu est nommé \textbf{agrégé}.} \\
+
+\defi{Agrégation}{ (ou agrégation faible) Les deux objets ne sont pas liés : L’agrégé existe
+indépendamment de l’agrégateur mais en fait partie, ce dernier
+définit un concept pouvant exister seul et pouvant même faire
+partie de plusieurs agrégateurs.} \\
+
+\defi{Composition}{ (ou agrégation forte) Relation asymétrique entre les deux objets : L’un ne peut exister sans l’autre. On parle aussi de composant(agrégé) et composite(agrégat).} \\
+
+\rem{Sur la destruction de l'agrégé}{La destruction de l’agrégé peut avoir une influence sur
+l’agrégateur (ou pas) : Si 0 est un nombre d’agrégé autorisé, il
+ne se passe rien, sinon l’agrégateur est peut-être à détruire.
+Ex : Le dernier employé d’une entreprise, le dernier livre d’une
+bibliothèque.} \\
+
+\defi{Généralisation}{Le généralisation décrit le concept d'héritage (ou l'inverse plutôt). Elle permet d'identifier un objet (instance d'une la classe fille) comme un spécialisation d'une classe plus générale (la classe mère). Dit autrement, la généralisation permet d'identifier plusieurs objets comme des sous ensembles d'objets ayant des spécificités communes. Dit dans l'autre sens la classe mère est une généralisation de la classe fille.}
+
+\section{Divers}
+
+\note{``Symphonie'' est un framework PHP.} \\
+
+\defi{MCD}{Modèle Conceptuel de Données. Il modélise l'organisation d'une base de donnée (apparemment déprécié par rapport à \gls{ac-uml}).}
+
+
+%% Glossaires
+\newpage
+\printglossary[type=\acronymtype]%\addcontentsline{toc}{chapter}{Acronymes}
+%\glsaddall% force l'apparition de tt les entrées du glossaire
+\glsaddallunused % meme chose que addall mais ne force pas la numéroattion dans la liste d'acronyme
+%\printunsrtglossary[type=main]
+\printglossary[type = main,nonumberlist]%\addcontentsline{toc}{chapter}{Glossaire}
+
+\end{document}

@@ -1,0 +1,70 @@
+\documentclass[a4paper,12pt,twoside]{article}
+
+%% packages
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,mathrsfs} 
+%\usepackage{import}
+\usepackage[french]{babel}
+%\usepackage{amssymb,mathrsfs} 
+\usepackage{float, subfig, caption}
+\usepackage{libertine}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=red}
+\urlstyle{same}
+\usepackage[french]{minitoc}
+\usepackage[acronym,toc,automake]{glossaries} % acronym pour les acronymes et toc pour inclusion des glossary dans la table des matières
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{minted}
+
+%% Macros
+\newcommand{\incode}[1]{{\footnotesize\ttfamily #1}} % pour du pseudo-code simple
+
+%% Infos document
+% Titre
+\title{Notes sur le module : \textit{Agile}}
+% auteur
+\author{Armel Pitelet}
+% date de création du document
+\date{\today}
+
+%% Glossaire, acronymes et index
+\makeglossaries
+%% Glossaire
+\newglossaryentry{gl:us}
+{
+name={US}, 
+description={La description}
+}
+
+%% Acronyme
+\newglossaryentry{ac:us}
+{
+type = \acronymtype, name = {US}, 
+description = {User Story}, 
+first = {User Story (US)\glsadd{gl:us}}, 
+see = [Glossaire:]{gl:us}
+}
+
+\begin{document}
+%% Informations Générale
+\maketitle
+\author{}
+\date{}
+
+%% Organisation 
+\tableofcontents%\addcontentsline{toc}{chapter}{Table des matières}
+
+\section{Test}
+
+premier appel a \gls{ac:us}\\
+second appel a \gls{ac:us}
+
+%% Glossaires et acronymes
+\newpage
+\printglossary[type=\acronymtype]%\addcontentsline{toc}{chapter}{Acronymes}
+\newpage
+\printglossary[type = main]%\addcontentsline{toc}{chapter}{Glossaire}
+
+\end{document}
