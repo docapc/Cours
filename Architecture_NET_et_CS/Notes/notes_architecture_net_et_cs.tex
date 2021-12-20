@@ -189,6 +189,30 @@ Fichier de cours correspondant : % \pdfref{../Cours/POEC\_Architecture}{POEC\_Ar
 %\folderref{Facade}{Dossier}, 
 %%--------------------------------------------------------------------------------------------------------------------------------
 %% Contenue 
+\section{Sur .Net}
+
+\Note{\textbf{Il faut passer à visual studio 2022 pour tuiliser le framework .Net6.0}}\\
+
+\note{\keyref{https://fr.wikipedia.org/wiki/Microsoft\_.NET}{.Net} est un framework : qui ne gère pas que le C\#. On par exemple F\# qui fait de la programmation fonctionnelle. On a VBNet (Visual Basic sur le framework .Net). On a Q\# : programmation quantique (c'est pas une blague : basé sur le \keyref{https://fr.wikipedia.org/wiki/Particule_de_Majorana}{fermion de Majorana}). Tous ceux la sont géré par Microsoft mais Visual Studio gère aussi d'autre languages (C, C$++$), JavaScript, TypeScript (superset de JavaScript).}\\
+
+\rem{Sur la programmation fonctionnelle}{Point fort : imutabilité sur tout les objets.}\\
+
+Il existe aujourd'hui deux gros morceaux au .Net (plus une nouvelle en cours qui sera remplacé par .Net) : 
+\begin{itemize}
+\item \keyref{https://fr.wikipedia.org/wiki/.NET\_Framework}{.Net framework} (legacy : l'ancien framework) $\to$ Windows uniquement.
+\item \keyref{https://fr.wikipedia.org/wiki/.NET\_Core}{.Net Core} (Aujourd'hui simplement appelé .Net) $\to$ Linux (voir Note), Mac, Windows. $+$ IOS, Android en cours d'intégration via MAUI.
+\item Mono (implémentation libre crée à la base pour Linux). Avec Xamarin par dessus pour les applis mobile IOS, Android.\\
+\end{itemize}
+.Net framework ou Core permet de faire cu client lourd et du client Web. Les autres framework WPF, WCF viennent ensuite se rajouter par dessus le framework .Net. 
+
+\note{Linux est un cas un peu à part. A cause de la fragmentation inhérente de toutes les librairies, rien n'est garantie. .Net Core permet de faire la console mais pour les applis graphiques c'est beaucoup plus compliqué.}\\
+
+\note{.Net (Core) est \textit{sideloadé} cad qu'il est directement inclues dans les applications qu'il a permit de concevoir. On a donc un framework par application (car la place n'est plus un problème). Cela permet d'éviter les problèmes de dépendances entre différentes version du framework .Net (dans le cas ou il n'est pas \textit{sideloadé}).}\\
+
+\defi{LTS}{Long Term Support : support long terme = sécurité. Vien après le support actif : qui gère les bugs au début. Attention s'engager sur une version non LTS c'est s'engager à migrer le code vers les version supérieures LTS à un moment donné.}\\
+
+\note{partir sur .Net 6 : donc installer visual studio 2022.}
+
 \section{Sur l'architecture}
 
 \defi{Arhitecture logiciel}{
@@ -373,7 +397,7 @@ Lien : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/bu
 
 \rem{Sur \incode{is} et \incode{as}}{Ces deux opérateurs sont utilisés pour la conversion de type référence(De ce que j'ai compris essentiellement pour de la conversion dans une chaine d'héritage).}\\
 
-\rem{Sur la conversion de types valeur}{Pour convertir les types valeur on utilise les méthodes \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.int32.parse?view=net-6.0}{Parse} et \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.int32.tryparse?view=net-6.0}{TryParse}. Le \incode{Parse} lève une erreur en cas d'impossibilité de conversion alors que la version \incode{TryParse} prend un argument supplémentaire (par référence) dans lequel mettre le résultat de la conversion. En cas d'impossibilité, \incode{TryParse} ne lève pas d'erreur.}\\
+\rem{Sur la conversion de types valeur}{Pour convertir les types valeur on utilise les méthodes \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.int32.parse?view=net-6.0}{Parse} et \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.int32.tryparse?view=net-6.0}{TryParse}. Le \incode{Parse} lève une erreur en cas d'impossibilité de conversion alors que la version \incode{TryParse} prend un argument supplémentaire (par référence) dans lequel mettre le résultat de la conversion. En cas d'impossibilité, \incode{TryParse} ne lève pas d'erreur. Le \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/operators/type-testing-and-cast\#cast-expression}{cast} peut aussi fonctionner (vraiment un truc à creuser). Voir aussi les \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/language-specification/conversions\#explicit-conversions}{conversions explicites}.}\\
 
 \keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/ref}{ref}{Permet d'indiquer un passage par référence. \incode{ref} force l'initialisation d'une variable avant son passage contrairement à \incode{out}. Pour les multiples cas d'utilisation voir : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/ref}.}\\
 
@@ -397,7 +421,7 @@ Lien : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/bu
 
 \keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/when}{when}{Mot cléf contextuel utilisé dans les \incode{switch} permet d'imposer une condition à l'éxécution d'un case lors d'un switch (équivalent case {\incode{if\{\}}}).}\\
 
-\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods}{partial}{Le \incode{partial} (au sens \keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/partial-type}{type partial}) devant une classe permet de définir une classe dans deux fichiers différents! public partial A dans A.cs et public partial A dans B.cs résultera en une classe A unique à la compilation. Au sens \keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/partial-method}{méthodes partielles}: une méthode déclarée \incode{partial} dans une classe \incode{partial} pourra être étendue par une méthode de signature identique dans une classe de nom identique ailleurs dans le programme. Pour plus de différence classe et méthodes partiel voir : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods}.}\\
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods}{partial}{Le \incode{partial} (au sens \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/partial-type}{type partial}) devant une classe permet de définir une classe dans deux fichiers différents! public partial A dans A.cs et public partial A dans B.cs résultera en une classe A unique à la compilation. Au sens \keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/partial-method}{méthodes partielles}: une méthode déclarée \incode{partial} dans une classe \incode{partial} pourra être étendue par une méthode de signature identique dans une classe de nom identique ailleurs dans le programme. Pour plus de différence classe et méthodes partiel voir : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods}.}\\
 
 
 \subsection{Remarques et liens divers}
@@ -438,11 +462,149 @@ Lien : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/bu
 
 \note{Se renseigner sur les relational pattern (c\#9 et +) : to compare an expression result with a constant \url{https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/patterns\# relational-patterns}}\\
 
-\rem{Lien sur la vérification et la conversion de type (cast)}{\url{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/operators/type-testing-and-cast\#is-operator}.}
+\rem{Lien sur la vérification et la conversion de type (cast)}{\url{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/operators/type-testing-and-cast\#is-operator}.}\\
 
 \rem{Lien sur boxing unboxing : conversion de type valeur en type object}{\url{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/types/boxing-and-unboxing}}\\
 
 \rem{Pdf certification c\#}{\url{https://www.certification-questions.com/microsoft-pdf/70-483-pdf.html}}\\
+
+\subsection{Suite}
+
+\subsection{Généralités}
+
+Au final un programme ne sert au final qu'a maintenir l'état d'une donnée. C'est l'objectif d'un objet de maintenir l'état d'une donnée. C'est l'objectif de la POO que de maintenir et traiter correctement de la donnée (éviter à tt pris les erreurs et assurer à tout pris le bon fonctionnement du code). Le plus complexe est la maitrise de toute la syntaxe pour faire des objets propres, bien définie, qui traite correctement la donnée via vérification, etc...\\
+
+\note{Coder du .NET avec Visual Studio Code n'est pas forcément une bonne idée.} \\
+
+\defi{Classe}{patron de conception, blueprint, pour un objet. Attention un objet ne viens pas forcément du monde physique réelle.}\\
+
+\rem{Sur la visibilité public}{Garantie le comportement d'un objet. TT le monde à l'extérieur du programme peut utiliser la classe. Notion très dimensionnante (car peut affecter beaucoup de chose). Il faut faire très attention dès lors que l'on utilise cette visibilité (notion de sécurité).}\\
+
+\rem{Sur la visibilité internal}{Visibilité par défaut car il faut partir du principe qu'il vaut mieux travailler tt seul mais que l'on ne l'est pas. Principe POO : encapsulation, être le plus restrictif de base pour éviter de casser des compatibilité.}\\
+
+\defi{Casing}{Ce sont les conventions de nommage (à vérifier).}\\
+
+\rem{Sur les conventions de nommage des attribut}{Le \_ est là pour éviter le \incode{this.attribut}. Cela renforce (en syntax) la notion de visibilité privée.}\\
+
+\rem{Sur les propriétés et la construction d'objet}{Il vaut mieux éviter d'utiliser les property pour initialiser un objet (créer un objet) car pendant un temps cours la donnée n'existe pas dans l'objet! Passer par le constructeur est une obligation! Le seul cas particulier est lors de l'utilisation de Data Transfert Objet (objet sans constructeur).}
+
+\rem{Les 3 grosses erreurs en informatique}{
+\begin{itemize}
+ \item Le \incode{null reference exception} : les objets sont \incode{null} par défaut (avant initialisation) et l'erreur arrive lorsque l'on cherche à accéder à un objet non initialisé. Erreur de Dev.
+ \item Les problèmes de cast \textit{internationaux} : à cause des conventions sur les séparateurs comme sur les décimale ou les dates. Erreur de \textit{localisation}
+ \item \\ 
+\end{itemize}
+}
+
+\rem{Sur le constructeur par défaut}{Il intialise tout les attribut aux valeurs par défaut (qui peuvent être nulle). Si l'on ne met un constructeur, le constructeur par défaut disparait!}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/api/system.guid?view=net-6.0}{Guid}{Est un type particulier qui permet la génération d'identifiant unique. Trés important mais moins performant que de simple \incode{int}. Il n'est pas \incode{null} par défaut (ce sera une rangé de zéro).}\\
+
+\rem{Les \incode{int} en id}{Sont dangeureux, car prédictibles à cause des incrémentations. Exemple : l'admin a un id de 1 -> grosse bétise. Gros potentiel de faille de sécurité. Si les données sont privés ou personnel il vaut mieux partir directement sur des Guid.}\\
+
+\rem{Règle générale}{Dans chaque constructeur on doit avoir autant d'affectation que d'attribut privée (ou de propriété).}\\
+
+\note{Balec des performance : priorité au travail de la donnée.}
+
+\rem{Retour sur le chainage de constructeur}{Que ce soit avec \incode{base} ou \incode{this}. Cela sert surtout pour la maintenabilité du code. Eviter la redondance (et donc le risque d'erreur). Il faut que les constructeurs avec l emoins de paramètres appel ceux avec le plus de paramètres. Et donc dans la même veine c'est une bonne chose d'utiliser des valeurs par défauts.}\\
+
+\rem{Retour sur le constructeur}{Tout les constructeurs, qq que soit leur signatures, doivent garantir la même réaction!}\\
+
+\rem{Sur les exceptions et les constructeurs}{Le premier endroit ou l'on met des exceptions est dans le constructeur. On doit a tt pris éviter d'avoir des objets pas valides (bancales) -> des données \textit{pourries}.}\\
+
+\rem{Sur les exceptions}{c'est nécessaire mais le but d'une exception est de ne jamais la lever! L'idée est de sécuriser un maximum le code (pas de \incode{null}, pas de problème de \incode{cast}).}\\
+
+\rem{Retour sur le constructeur}{C'est également le role du constructeur de faire la validation des données.}\\
+
+\rem{Sur la notion d'identifiant}{Il existe des identifiants techniques, qui ne sont pas destinés à changer, et des identifiants fonctionnelles qui peuvent changer et sont beaucoup plus pratique que les identifiants techniques (ex : numéro de dossier sur une facture). En générale, on utilise un abus de language pour faire le raccourci entre \incode{id} et identifiant technique.}\\
+
+\defi{POCO}{plain old Clr Object : ou \textit{Dumb Object}, sans constructeur, qui peut accepter des \incode{null}. L'idée est ensuite de transformer le plus vite possible cette objet en objet valide via un Mapper. On dit que ces objet sont \textit{non trusted} et le but est de valider par la suite les données via le Mapper.}\\
+
+\rem{Sur la sécurité et les framework}{Penser à enlever toute références à la techno utilisée pour créer un code à la compilation (Souvent des options automatiques à désactiver donc à envlever manuellement).}\\
+
+\note{Se renseigner sur les conventions de versionning (comment décrire un cassage de compatibilité d'une version à une autre par exemple).}\\
+
+\subsection{Generique et liste}
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/var}{var}{\incode{var} permet de faire de l'inférence de type.}\\
+
+\defi{Générique}{Classe qui manipule une classe qu'elle ne connait pas. Se caractérise par des chevron <> après la déclaration de type. L'objet obj<T> adaptera son comportement en fonction de T (qui est un type). Permet d'adpater un comprtement à des classes différentes. Un générique ne sert pas à tout gérer en même temps mais à définir un ensemble de cas d'utilisation limité, avec un périmètre bien limitén(de C à E plus que de A à Z).}\\
+
+\rem{Sur la convention de nommage de type dans les génériques}{le type entre chevron commence généralement par T, exemple <TUser>.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/where-generic-type-constraint}{where}{Sert à spécifier les contraintes à appliquer sur les alias dans les génériques. Est quasiment obligatoire afin de limiter le périmètre d'utilisation du générique.}\\
+
+\rem{Sur l'utilité des générique}{pour les CrUDes, les bases de données en générales.}\\
+
+\rem{Sur la \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.collections.generic.list-1?view=net-6.0}{List}}{C'est un cas particulier de générique qui n'est pas limité par un \incode{where}. C'est une exception à l'intention originale de garder les génériques dans un périmètre bien limité.}\\
+
+\note{3 slashs d'affilés permettent de faire de la documentation. Toute classe public est obligatoirement documentée. Les exceptions levables dans les classe/méthodes doivent également être documentés}\\
+
+\rem{Sur les nom de fonctions}{Il vaut mieux avoir un nom de méthode/attribut un peu long mais correct plutôt que qq chose de trop cour et vague voir inexact.}
+
+\rem{Sur les chaines \incode{try catch}}{La bonne pratique pour une exception que l'on a pas pu régler et de la récupéré via un ctach \incode{Exception}, créer un log pour récupérer un maximum d'information puis trow à nouveaux l'exception pour arréter le programme.}\\
+
+\note{prendre de la doc pour apprendre la gestion des logs. A l'air important mais ne sera pas vu pendant la formation. Il faut éviter le log bête et méchant qui raconte tt et n'importe quoi et être conscient de l'importance de chaque ligne. Un log est généralement écrit dans un fichier afin d'être peristant, de ne pas polluer l'affichage, et encore si celui ci existe (pas d'écran sur un serveur...).}\\
+
+\rem{Qu'est ce qu'un bon log}{Regarder la lib : \keyref{https://serilog.net/}{serilog} pour exemple de log strcuturée. Différents niveaux de log : 
+\begin{itemize}
+ \item Debug : n'existe pas en production (n'existe que pendant le développement). Le log qui sort toutes les infos faites pour les développeur, très précises et détaillées (très gourmand en ressources)\footnote{A cause de l'accès disque qui est très lent par rapport au autres composant}
+ \item info : informations liées à une mutation d'état (User X à fait Y action, tel champ de tel élément à été mis à jour) avec un contexte.
+ \item warning : erreurs \textit{normales} c'est à dire prévisibles (connues). Il faut les accompagner du contexte : Ex : sa a planter lorsque l'on essayé de ...
+ \item error :  erreur grave mais localement (pour un seul user). Contexte de plantage également.
+ \item fatal : erreur qui tue l'appli. Ex : mauvaise config au démarage.
+\end{itemize}
+Dans tout les cas, le contexte est toujours essentiel dans chaque log.}\\
+
+\rem{Applications annex aux logs}{Bien organisé, il peuvent permettrent de rechercher des infos sur l'utilisation courante (par un user) d'une application : c'est à dire faire des stats sans passer par une base de donnée. Ils ne servent pas que pour la gestion des logs, ils contiennent également de la donnée! Ils sont la première entré vers les statistiques d'une application.}\\
+
+\rem{Danger du log}{Ne surtout pas logger des données sensible, comme des données privés ou un password.}\\
+
+\note{Le nom complet d'une classe contient le namespace. On a nom_total = namespace.nom_classe}\\
+
+\rem{Bonne pratique sur les \incode{namespace}}{En générale NomEntreprise.NomApplication.perimetre, ou le périmètre est une notion qui sera vue plus tard. Cette convention est en lien avec la génération des dlls. Voir propriété du projet nom d'assembly, espace de nom par défaut. Cela permet de gérer les noms en sortie des .exe et .dll que l'on retrouve dans le /bin. }\\
+
+\note{double quote et \incode{string.Empty} font exactement la meêm chose}\\
+
+\note{\incode{nameof} permet de récupérer le nom d'une variable. A creuser et linker.}\\
+
+\rem{Sur les Magic values}{Utiliser des litérals au lieux de paramètres nommés mène à une très mauvaise lisibilité et maintenabilité. Il vaut mieux créer un fichier de constantes (contenant une classe \incode{static}). Le fichier de constantes à l'avantage de pouvoir être associé à une documentation propre et claire. On peut aussi faire des sous classes dans ce fichier de constantes.}\\
+
+\rem{Sur les Magic values}{Par convention elle sont en MAJUSCULE_SUITE.}\\
+
+\note{Pour un guide de bonne pratique encore plus violent que le SOLID : https://williamdurand.fr/2013/06/03/object-calisthenics/}\\
+
+\subsection{Sur l'application console (Exercice)}
+
+Application console : ExoGarage \\
+Structure : 
+\begin{itemize}
+ \item Program.cs
+ \item Garage.cs $\to$ pas de ConsoleWrite la dedans. Maintiens une liste et fait les opérations
+\end{itemize}
+But : Stocker des véhicules 2 rous ou 4 roues\\
+Menu : 4 options
+\begin{itemize}
+ \item Lister les véhicules du garage
+ \item Ajouter un véhicules
+ \item Supprimer un véhicules 
+ \item Mettre à jour un véhicule
+ \item Quitter
+\end{itemize}
+Véhicule : 
+\begin{itemize}
+ \item identifiant, (à géré via static car pas droit au Guid)
+ \item type (2 ou 4 roues),
+ \item  un état (Bon, Moyen, Mauvais)
+ \item marque 
+ \item modele
+ \item kilométrage
+\end{itemize}
+Optionnel1 : Gérer la sauvegarde de fichier. (données dans un fichier text, ou bien json.net ou bien sérialisation) \\
+Optionnel2 : ajouter un système de log. (plus important que le système de sauvegarde).
+Optionnel3 : faire des test.
+Optionnel4 (+++) : Faire un jeu de la vie.(tableau multidimmensionnel)
+
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
