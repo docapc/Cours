@@ -12,18 +12,22 @@ namespace ExoGarage
     internal static class Rules
     {
         // Attributs
-        public const int WORKSHOP_MAX_CAPACITY = 5; 
-        public const int FOUR_WHEELS_MAX_CAPACITY = 2;
-
-        // Getters  (pas nécessaire si const passé en public : elles sont non modifiable de toutes facon)  
-        //public static int MaxCapacity
-        //{
-        //    get { return _workshop_max_capacity; }
-        //}
-        //public static int Max4WheelsCapacity
-        //{
-        //    get { return _4wheels_max_capacity; }
-        //}
+        private const int WORKSHOP_MAX_CAPACITY = 5;    // Note : une const est traité comme étant static
+        private const int FOUR_WHEELS_MAX_CAPACITY = 2; // les deux mots clefs sont incompatible
+        private const string MILEAGE_UNIT = "km";
+        // Getters  (pas nécessaire si const passé en public : mais ne respecterai pas l'encapsulation)  
+        public static int MaxCapacity
+        {
+            get { return WORKSHOP_MAX_CAPACITY; }
+        }
+        public static int MaxFourWheelsCapacity
+        {
+            get { return FOUR_WHEELS_MAX_CAPACITY; }
+        }
+        public static string MileageUnit
+        {
+            get { return MILEAGE_UNIT; }
+        }
 
     }
 

@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExoGarage
 {
-    internal enum Brand
+    internal class FourWheels
     {
-        /// Marques disponibles
-        
-        
     }
 }
