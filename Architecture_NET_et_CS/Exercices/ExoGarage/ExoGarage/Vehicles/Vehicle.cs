@@ -9,20 +9,28 @@ namespace ExoGarage
     internal abstract class Vehicle
     {
         // Attributs
-        private static int s_id = 0;
-        private readonly int _id;
-        //private readonly VehicleBrand _brand; // on peut rester avec des string la dessus pour l'instant
-        //private readonly VehicleModel _model; // mais dans l'idée il faudrait au moins des énums pour assurer l'unicité de chaque entrée possible
-        private readonly string _brand;
-        private readonly string _model;
-        private VehicleState _state;
-        private float _mileage; 
-
-        // Constructeur(s)
-        // note : on ne peut pas utiliser string.Empty : le compilateur se plein d'une valeur non compile time constant!
-        public Vehicle(string brand = "", string model = "", VehicleState state = VehicleState.New, float mileage = 0)
+        private static int _sid = 0;
+        protected readonly int _id;
+        protected readonly string _brand;
+        protected readonly string _model;
+        protected VehicleState _state;
+        protected float _mileage;
+        // Getter/Setter
+        protected Enum SubType { get; set; }
+        protected int WheelsNumber {get; set;}
+        public VehicleState State // foireux sa
         {
-            _id = ++s_id; // le id sert au stats du garage, pas à l'indexation dans la list
+            get { return _state; }
+            set { _state = value; }
+        }
+        private int Id // private pour l'instant
+        {
+            get { return _id; }
+        }
+        
+        public Vehicle(string brand, string model, VehicleState state, float mileage)
+        {
+            _id = ++_sid; // le id sert au stats du garage, pas à l'indexation dans la list
             _brand = brand;
             _model = model;
             State = state;
@@ -33,13 +41,16 @@ namespace ExoGarage
         public override string ToString() // virtual au lieu d'override ici??? voir abstract -> empècherai la définition parentes communes
         {
             /// Permet d'afficher les caractéristiques d'un véhicule
-            return $"{_brand}, model : {_model}, State : {State}, mileage = {_mileage} {Rules.MileageUnit} (garage id = {_id})";
+            return $"{WheelsNumber} roues ({SubTypeToString()}), Marque : {_brand}, Modèle : {_model}, Etat : {StateToString()}, ({_mileage} {Rules.MILEAGE_UNIT}), Id du Garage = {_id}";
         }
 
+        /// <summary>
+        /// Renvoie une string correspondant à l'état du véhicule (pour changer la langue)
+        /// </summary>
+        /// <returns>string</returns>
         // Méthodes privées
-        private string StateToString()
+        public string StateToString() // à ne pas mettre ici car empèche l'accès au nom en dehors sans instance de Vehicule
         {
-            /// Renvoie une string correspondant à l'état du véhicule (pour changer la langue)
             switch (State)
             {
                 case VehicleState.New:      return "Neuf";
@@ -50,17 +61,11 @@ namespace ExoGarage
             }
         }
 
-        // Getter/Setter
-        public VehicleState State
-        {
-            get { return _state; }
-            set { _state = value; }
-        }
-
-        public int ID
-        {
-            get { return _id; }
-        }
+        /// <summary>
+        /// Renvoie le nom de l'enum Subtype du véhicule.
+        /// </summary>
+        /// <returns>string</returns>
+        protected abstract string SubTypeToString();
 
     }
 }

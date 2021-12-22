@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ExoGarage
 {
-    internal interface ISubtype
+    internal enum FourWheelsSubType
     {
+        none,
+        car, 
+        smallcar
     }
 }

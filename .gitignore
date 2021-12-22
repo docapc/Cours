@@ -133,7 +133,7 @@ $RECYCLE.BIN/
 
 # Others
 *.dtbcache.v2
-*.futdcache.
+*.futdcache.v1
 
 _NCrunch*
 
