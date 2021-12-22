@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "7ebe828d-b155-442c-be1d-b9b176ec84f3": {
+      "ProjectGuid": "7ebe828d-b155-442c-be1d-b9b176ec84f3",
+      "DisplayName": "MyIngredient",
+      "ColorIndex": 0
+    },
+    "486e7e76-fc8f-465f-a50b-2054988d9dda": {
+      "ProjectGuid": "486e7e76-fc8f-465f-a50b-2054988d9dda",
+      "DisplayName": "MyIngredient.Models",
+      "ColorIndex": 1
+    },
+    "ff8df0a3-3627-436b-9067-004d6f49b58f": {
+      "ProjectGuid": "ff8df0a3-3627-436b-9067-004d6f49b58f",
+      "DisplayName": "MyIngredient.Models",
+      "ColorIndex": 2
+    },
+    "89d65da6-669b-4088-88ef-72aca0c10a9b": {
+      "ProjectGuid": "89d65da6-669b-4088-88ef-72aca0c10a9b",
+      "DisplayName": "ConsoleApp.Ingredient",
+      "ColorIndex": 3
+    }
+  },
+  "NextColorIndex": 4
+}
