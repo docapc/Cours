@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ExoGarage
 {
-    internal enum FourWheelsSubType
+    internal enum TwoWheelsSubType 
     {
-        none,
-        car, 
-        smallcar
+        motorbike,
+        bike,
+        scooter, 
     }
 }

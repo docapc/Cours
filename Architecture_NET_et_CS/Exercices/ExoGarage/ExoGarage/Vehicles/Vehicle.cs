@@ -3,69 +3,75 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
+/// <summary>
+/// Type principale Contenue dans le Garage
+/// Important : le nombre de roues n'est absoluement pas nécessaire et est juste la pour affichage
+/// </summary>
 namespace ExoGarage
 {
-    internal abstract class Vehicle
-    {
-        // Attributs
+    internal abstract class Vehicle 
+    {       
         private static int _sid = 0;
-        protected readonly int _id;
-        protected readonly string _brand;
-        protected readonly string _model;
-        protected VehicleState _state;
-        protected float _mileage;
-        // Getter/Setter
-        protected Enum SubType { get; set; }
-        protected int WheelsNumber {get; set;}
-        public VehicleState State // foireux sa
-        {
-            get { return _state; }
-            set { _state = value; }
-        }
-        private int Id // private pour l'instant
-        {
-            get { return _id; }
-        }
         
-        public Vehicle(string brand, string model, VehicleState state, float mileage)
-        {
-            _id = ++_sid; // le id sert au stats du garage, pas à l'indexation dans la list
-            _brand = brand;
-            _model = model;
-            State = state;
-            _mileage = mileage;
-        }
+        private readonly int _id;
+        private readonly string _brand;
+        private readonly string _model;
+        private readonly float _mileage; 
 
-        // Méthodes public
-        public override string ToString() // virtual au lieu d'override ici??? voir abstract -> empècherai la définition parentes communes
-        {
-            /// Permet d'afficher les caractéristiques d'un véhicule
-            return $"{WheelsNumber} roues ({SubTypeToString()}), Marque : {_brand}, Modèle : {_model}, Etat : {StateToString()}, ({_mileage} {Rules.MILEAGE_UNIT}), Id du Garage = {_id}";
-        }
+        protected int WheelsNumber { get; init; } 
+
+        internal VehicleState State { get; set; }   
 
         /// <summary>
-        /// Renvoie une string correspondant à l'état du véhicule (pour changer la langue)
+        /// Constructeur Mère abstract
         /// </summary>
-        /// <returns>string</returns>
-        // Méthodes privées
-        public string StateToString() // à ne pas mettre ici car empèche l'accès au nom en dehors sans instance de Vehicule
+        /// <param name="brand"></param>
+        /// <param name="model"></param>
+        /// <param name="state"></param>
+        /// <param name="mileage"></param>
+        /// <exception cref="MyBadStringException"></exception>
+        /// <exception cref="MyNegativeParamException"></exception>
+        /// <exception cref="InvalidEnumArgumentException"></exception>
+        public Vehicle(string brand, string model, VehicleState state, float mileage)
         {
-            switch (State)
+            // Aucun types nullable la dedans
+            _id = ++_sid; // le id sert au stats du garage, pas à l'indexation dans la list
+            if (string.IsNullOrWhiteSpace(brand))
+                {
+                throw new MyBadStringException($"Du Constructeur de véhicule : la Marque donnée est null ou vide : on attend au moins un charactère");
+                }
+            _brand = brand;
+            if (string.IsNullOrWhiteSpace(model))
             {
-                case VehicleState.New:      return "Neuf";
-                case VehicleState.Good:     return "Bon";
-                case VehicleState.Average:  return "Moyen";
-                case VehicleState.Bad:      return "Mauvais";
-                default:                    return "Indéfini";
+                throw new MyBadStringException($"Du Constructeur de véhicule : le Modèle donné est null ou vide : on attend au moins un charactère");
+//                throw new ArgumentNullException($"le Modèle donné est null ou vide : on attend au moins un charactère");
+            }
+            _model = model;
+            if (mileage < 0)
+            {
+                throw new MyNegativeParamException($"Du Constructeur de véhicule : kilométrage négatif passé : on attend une valeur positive");
+            }
+            _mileage = mileage;
+            if (Enum.IsDefined(typeof(VehicleState), state))
+            {
+                State = state;
+            }
+            else
+            {
+                throw new InvalidEnumArgumentException("Du constructeur de véhicule : l'état passé n'est pas dans liste autorisée" +
+                    " voir VehicleSate pour les types authorisés.");
             }
         }
 
         /// <summary>
-        /// Renvoie le nom de l'enum Subtype du véhicule.
+        /// Permet d'afficher un véhicule via Console.Write()
         /// </summary>
         /// <returns>string</returns>
-        protected abstract string SubTypeToString();
-
+        public override string ToString() 
+        {
+            return $"({WheelsNumber} roues), Marque : {_brand}, Modèle : {_model}, Etat : {State.GetString()}, ({_mileage} {Rules.MILEAGE_UNIT}), Id du véhicule = {_id}";
+        }
     }
 }

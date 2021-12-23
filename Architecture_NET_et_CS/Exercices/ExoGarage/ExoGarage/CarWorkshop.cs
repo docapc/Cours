@@ -4,90 +4,84 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 /// <summary>
-/// Idée : pattern Factory -> Le CarWorkShop créré aussi les véhicule à la volée
+/// 
 /// </summary>
 namespace ExoGarage
 {
     internal class CarWorkshop
     {
          
-        private readonly List<Vehicle> _vehicles; // remarque, Une array (de taille fixe) serait peut être mieux...
-        // remarque le champ est readonly mais la list est quand même modifiable!
+        private readonly List<Vehicle> _vehicles;
 
-
+        /// <summary>
+        /// Constructeur de garage vide
+        /// </summary>
         public CarWorkshop()
         {
-            _vehicles = new List<Vehicle>(); // le type List, une fois instancié, ne peut peut pas être null, seulement Empty ce qui ne gène pas ici
+            _vehicles = new List<Vehicle>();
         }
 
-        //public CarWorkshop(List<Vehicle> vehicles) // Constructeur pour chargement via fichier
-        //{
-        //    // Il faut tester le type null ici
-        //    _vehicles = vehicles; // le type List ne peut peut pas être null, seulement Empty
-        //    // Ici la validation dans le cas d'un chargement via fichier.
-        //}
-
-
+        /// <summary>
+        /// Ajoute un véhicule au garage
+        /// </summary>
+        /// <param name="vehicle"></param>
+        /// <exception cref="MyCapacityException"></exception>
         public void AddVehicle(Vehicle vehicle)
         {
+  
             if (IsAtMaxCapacity)
             {
-                //throw new FullCapacityException($"");
+                throw new MyCapacityException($"De AddVehicle : Garage à capacité maximum");
             }
-            if ((vehicle.GetType() is FourWheels) && IsAtFourWheelMax)
+            //if ((vehicle.GetType() is FourWheels) && IsAtFourWheelMax)
+            if ((vehicle is FourWheels) && IsAtFourWheelMax)
             {
-                //throw new FourWheelCapacityExcepetion($"");
+                throw new MyCapacityException($"De AddVehicle : Garage à capacité maximum (en {Rules.DEFAULT_4W_NWHEELS} roues)");
             }
             _vehicles.Add(vehicle);
         }
 
-        // try 
-            /// Ajoute un vehicule au Garage si celui en à la capacité
-            //if (!IsAtMaxCapacity)
-            //{   // test de contenance par type
-            //    if(vehicle.GetType() is FourWheels)
-            //    {
-            //        // excepetion ici
-            //    }
-            //}
-            //else
-            //{
-            //       // Lever une exception?
-            //}
-        // catch 
-      
-
+        /// <summary>
+        /// Supprime un véhicule à la position index dans la liste de véhicules
+        /// </summary>
+        /// <param name="index"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void RemoveVehicle(int index)
         {
-            /// Supprime un véhicule à la position index dans la liste de véhicules
+            /// 
             try
             {
                 _vehicles.RemoveAt(index); // peut lever une erreur de type problème d'indexation
             }
-            catch (ArgumentOutOfRangeException)
+            catch (ArgumentOutOfRangeException ae)
             {
-                throw;
+                throw new ArgumentOutOfRangeException($"Echec de l'indexation lors de la suppression du vehicule (mauvais index passé en entré?) {ae.GetType}"); // on repasse l
             }
         }
 
         /// <summary>
-        /// Change l'état du véhicule en position index dans la liste de véhicule
+        /// Change l'état du véhicule en position index dans la liste de véhicule. Ici pour ne jamais renvoyer de ref 
+        /// vers un véhicule du garage dans le niveau supérieur (Menu)
         /// </summary>
         /// <param name="index">int</param>
         /// <param name="state">VehicleState</param>
         public void SetVehicleState(int index, VehicleState state)
         {
+            if (IsAtMaxCapacity)
+            {
+                throw new MyCapacityException($"De AddVehicle : Garage à capacité maximum");
+            }
             _vehicles[index].State = state;
         }
 
         /// <summary>
-        /// Le garage est il plein
+        /// Le garage est il plein?
         /// </summary>
         /// <returns>bool</returns>
         public bool IsAtMaxCapacity
         {
             /// Le garage est t'il plein
-            get { return _vehicles.Count == Rules.WORKSHOP_MAX_CAPACITY; }
+            get { return _vehicles.Count >= Rules.WORKSHOP_MAX_CAPACITY; }
 
         }
 
@@ -97,7 +91,7 @@ namespace ExoGarage
         /// <returns>bool</returns>
         public bool IsAtFourWheelMax
         {
-            get { return CheckFourWheelsNumber() == Rules.FOUR_WHEELS_MAX_CAPACITY; }
+            get { return CheckFourWheelsNumber() >= Rules.FOUR_WHEELS_MAX_CAPACITY; }
         }
 
         /// <summary>
@@ -109,9 +103,10 @@ namespace ExoGarage
             int count = 0;
             foreach (Vehicle vehicle in _vehicles)
             {
-                if (vehicle.GetType() is FourWheels)
-                {
-                    count++;
+                //if (vehicle.GetType() == typeof(FourWheels))
+                if (vehicle is FourWheels)
+                    {
+                    ++count;
                 }
             }
             return count;
@@ -120,7 +115,7 @@ namespace ExoGarage
         /// <summary>
         /// Property pour récupérer la liste de véhicule sous forme IEnumerable
         /// </summary>
-        public IEnumerable<Vehicle> Vehicles // à ne pas faire : ne jamais renvoyer des list dans un getter
+        public IEnumerable<Vehicle> Vehicles 
         {
             get { return _vehicles; }
         }
