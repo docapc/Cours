@@ -123,7 +123,7 @@ see = [Glossaire:]{gl-dip}
 
 \section{Azure DevOps}
 
-Il s'agit d'une \textbf{forge logicielle} : outils qui regroupe tt les outils nécessaires au développement d'un projet.
+Il s'agit d'une \textbf{forge logicielle} : outils qui regroupe tt les outils nécessaires au développement d'un projet. Par microsoft, donc intégré à visual Studio et pensé pour du .NET. \\
 
 \note{Equivalent microsoft de gitlab. (voir \keyref{https://www.atlassian.com/fr/software/jira}{Jira} (par atlassian) également)}\\
 
@@ -208,15 +208,21 @@ Tout ce qui qui gère l'intégration et le déploiment du code (partie Obs). Ex�
 
 \rem{Task groups}{}\\
 
-\rem{Deployment groups}{Permet de définir les machines sur lesquels l'applications ont/seront déployées. Automatise le déploiement}\\
+\rem{Deployment groups}{Permet de définir les machines sur lesquels l'applications ont/seront déployées. Automatise le déploiement.}\\
+
+\note{Prendre des infos sur \keyref{https://fr.wikipedia.org/wiki/Docker_(logiciel)}{Docker}.}\\
 
 \subsection{Test plans}
 
+Les plans de tests de type tests utilisateur (Use case). Est préférablement mis en place par la partie métier.\\
 
+\note{Attention : partie payante de AzureDevOps.}\\
+
+\note{Il faudra quand même utiliser des bibliothèques de test en Visual Studio.}\\
 
 \subsection{Artifacts}
 
-Permet de créer proprement des dépendances commune au projet (des .dll). 
+Permet de créer proprement des dépendances commune au projet (des .dll). \\
 
 \note{On évite à tt pris les copier coller de solution en solution.}\\
 
