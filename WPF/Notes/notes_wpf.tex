@@ -1,0 +1,160 @@
+%\listfiles
+\documentclass[a4paper,12pt,twoside]{article}
+
+%% packages
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,mathrsfs} 
+%\usepackage{import}
+\usepackage{float, subfig, caption}
+\usepackage{libertine}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{xcolor} %/ pour \Definecolor
+\usepackage[pdftex,final=true]{hyperref}
+%\usepackage[]{hyperref}
+\hypersetup{
+colorlinks=true,
+linkcolor=blue,
+urlcolor=magenta, %/ file: adopte également cette couleur
+filecolor=cyan, % ne fonctionne qu'avec run:, 
+%citecolor=red
+}
+\urlstyle{same}
+\usepackage[french]{minitoc}
+\usepackage[acronym,toc,automake]{glossaries} % acronym pour les acronymes et toc pour inclusion des glossary dans la table des matières
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+%\usepackage{minted} % pour code avec coloration dans le texte
+\usepackage{url} % Pour avoir de belles url
+%% package ticks spécifiquement (pour les schémas) 
+%\usepackage{tikz}%
+%\usepackage[top=2cm,bottom=2cm]{geometry}
+%% paramètres tikz
+%\usetikzlibrary{patterns,decorations.pathreplacing,shapes.misc}
+%\usetikzlibrary{calc}
+%\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+%cross/.default={5pt}}
+% \definecolor{Gray}{gray}{0.9}
+% \definecolor{LightCyan}{rgb}{0.88,1,1}
+% \newcommand{\RN}[1]{\textup{\uppercase\expandafter{\romannumeral#1}}}    
+
+%% Macros comme variable
+%\newcommand{\editorpath}{C:/Program Files/Notepad++/notepad++.exe}
+\newcommand{\exemplepath}{../Exercices}
+\newcommand{\urlcolor}{magenta}  % couleur des liens https
+\newcommand{\filecolor}{cyan} % couleur des liens file: file
+\newcommand{\pdfcolor}{red} % couleur des liens file: .pdf
+\newcommand{\foldercolor}{orange} % couleur des liens file: Folder
+\newcommand{\cscolor}{green!60!black} % couleur des liens file: .cs
+\newcommand{\slncolor}{violet} % couleur des liens file: .sln
+\newcommand{\keycolor}{purple} % couleur des liens  de type mot clefs
+%% Macros commun
+\newcommand{\incode}[1]{{\footnotesize\ttfamily #1}} % pour du pseudo-code simple
+\newcommand{\rem}[2]{\noindent\underline{Remarque} : \textit{#1}.\\ \indent #2}
+\newcommand{\note}[1]{\noindent\underline{Note} : \\ \indent #1}
+\newcommand{\defi}[2]{\noindent\underline{Définition} : \textbf{#1}.\\ \indent #2}
+\newcommand{\slide}[2]{\textbullet ~ Slide n°#1 : \indent #2}
+%% Macro spécifiques à ce fichier (pas forcément) : pour fonctionner il faut que le fichier ai été ouvert diretcement dans le dossier du .tex ...
+\newcommand{\fileref}[2]{\hypersetup{urlcolor=\filecolor}\href{file: #1}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\pdfref}[2]{\hypersetup{urlcolor=\pdfcolor}\href{file: #1.pdf}{#2.pdf}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\csref}[2]{\hypersetup{urlcolor=\cscolor}\href{file:\exemplepath /#1.cs}{#2.cs}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\slnref}[2]{\hypersetup{urlcolor=\slncolor}\href{file:\exemplepath /#1.sln}{#2.sln}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\folderref}[2]{\hypersetup{urlcolor=\foldercolor}\href{file:\exemplepath /#1/.}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyref}[2]{\hypersetup{urlcolor=\keycolor} \href{#1}{\textbf{#2}}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyword}[3]{\noindent\underline{Mot clef} : \keyref{#1}{#2}. \\ \indent #3}
+%% Macro spécifiques à ce fichier (pas forcément)
+\newcommand{\dpat}[7]{
+\noindent \underline{Pattern} : \textbf{#1}, \indent (type : \textit{#2}) \\
+\underline{Description} : \indent #3 \\
+\underline{Exemple} : \indent #4 \\
+\noindent \underline{Avantages} : 
+\begin{itemize}
+ #5
+\end{itemize}
+\noindent \underline{Inconvénients} : 
+\begin{itemize}
+ #6 
+\end{itemize}
+\underline{Liens} : #7 
+}
+
+%% Infos document
+% Titre
+\title{Notes sur le module : \textit{WPF.}
+% auteur
+\author{Armel Pitelet}
+% date de création du document
+\date{\today}
+
+%% Glossaire, acronymes et index
+\makeglossaries
+
+%% Glossaire et acronyme (déclarations)
+
+% DIP : exemple de formalisme
+\newglossaryentry{gl-dip}{
+name = {DSP},
+description = {la description détaillé}
+}
+\newglossaryentry{ac-dip}{
+type = \acronymtype, name = {DSP}, 
+description = {Nom simple}, 
+first = {Première occurence\glsadd{gl-dip}}, 
+see = [Glossaire:]{gl-dip}
+}
+
+
+\begin{document}
+%% Organisation globale 
+\maketitle
+\tableofcontents
+
+%%--------------------------------------------------------------------------------------------------------------------------------
+\keyword{WPF}{https://fr.wikipedia.org/wiki/Windows_Presentation_Foundation}{Permet de créer des application en mode fenêtre.Pour utiliser WPF, soit on passe par du .Net Framework (ancienne version) soit on passe sur du .Net Core (nouvelle).}\\
+
+\rem{XAML}{Language balise associé au WPF. C'est via XAML que l'on définit le design. Voir les différents layout ci dessous}\\
+
+\rem{Stack Panel}{Layout qui permet de stacker plusieurs éléments les uns à la suite des autres.}\\
+
+\rem{Wrap panel}{Identique au stack panel mais passe à la ligne suivante lorsque la ligne en cours est pleine (dynamiquement en fonction de la taille de l'écran contrairement au stack panel).}\\
+
+\rem{Dock panel}{Permet de fixer un élément à un endroit donné avec une taille donnée.}\\
+
+\rem{Grid}{Permet de créer des lignes et des colonnes avec des tailles possiblement relative les unes aux autres.}\\
+
+\rem{Canvas}{Permet un placement libre des éléments.}\\
+
+\note{Pour une intro à wpf : \url{https://wpf-tutorial.com/}.}\\
+
+\rem{Textbox}{Permet de créer une boite de texte éditatble.}\\
+
+\rem{Textblock}{Même chose que textblox mais le texte n'est pas éditable.}\\
+
+\rem{Combobox}{Permet de faire une liste déroulante à possibilité de choix fixes.}\\
+
+\rem{Listbox}{Même chose que combobox mais sous forme de liste et pas d'un menu déroulant.}\\
+
+\rem{Menu}{Permet de faire des menus, avec potentiellement des sous menu inclus.}\\
+
+\note{Attention par défaut les images ne sont pas embarquées dans l'application WPF. On les voits dans le designer mais pas dans l'application une fois celle ci lancée. Il faut changer le statut de l'image en ``ressource de l'application'' (dans les paramètres Propriétés/Avancé). Cela permet d'embarquer l'image avec le dll. On peut aussi la mettre en ``Contenue''. A ce moment l'image sera copiée (à la compilation) avec la même arborescence que l'application lors de la création.}\\
+
+\note{Pour faire des gitignore facilement \url{https://www.toptal.com/developers/gitignore}}\\
+
+\note{Pour de la génération de classe automatique \url{https://github.com/AutoFixture} et \url{https://github.com/bchavez/Bogus}.}\\
+
+\rem{Utiliser les ToString}{Mauvaise pratique pour faire de l'affichage en WPF}\\
+
+
+%%--------------------------------------------------------------------------------------------------------------------------------1
+%% Glossaires
+\newpage
+\printglossary[type=\acronymtype]%\addcontentsline{toc}{chapter}{Acronymes}
+%\glsaddall% force l'apparition de tt les entrées du glossaire
+\glsaddallunused % meme chose que addall mais ne force pas la numéroattion dans la liste d'acronyme
+%\printunsrtglossary[type=main]
+\printglossary[type = main,nonumberlist]%\addcontentsline{toc}{chapter}{Glossaire}
+
+\end{document}
+\end{document}
