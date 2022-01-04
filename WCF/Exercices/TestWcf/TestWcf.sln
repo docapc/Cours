@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfApp", "WpfApp\WpfApp.csproj", "{28F94DFF-79C3-4FA7-98E5-406BB49A23BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serveur", "Serveur", "{C10237FF-B180-4BF4-B18D-9846B214113C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{070A1D43-1EBE-4A9F-9584-0D3140AF052B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfApp", "WcfApp\WcfApp.csproj", "{04DCF19F-B49F-4E48-AA2C-B0701AC39860}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{28F94DFF-79C3-4FA7-98E5-406BB49A23BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28F94DFF-79C3-4FA7-98E5-406BB49A23BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28F94DFF-79C3-4FA7-98E5-406BB49A23BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28F94DFF-79C3-4FA7-98E5-406BB49A23BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04DCF19F-B49F-4E48-AA2C-B0701AC39860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04DCF19F-B49F-4E48-AA2C-B0701AC39860}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04DCF19F-B49F-4E48-AA2C-B0701AC39860}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04DCF19F-B49F-4E48-AA2C-B0701AC39860}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{28F94DFF-79C3-4FA7-98E5-406BB49A23BD} = {070A1D43-1EBE-4A9F-9584-0D3140AF052B}
+		{04DCF19F-B49F-4E48-AA2C-B0701AC39860} = {C10237FF-B180-4BF4-B18D-9846B214113C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C8CB4D1D-30E0-4AAB-AE9B-02D8BAF734F6}
+	EndGlobalSection
+EndGlobal

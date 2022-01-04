@@ -82,7 +82,7 @@ filecolor=cyan, % ne fonctionne qu'avec run:,
 
 %% Infos document
 % Titre
-\title{Notes sur le module : \textit{WPF.}
+\title{Notes sur le module : \textit{WPF}.}
 % auteur
 \author{Armel Pitelet}
 % date de création du document
@@ -173,7 +173,7 @@ WCF utilise des adresses, et des protocoles (comme http, https) pour créer un \
 
 \rem{Encodage Windows}{Windows et donc .Net est en UTF-16!!! Attention peut poser des problème avec les système Unix qui sont restés en UTF-8.}\\
 
-\defi{CRLF et LF}{LF : chaque fin de ligne (aussi appelé \textit{retour chariot}), \r (un seul élément), CRLF : deux éléments de fin de ligne \r\n. Peut poser des problèmes de EOF (End Of Lign).}\\
+\defi{CRLF et LF}{LF : chaque fin de ligne (aussi appelé \textit{retour chariot}), \textbackslash r (un seul élément), CRLF : deux éléments de fin de ligne \textbackslash r \textbackslash n. Peut poser des problèmes de EOF (End Of Lign).}\\
 
 \note{\keyref{https://docs.microsoft.com/en-us/sysinternals/downloads/zoomit}{zoomit} permet de zoomer sur un écran (outils windows).}\\
 
@@ -183,9 +183,13 @@ WCF utilise des adresses, et des protocoles (comme http, https) pour créer un \
 
 \note{Ctrl+R,R permet de renommer rapidemment dans l'ensemble d'un projet /solution.}\\
 
-\note{rappel namespace : nom_societe.nom_projet.nom_application}
+\note{rappel namespace : nom\_societe.nom\_projet.nom\_application}
 
+\defi{DTO}{Data transfert Object : object partagé entre plusieurs projets. Quand on fait un dto il vaut mieux garder les objet les plus bêtes possible (propriété uniquement avec getter et setter en public).}\\
 
+\note{Lors des transfert WCF on ne peut envoyer que des données (traduite en texte dans les tuyaux) et pas d'objet complexe donc sans méthode, attribut ou constructeurs.}\\
+
+\rem{Sur le property Required}{Une property required ne peut pas etre nulle ou non définie (obligatoire de définir un get et un set).}\\
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
