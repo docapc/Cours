@@ -9,7 +9,7 @@ namespace Ipme.Proxy.Model
     public class ProxyOrdinateur : IOrdinateur
     {
         private static List<User> _users = new List<User>(); // cache des utilisateurs ayant utilisé un proxy
-        public IEnumerable<User> Users
+        public static IEnumerable<User> Users
         {
             get { return _users; }
         }

@@ -33,7 +33,7 @@ namespace Ipme.Proxy.Main
             proxy1.DoSomeSensibleStuff();
             proxy2.DoSomeSensibleStuff();
             proxy1.DoSomeSensibleStuff(); // ne rajoutera pas une deuxième fois le nom dans la liste du cache
-            foreach (var user in proxy1.Users)
+            foreach (var user in ProxyOrdinateur.Users)
             {
                 Console.WriteLine($"Accès tenté par {user.Name}, niveau d'accréditation {user.LvlAccess}");
             }
