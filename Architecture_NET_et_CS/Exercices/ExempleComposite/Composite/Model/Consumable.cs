@@ -1,6 +1,6 @@
 ﻿namespace Ipme.ExoComposite.Model
 {
-    internal class Consumable : Leaf
+    public class Consumable : Leaf // fait partie du pattern
     {
         public Consumable(string name) : base(name)
         {

@@ -8,7 +8,7 @@ namespace Ipme.ExoComposite.Model
 {
     internal static class Rules
     {
-        public const int MAX_WEAPONBAG_WEIGHT = 100;
+        public const int MAX_WEAPONBAG_TOTALWEIGHT = 100; // pour l'ensemble des sacs
         public const int MAX_CONSUMABLEBAG_CAPACITY = 5;
     }
 }

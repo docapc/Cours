@@ -2,66 +2,33 @@
 {
     public class Composite : IComponent
     {
-        public string Name { get; private set; }
+        public string Name { get; private set; } // fait partie du pattern car dans le contrat IComponent
 
-        protected List<IComponent> _components;
-        
+        protected List<IComponent> _components; // fait partie du pattern :liste de tt les éléments d'un composite
+
         public Composite(string name)
         {
             Name = name;
             _components = new List<IComponent>();
         }
 
-        public virtual void AddComponent(IComponent component)
+        public virtual void AddComponent(IComponent component) // ne fait pas partie du pattern
         {
             _components.Add(component);
         }
 
-        public virtual void RemoveComponent(IComponent component)
+        public virtual void RemoveComponent(IComponent component) // ne fait pas partie du pattern
         {
             _components.Remove(component);
         }
 
-        public void LoadLeafs(List<IComponent> leafs)
+        public void LoadLeafs(List<IComponent> leafs) // fait partie du pattern car dans le contrat IComponent
         {
             foreach (var component in _components)
             {
                 component.LoadLeafs(leafs);
             }
         }
-
-        //public virtual IEnumerable<IComponent> GetComponents() // retourner un enumerable ne peut pas fonctionner correction en récursif!
-        //{
-        //    foreach (var component in _components)
-        //        if (component is Leaf)
-        //            yield return component;
-        //        else
-        //        {
-        //            component.GetComponents();
-        //        }
-        //}
-
-        //public virtual IEnumerable<string> GetAllNames()
-        //{
-        //    foreach (var component in _components)
-        //        if (component is Leaf)
-        //            yield return component.Name;
-        //        else
-        //        {
-        //            component.GetAllNames();
-        //        }
-        //}
-
-        //public virtual string GetAllNames()
-        //{
-        //    foreach (var component in _components)
-        //        if (component is Leaf)
-        //            yield return component.Name;
-        //        else
-        //        {
-        //            component.GetAllNames();
-        //        }
-        //}
 
     }
 }

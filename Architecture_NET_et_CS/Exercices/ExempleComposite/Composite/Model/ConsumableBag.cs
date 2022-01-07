@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ipme.ExoComposite.Model
 {
-    internal class ConsumableBag : Composite
+    public class ConsumableBag : Composite
     {
         public ConsumableBag(string name) : base(name)
         {            
@@ -14,16 +14,20 @@ namespace Ipme.ExoComposite.Model
 
         public override void AddComponent(IComponent component)
         {
-            var consumable = (Consumable)component;
-            if (!IsFull())
+            //var consumable = (Consumable)component;
+            if (HasSpaceAvaible())
             {
                 base.AddComponent(component);
             }
+            else
+            {
+                Console.WriteLine($"{this.Name} has no more avaible slots. Ipossible to add {component.Name}");
+            }
         }
 
-        private bool IsFull()
+        private bool HasSpaceAvaible()
         {
-            return _components.Count() <= Rules.MAX_WEAPONBAG_WEIGHT;
+            return _components.Count() <= Rules.MAX_CONSUMABLEBAG_CAPACITY; // à faire en récursivité pour de potentiel composite dans ce type de composite?
         }
     }
 }
