@@ -1,0 +1,227 @@
+%\listfiles
+\documentclass[a4paper,12pt,twoside]{article}
+
+%% packages
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,mathrsfs} 
+%\usepackage{import}
+\usepackage{float, subfig, caption}
+\usepackage{libertine}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{xcolor} %/ pour \Definecolor
+\usepackage[pdftex,final=true]{hyperref}
+%\usepackage[]{hyperref}
+\hypersetup{
+colorlinks=true,
+linkcolor=blue,
+urlcolor=magenta, %/ file: adopte également cette couleur
+filecolor=cyan, % ne fonctionne qu'avec run:, 
+%citecolor=red
+}
+\urlstyle{same}
+\usepackage[french]{minitoc}
+\usepackage[acronym,toc,automake]{glossaries} % acronym pour les acronymes et toc pour inclusion des glossary dans la table des matières
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+%\usepackage{minted} % pour code avec coloration dans le texte
+\usepackage{url} % Pour avoir de belles url
+%% package ticks spécifiquement (pour les schémas) 
+%\usepackage{tikz}%
+%\usepackage[top=2cm,bottom=2cm]{geometry}
+%% paramètres tikz
+%\usetikzlibrary{patterns,decorations.pathreplacing,shapes.misc}
+%\usetikzlibrary{calc}
+%\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+%cross/.default={5pt}}
+% \definecolor{Gray}{gray}{0.9}
+% \definecolor{LightCyan}{rgb}{0.88,1,1}
+% \newcommand{\RN}[1]{\textup{\uppercase\expandafter{\romannumeral#1}}}    
+
+%% Macros comme variable
+%\newcommand{\editorpath}{C:/Program Files/Notepad++/notepad++.exe}
+\newcommand{\exemplepath}{../Exercices}
+\newcommand{\urlcolor}{magenta}  % couleur des liens https
+\newcommand{\filecolor}{cyan} % couleur des liens file: file
+\newcommand{\pdfcolor}{red} % couleur des liens file: .pdf
+\newcommand{\foldercolor}{orange} % couleur des liens file: Folder
+\newcommand{\cscolor}{green!60!black} % couleur des liens file: .cs
+\newcommand{\slncolor}{violet} % couleur des liens file: .sln
+\newcommand{\keycolor}{purple} % couleur des liens  de type mot clefs
+%% Macros commun
+\newcommand{\incode}[1]{{\footnotesize\ttfamily #1}} % pour du pseudo-code simple
+\newcommand{\rem}[2]{\noindent\underline{Remarque} : \textit{#1}.\\ \indent #2}
+\newcommand{\note}[1]{\noindent\underline{Note} : \\ \indent #1}
+\newcommand{\defi}[2]{\noindent\underline{Définition} : \textbf{#1}.\\ \indent #2}
+\newcommand{\slide}[2]{\textbullet ~ Slide n°#1 : \indent #2}
+%% Macro spécifiques à ce fichier (pas forcément) : pour fonctionner il faut que le fichier ai été ouvert diretcement dans le dossier du .tex ...
+\newcommand{\fileref}[2]{\hypersetup{urlcolor=\filecolor}\href{file: #1}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\pdfref}[2]{\hypersetup{urlcolor=\pdfcolor}\href{file: #1.pdf}{#2.pdf}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\csref}[2]{\hypersetup{urlcolor=\cscolor}\href{file:\exemplepath /#1.cs}{#2.cs}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\slnref}[2]{\hypersetup{urlcolor=\slncolor}\href{file:\exemplepath /#1.sln}{#2.sln}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\folderref}[2]{\hypersetup{urlcolor=\foldercolor}\href{file:\exemplepath /#1/.}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyref}[2]{\hypersetup{urlcolor=\keycolor} \href{#1}{\textbf{#2}}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyword}[3]{\noindent\underline{Mot clef} : \keyref{#1}{#2}. \\ \indent #3}
+%% Macro spécifiques à ce fichier (pas forcément)
+\newcommand{\dpat}[7]{
+\noindent \underline{Pattern} : \textbf{#1}, \indent (type : \textit{#2}) \\
+\underline{Description} : \indent #3 \\
+\underline{Exemple} : \indent #4 \\
+\noindent \underline{Avantages} : 
+\begin{itemize}
+ #5
+\end{itemize}
+\noindent \underline{Inconvénients} : 
+\begin{itemize}
+ #6 
+\end{itemize}
+\underline{Liens} : #7 
+}
+
+%% Infos document
+% Titre
+\title{Notes sur le module : \textit{Base de Données.}
+% auteur
+\author{Armel Pitelet}
+% date de création du document
+\date{\today}
+
+%% Glossaire, acronymes et index
+\makeglossaries
+
+%% Glossaire et acronyme (déclarations)
+
+% DIP : exemple de formalisme
+\newglossaryentry{gl-dip}{
+name = {DSP},
+description = {la description détaillé}
+}
+\newglossaryentry{ac-dip}{
+type = \acronymtype, name = {DSP}, 
+description = {Nom simple}, 
+first = {Première occurence\glsadd{gl-dip}}, 
+see = [Glossaire:]{gl-dip}
+}
+
+
+\begin{document}
+%% Organisation globale 
+\maketitle
+\tableofcontents
+
+%%--------------------------------------------------------------------------------------------------------------------------------
+\section{BDD et SGBD}
+
+\subsection{Généralités}
+
+Commencer par voir \url{https://github.com/Authfix/dotnet-basics/blob/main/sql-server-basics.ipynb} pour les définitions et principe de base. Pour se connecter (en local) il faut commencer par utiliser le serveur : (LocalDb)\MSSQLLocalDB.
+
+\note{Attention à l'installation d'une bdd en local. Elles sont pensé pour être seul et prennent donc toute la place et les ressources disponibles.}\\
+
+\note{La base doit se situer sur la même machine que le gestionnaire de base. Pas forcément dans un \textit{folder} spécifique mais sue la même \textit{machine} (ou serveur, ou conteneur docker, ...).}\\
+
+\note{Dans une base tout est objet.}\\
+
+\note{Il existe deux type de backup : full $\to$ avec tout dedans. Incrémental $\to$ se base sur un backup full mais n'enregistre que le delta par rapport à cette partie la.}\\
+
+\rem{Sur la stratégie de backup classique}{Exemple : Dimanche $\to$ full puis de Lundi à Samedi $\to$ incrémental.}\\
+
+\rem{Sur l'archivage}{Une BDD n'est pas faite pour faire de l'archivage long terme (en dehors du backup) $\to$ à cause de l'obligation de passer par un système de gestion de base de données pour pouvoir lire dans la base. Pour de l'archive il vaut mieux avoir les données dans un fichier \textit{clair} {csv, json, dat,...} aka pas un fichier binaire (dépendant d'un système de lecture particulier).}\\
+
+\rem{Sur la spécialisation des SGBD}{Selon le type de donnée, il existe des SGBD qui sont plus efficaces que d'autres (données temps, données espace,...). SQL Server peut à peut prêt tout faire mais le fera moyennement bien (rapidité, efficacité, optimisation).}\\
+
+\note{voir docker et powershell $\to$ cela aidera grandement pour toute la suite.}\\
+
+\subsection{Contenue d'une table}
+
+On prend l'exemple de la table SalesLT.Adress (au début) et on déroule les différents menus. \\
+
+\defi{table}{Liste de données obéissant à une certaine nomenclature, un certain format. Cela garantie que chaque ligne de données possèdera les même colonne. Faire click-droit $\to$ property pour plus de détails.}\\
+
+\remColumns}{Contient les infos sur les différents colonnes de la tables.}
+
+\note{Les type de valeur peuvent être différent des types du système. Pour gérer de l'upper case/lower case par exemple.}\\
+
+\note{Le nom de chaque colonne est accompagné d'un type (ex : int) et de conditions particulière (ex : not null)}\\
+
+\rem{Sur varchar}{Il existait varchar et aujourd'hui nvarchar (Pour nouveau varchar). Ce nvarchar($x$) est accompagné de sa taille maximum $x$.}\\
+
+\rem{Sur les dates et le temps}{Il faut toujours utiliser un temps universel et pas un temps localisé.}\\
+
+\rem{Unique identifier}{Est un type de donnée en bdd qui correspond à un Guid.}
+
+\rem{rowid (rowguid)}{Est un identifier qui correspond à une ligne de base de donnée qui change (ou doit être changé) à chaque modification de la ligne. C'est un moyen de bloquer des updates parallèles (cela assure de repasser par la dernière version et pas une version antérieur). Attention cette mécanique n'est pas automatique, il faut l'implémenter.}\\
+
+\rem{Sur le nombre de ligne}{Une BDD ne sait jamais combien de ligne elle possède exactement!}\\
+
+\rem{Keys}{Dans ce dossier les différentes clefs de la table (voir ci dessous).}\\
+
+\defi{PK}{Primary Key : $\to$ garantie que chaque ligne de la table est unique. C'est un index ordonné : c'est à dire que c'est via elle qu'il est le plus rapide et efficace d'aller chercher une donnée. C'est l'équivalent d'un annuaire.}
+
+\rem{AK}{Fait partie du mécanisme de rowguid.}\\
+
+\rem{Dans le folder keys}{FK : plutôt Foreign Key qui permet de faire le liens entre les différentes tables et de garantir l'existence de la donnée du coté des deux tables. Convention de nommage : le nom des clefs indique le liens entre les table. Ex : FK_CustomerAdress_Adress_AdressID fait le lien entre CustomerAdress et Adress_AdressID.}\\
+
+\rem{Constraints}{Dans ce folder on trouve des objet Contrainte qui vont s'appliquer sur des colonnes particulières. On peut par exemple donner des valeurs par défauts dans ces contraintes (comme le temps en cours au moment d'une modification ou bien pour donner par défaut un nouveau guid lors d'un changement de ligne). On peut également poser une contrainte d'unicité (sans passer par une primary key), Ex : une adresse email qui doit être unique.}\\
+
+\rem{Triggers}{Permet d'écrire du code SQL qui réagit en fonction de certaines actions faites dans les tables. Ex : exécuter un code qui remplit une table X quand une table Y est mise à jour.}\\
+
+\note{Pour faire des trigger il faut travailler avec du TSQL (language de programmation [spécifique à Microsoft]). Le trigger tend à disparaitre car on essaie d'éviter de maintenir du code coté bdd et coté applicatif en même temps.}\\
+
+\rem{Indexes}{Permet de ranger la base pour l'optimiser en fonction d'un certain type de recherche. Ce n'est pas réellement cela, les index créent en fait un fichier qui garde de l'information utile pour savoir comment parcourir la base de donnée en fonction du type de recherche demandée. Attention : ces fichiers peuvent poser très lourd très vite. Cela engendre aussi une lenteur dans la suppression, l'update et l'insertion (puisqu'il faut mettre à jour les index en plus des données elle même).}\\
+
+\note{Eviter de se servir des indexes tant que l'on a pas de problème de performance. De plus ce n'est pas la seule manière d'optimiser la lecture dans une base. La base peut également ne pas se servir du tout de ces index si elle \textit{estime} qu'ils ne sont pas pertinent.}\\
+
+\note{Les Clefs sont systématiquement (obligatoirement) accompagnées d'index (pour AK/PK mais pas forcément FK [qui lient deux tables différentes]).}\\
+
+\rem{Statistics}{Ne sert pas souvent... La base de donnée reste dans un état d'incertitude sur beaucoup de chose (pour des raisons de performance) et garde des statistiques à la place de données exacts (comme le nombre de ligne par exemple). Les stats se mettent à jour pour éviter que la base ne se trompe trop souvent. C'est surtout un outils d'analyse pour comprendre exactement ce qu'il se passe dans la BDD. Pratiquement réservé aux développeurs spécialistes des BDD ou au moteur d'optimisation qui se basent sur les stats pour décider de la meilleur manière de faire une requète à la BDD (faite par un moteur d'éxécution).}\\
+
+\section{Divers}
+
+\rem{Sur les schéma}{Au niveau des nom des tables on a Schema.Nom_de_table. Le schéma permet de moduler le comportement des tables, par exemple pour donner des accès à certain et pas à d'autre. Ces schémas permettent de segmenter la BDD.}\\
+
+\note{Une application ne doit jamais authoriser la modification des schémas de la bdd (sauf admin aka superuser). Il vaut mieux avoir 2 user différents avec deux roles différent plutôt qu'un seul type de user avec deux rôles différents.}\\
+
+\rem{Principe de List Priviledges}{Il faut à tt pris éviter de donner un droit non nécessaire. L'idée est de conserver au maximum les données et surtout la structure de ces données.}\\
+
+\section{Le SQL}
+
+liens utiles \url{https://www.w3schools.com/sql/sql_top.asp}, \url{https://sql.sh/}.\\
+
+\keyword{https://sql.sh/cours/select}{SELECT}{Permet de récupérer les données nécessaires (dont on a besoin). SELECT nom_de_colonne}
+
+\keyword{https://sql.sh/cours/select}{FROM}{Permet de sélectionner la table que l'on veut : Schema.nom_de_table}
+
+\keyword{https://sql.sh/cours/where}{WHERE}{Permet de sélectionner par filtre. WHERE : Predicat}
+
+\rem{Sur les prédicats}{on a le $=$, comparaison exact, ou bien le LIKE 'untruc\%' ou le \% est un wildcard indiquant qu'il y aura un truc après. C'est du Regex.}\\
+
+\keyword{https://sql.sh/cours/where/and-or}{AND et OR}{Pour \textit{empiler} les prédicat. Utilisable avec un WHERE par exemple.}\\
+
+\note{Les fichier.sql sont un bon endroit pour faire des calculs (au lieu de récupérer la donnée pour la traiter en externe). On utilise les fonction d'aggrégats}\\
+
+\rem{Quelques fonction d'aggrégat}{MAX, SUM, MIN, COUNT, AVG, TOP (n) column_name1, column_name2 [remonte les n lignes des columns]...}
+
+\note{Les mot clef ne sont pas case sensitive. MAX est équivalent à Max ou max}\\
+
+\keyword{https://sql.sh/cours/order-by}{ORDER BY}{Order by column_name opt: ordonne la remontée des données par la colonne column_name dans l'ordre opt (ASC OU DSC). En principe on en met partout pour maitriser la remontée des données.}\\
+
+\keyword{https://sql.sh/cours/group-by}{GROUP BY}{Group by column .Regroupe par valeur unique dans column. Nécessite un SELECT fun_aggregation() [et pas un simple SELECT column]}
+
+\keyword{https://sql.sh/cours/jointures}{JOIN}{JOIN schema.table ON schema.table.column_interessante = schema.Autretable.column_interessante. schema.table.column_interessante est une colonne de FK qui font référence à schema.Autretable.column_interessante. Le nom des colonnes n'est pas forcément le même dans les deux tables mais le types doit rester cohérent. Le JOIN permet de mapper une table à une autre. Le join va joindre les primary keys de la table cible aux foreign keys de la table mère (celle qui demande la jointure).} \\
+
+\note{On peut (et on doit) mettre des alias sur les noms quand tt devient trop verbeux.}\\
+
+%%--------------------------------------------------------------------------------------------------------------------------------1
+%% Glossaires
+\newpage
+\printglossary[type=\acronymtype]%\addcontentsline{toc}{chapter}{Acronymes}
+%\glsaddall% force l'apparition de tt les entrées du glossaire
+\glsaddallunused % meme chose que addall mais ne force pas la numéroattion dans la liste d'acronyme
+%\printunsrtglossary[type=main]
+\printglossary[type = main,nonumberlist]%\addcontentsline{toc}{chapter}{Glossaire}
+
+\end{document}
+\end{document}

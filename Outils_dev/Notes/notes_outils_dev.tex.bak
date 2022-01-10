@@ -1,0 +1,253 @@
+%\listfiles
+\documentclass[a4paper,12pt,twoside]{article}
+
+%% packages
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,mathrsfs} 
+%\usepackage{import}
+\usepackage{float, subfig, caption}
+\usepackage{libertine}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{xcolor} %/ pour \Definecolor
+\usepackage[pdftex,final=true]{hyperref}
+%\usepackage[]{hyperref}
+\hypersetup{
+colorlinks=true,
+linkcolor=blue,
+urlcolor=magenta, %/ file: adopte également cette couleur
+filecolor=cyan, % ne fonctionne qu'avec run:, 
+%citecolor=red
+}
+\urlstyle{same}
+\usepackage[french]{minitoc}
+\usepackage[acronym,toc,automake]{glossaries} % acronym pour les acronymes et toc pour inclusion des glossary dans la table des matières
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+%\usepackage{minted} % pour code avec coloration dans le texte
+\usepackage{url} % Pour avoir de belles url
+%% package ticks spécifiquement (pour les schémas) 
+%\usepackage{tikz}%
+%\usepackage[top=2cm,bottom=2cm]{geometry}
+%% paramètres tikz
+%\usetikzlibrary{patterns,decorations.pathreplacing,shapes.misc}
+%\usetikzlibrary{calc}
+%\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+%cross/.default={5pt}}
+% \definecolor{Gray}{gray}{0.9}
+% \definecolor{LightCyan}{rgb}{0.88,1,1}
+% \newcommand{\RN}[1]{\textup{\uppercase\expandafter{\romannumeral#1}}}    
+
+%% Macros comme variable
+%\newcommand{\editorpath}{C:/Program Files/Notepad++/notepad++.exe}
+\newcommand{\exemplepath}{../Exercices}
+\newcommand{\urlcolor}{magenta}  % couleur des liens https
+\newcommand{\filecolor}{cyan} % couleur des liens file: file
+\newcommand{\pdfcolor}{red} % couleur des liens file: .pdf
+\newcommand{\foldercolor}{orange} % couleur des liens file: Folder
+\newcommand{\cscolor}{green!60!black} % couleur des liens file: .cs
+\newcommand{\slncolor}{violet} % couleur des liens file: .sln
+\newcommand{\keycolor}{purple} % couleur des liens  de type mot clefs
+%% Macros commun
+\newcommand{\incode}[1]{{\footnotesize\ttfamily #1}} % pour du pseudo-code simple
+\newcommand{\rem}[2]{\noindent\underline{Remarque} : \textit{#1}.\\ \indent #2}
+\newcommand{\note}[1]{\noindent\underline{Note} : \\ \indent #1}
+\newcommand{\defi}[2]{\noindent\underline{Définition} : \textbf{#1}.\\ \indent #2}
+\newcommand{\slide}[2]{\textbullet ~ Slide n°#1 : \indent #2}
+%% Macro spécifiques à ce fichier (pas forcément) : pour fonctionner il faut que le fichier ai été ouvert diretcement dans le dossier du .tex ...
+\newcommand{\fileref}[2]{\hypersetup{urlcolor=\filecolor}\href{file: #1}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\pdfref}[2]{\hypersetup{urlcolor=\pdfcolor}\href{file: #1.pdf}{#2.pdf}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\csref}[2]{\hypersetup{urlcolor=\cscolor}\href{file:\exemplepath /#1.cs}{#2.cs}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\slnref}[2]{\hypersetup{urlcolor=\slncolor}\href{file:\exemplepath /#1.sln}{#2.sln}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\folderref}[2]{\hypersetup{urlcolor=\foldercolor}\href{file:\exemplepath /#1/.}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyref}[2]{\hypersetup{urlcolor=\keycolor} \href{#1}{\textbf{#2}}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyword}[3]{\noindent\underline{Mot clef} : \keyref{#1}{#2}. \\ \indent #3}
+%% Macro spécifiques à ce fichier (pas forcément)
+\newcommand{\dpat}[7]{
+\noindent \underline{Pattern} : \textbf{#1}, \indent (type : \textit{#2}) \\
+\underline{Description} : \indent #3 \\
+\underline{Exemple} : \indent #4 \\
+\noindent \underline{Avantages} : 
+\begin{itemize}
+ #5
+\end{itemize}
+\noindent \underline{Inconvénients} : 
+\begin{itemize}
+ #6 
+\end{itemize}
+\underline{Liens} : #7 
+}
+
+%% Infos document
+% Titre
+\title{Notes sur le module : \textit{Outils du développeur.}
+% auteur
+\author{Armel Pitelet}
+% date de création du document
+\date{\today}
+
+%% Glossaire, acronymes et index
+\makeglossaries
+
+%% Glossaire et acronyme (déclarations)
+
+% DIP : exemple de formalisme
+\newglossaryentry{gl-dip}{
+name = {DSP},
+description = {la description détaillé}
+}
+\newglossaryentry{ac-dip}{
+type = \acronymtype, name = {DSP}, 
+description = {Nom simple}, 
+first = {Première occurence\glsadd{gl-dip}}, 
+see = [Glossaire:]{gl-dip}
+}
+
+
+\begin{document}
+%% Organisation globale 
+\maketitle
+\tableofcontents
+
+%%--------------------------------------------------------------------------------------------------------------------------------
+%% Contenue 
+\note{ReSharper : pour le refactoring de code en .Net (payant mais craquable) : extension visual studio.}\\
+
+\note{Avant DevOps : Dev --Jalon1----Jalon2---> Release : Obs -----> Produit : client}\\
+
+\note{Obs : partie revue de code, test d'intégration,  infrastructure et déploiement de produit (livraison) voir développement continue avec déploiement intégré tt du long. poste plus technique qu'un chef de projet mais à responsabilité quand même (du fait de la pluparité ``touche à tout'').}\\
+
+\defi{Concept DevOps}{Le Dev fait du Dev et a en même temps une vision plus globale du projet. Le dev se fait par cycle, qui aboutit à une livraison régulière de produit. Le fiat Obs fait à la fois le dev et la livraison du produit (partie Obs).}\\
+
+\section{Azure DevOps}
+
+Il s'agit d'une \textbf{forge logicielle} : outils qui regroupe tt les outils nécessaires au développement d'un projet. Par microsoft, donc intégré à visual Studio et pensé pour du .NET.
+
+\note{Equivalent microsoft de gitlab. (voir \keyref{https://www.atlassian.com/fr/software/jira}{Jira} (par atlassian) également)}\\
+
+\note{Gratuit jusqu'a 5 dev sur un même projet (droit lecture + écriture).}\\
+
+\note{L'approche DevOps consiste à fonctionner en projets mais à réfléchir en produit (donc un projet par produit).}\\
+
+\defi{README}{Docuement interne au code qui donnes des instructions principalement à destinationd es développeur.}\\
+
+La suite liste les remarques et note sur le contenue d'\keyref{https://azure.microsoft.com/fr-fr/services/devops/#overview}{Azure Devops}.
+
+\subsection{Overview}
+
+\rem{Summary}{Doit rester compréhensible par tous, client, dev, et équipe métier (ceux qui traduisent les besoins)...}\\
+
+\rem{Dashboard}{Enesmble de widget (metrics, graphiques,...) princiapelement à destination des clients. Peut inclure le couverture du code (nb de ligne couvertes par les test), analyse du code (propre ou non). Interêt du dashboard : donne une vision globale du projet.}\\
+
+\rem{Wiki}{Donne la doc sur le projet, et/ou des info complémentaire (liens, video, image). Regroupe les ``commentaires'' dans le code qui sont trop gros ou trop important pour y rester.}\\
+
+\subsection{Boards}
+
+``Tableau'' qui regroupe l'organisation du travail.\\
+
+\rem{Work Item}{Regroupe les grandes familles de fonctionnalités à travailler.}\\
+
+\rem{Boards}{Regroupe l'ensemble de ToDo, Doing, Done, de tout le projet (pas juste ceux du sprint en cours, mis dans \textit{Sprint}).}\\
+
+\rem{Backlog}{Ensemble des tickets demandé trié par estimation de temps et interet.}\\
+
+\rem{Sprint}{ToDO, Doing, Done du print en cours (à partir du backlog principale)}
+
+\rem{Querries}{Moyen de faire des requètes pour lister les tickets. Recherche par filtre avancée.}\\
+
+\rem{Delivary Plan}{Ou Plan de Livraison : avec travail à fournir (effort) pour $X$ date (deadline). Attention peut avoir plusieurs sens (technique ou client). }\\
+
+\subsection{Repos}
+
+\defi{Repos}{Stockage du code source.}\\
+
+\rem{Files}{Ensemble des fichiers actuellement présents.}\\
+
+\rem{Commits}{Code mis sur le serveur sur une branche donnée. Etat du code à un moment donné sauvegardé en local.}\\
+
+\rem{Pushes}{Ensemble des commit (de 1 à N). Un push est le fait d'envoyer un ensemble de commit sur le serveur.}\\
+
+\rem{Brnches}{liste les branche disponibles (que l'on peut ranger par dossier). Montre le \textbf{GitFlow} via les Branches (voir schéma papier) :
+\begin{itemize}  
+\item \textbf{Main} : Code de la production. (on met en prod, sa fonctionne, on push dans la main). Durée de vie : projet
+\item \tetbf{Develop} : somme de tout les développement fait et valider (en parralèle de la main dès le début). Durée de vie : projet
+\item \textbf{Feature} : dure le temps d'un ticket (une fonctionnalité). Puis se retrouve merge avec la Develop. But : sa doit aller vite et disparaitre le plus vite possible.
+\end{itemize}
+Dans Main et Develop On ne commit pas mais on fait des \textbf{Pull Request}. Un système d'organisation possible : Task/ et Fix/ (dossier de branches) fonctionnenet en merge request sur le branche Devlop. Le Hotfix (fix rapide prioritaire) est le seul type de branche sur lequel on peut faire du ``code dégueu''. On ne passe par forcément par un système de pull request mais on merge directement dans la merge ou la dévelop. Après le hotfix (pour éteindre le feu), on repasse en générale dessus via une nouvelle branche task pour optimiser.\\
+}
+
+\note{On peut visualiser les branche dans visual studio. Liens sympa à regarder \url{https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens}.}\\
+
+\rem{tags}{Crée sur la main ou la develop (pour préprod). Il s'agit d'un numéro de version (d'une \textit{release}). sur le versioning : exemple : 1.2.3 : majeur.mineur.patch. Permet de naviguer facilement dans l'historique des version du code.}\\
+
+\defi{Pull Request}{Demande que la branche destinatrice \textit{pull} récupère le contenue de la branche demandeuse. C'est un merge mais la branche demandeuse n'est pas automatiquement supprimée.}\\
+
+\rem{Pull request}{de quel branche à quel branche. Titre, description. Optional reviewer : peuvent regarder mais n'ont pas besoind de valider. Required : ceux la ont l'obligation de valider les changement. Work items : tt leq tickets liés au merge. Après le remplissage de la request : les required doivent valider et les conflits doivent être gérés par le développeur qui a fait la pull-request.}\\
+
+\subsection{Pipelines}
+
+Tout ce qui qui gère l'intégration et le déploiment du code (partie Obs). Exécuté automatiquement lors des pulls requests.\\
+
+\defi{CI}{Intégration continue : plusieur sens interne et externe. Externe : analyse de code via des outils par exemple. Interne : exemple : exécution des tests unitaires, si les tests sont valide la pull request est validé, refusée sinon. Lors des pull requests visant le branche develop.}\\
+
+\defi{CD}{Déploiement continue : lancé lors des pull requests visant la main.}\\
+
+\remarque{Sur les Agent}{Suite de procédure à suivre pour l'intégration du code : Restore (restoration du Net Core et récupération des fichiers sources et dépendance (voir artifacts)), build, test, analyse du code, éventuellement publication.}\\
+
+\note{Attention lors dès changement de développement majeur (changement de version) à faire des backups et à bien tester en locale que tt fonctionne avant de faire un changement de version dans le serveur ( lors d'un changement de .Core par exemple).}\\
+
+\note{Sonar (\keyref{https://sonarcloud.io/?gads_campaign=Europe-4-SonarClouds&gads_ad_group=SonarCloud&gads_keyword=sonarcloud&gclid=EAIaIQobChMIsM-P3Zr89AIVe5BoCR05Sg28EAAYASAAEgI_ofD_BwE}{{Sonar Clour}) permet de l'analyse de code. Gratuit au début mais ensuite payant à la ligne de code!!!}\\
+
+\rem{Environnement}{Permet de créer les images nécessaire (virtual machine, server, \keyref{https://fr.wikipedia.org/wiki/Kubernetes}{Kubernetes}...). Les pipeline tourne sur ces environnements.}
+
+\rem{Release}{Stock les différents builds release depuis le début du projet.}\\
+
+\rem{Library}{Définit les variables global du projet[de l'application] (comme dans les fichiers de configde l'application) associées au déploiment d'une version. Ces variables sont définit par environnement (préprod, dev, test).}\\
+
+\rem{Task groups}{}\\
+
+\rem{Deployment groups}{Permet de définir les machines sur lesquels l'applications ont/seront déployées. Automatise le déploiement.}\\
+
+\note{Prendre des infos sur \keyref{https://fr.wikipedia.org/wiki/Docker_(logiciel)}{Docker}.}\\
+
+\subsection{Test plans}
+
+Les plans de tests de type tests utilisateur (Use case). Est préférablement mis en place par la partie métier.\\
+
+\note{Attention : partie payante de AzureDevOps.}\\
+
+\note{Il faudra quand même utiliser des bibliothèques de test en Visual Studio.}\\
+
+\subsection{Artifacts}
+
+Permet de créer proprement des dépendances commune au projet (des .dll). \\
+
+\note{On évite à tt pris les copier coller de solution en solution.}\\
+
+\note{On peut aussi faire des références dans VS, bien mais à des inconvénients (chemin relatif aux machines, obligation de recompiler les solutions référencé).}\\
+
+Le principe des artifacts est de récupérer des solutions ailleurs (machine, distant ou internet), de les stocker, les mettre à jour et les recompiler. On fait ensuite référence directement à l'artifact.
+
+
+\subsection{Divers}
+
+\defi{API}{``Application Programming Interface'' : ensemble de définitions et de protocoles qui facilite la création et l'intégration de logiciels d'applications.}\\
+
+\rem{Docker}{Permet de simuler, partager et déployer des environnements (Un genre de machine virtuelle mais en cloud).}\\
+
+
+
+
+%%--------------------------------------------------------------------------------------------------------------------------------1
+%% Glossaires
+\newpage
+\printglossary[type=\acronymtype]%\addcontentsline{toc}{chapter}{Acronymes}
+%\glsaddall% force l'apparition de tt les entrées du glossaire
+\glsaddallunused % meme chose que addall mais ne force pas la numéroattion dans la liste d'acronyme
+%\printunsrtglossary[type=main]
+\printglossary[type = main,nonumberlist]%\addcontentsline{toc}{chapter}{Glossaire}
+
+\end{document}
+\end{document}

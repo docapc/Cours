@@ -1,0 +1,619 @@
+%\listfiles
+\documentclass[a4paper,12pt,twoside]{article}
+
+%% packages
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,mathrsfs} 
+%\usepackage{import}
+\usepackage{float, subfig, caption}
+\usepackage{libertine}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{xcolor} %/ pour \Definecolor
+\usepackage[pdftex,final=true]{hyperref}
+%\usepackage[]{hyperref}
+\hypersetup{
+colorlinks=true,
+linkcolor=blue,
+urlcolor=magenta, %/ file: adopte également cette couleur
+filecolor=cyan, % ne fonctionne qu'avec run:, 
+%citecolor=red
+}
+\urlstyle{same}
+\usepackage[french]{minitoc}
+\usepackage[acronym,toc,automake]{glossaries} % acronym pour les acronymes et toc pour inclusion des glossary dans la table des matières
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+%\usepackage{minted} % pour code avec coloration dans le texte
+\usepackage{url} % Pour avoir de belles url
+%% package ticks spécifiquement (pour les schémas) 
+%\usepackage{tikz}%
+%\usepackage[top=2cm,bottom=2cm]{geometry}
+%% paramètres tikz
+%\usetikzlibrary{patterns,decorations.pathreplacing,shapes.misc}
+%\usetikzlibrary{calc}
+%\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+%cross/.default={5pt}}
+% \definecolor{Gray}{gray}{0.9}
+% \definecolor{LightCyan}{rgb}{0.88,1,1}
+% \newcommand{\RN}[1]{\textup{\uppercase\expandafter{\romannumeral#1}}}    
+
+%% Macros comme variable
+%\newcommand{\editorpath}{C:/Program Files/Notepad++/notepad++.exe}
+\newcommand{\exemplepath}{../Exercices}
+\newcommand{\urlcolor}{magenta}  % couleur des liens https
+\newcommand{\filecolor}{cyan} % couleur des liens file: file
+\newcommand{\pdfcolor}{red} % couleur des liens file: .pdf
+\newcommand{\foldercolor}{orange} % couleur des liens file: Folder
+\newcommand{\cscolor}{green!60!black} % couleur des liens file: .cs
+\newcommand{\slncolor}{violet} % couleur des liens file: .sln
+\newcommand{\keycolor}{purple} % couleur des liens  de type mot clefs
+%% Macros commun
+\newcommand{\incode}[1]{{\footnotesize\ttfamily #1}} % pour du pseudo-code simple
+\newcommand{\rem}[2]{\noindent\underline{Remarque} : \textit{#1}.\\ \indent #2}
+\newcommand{\note}[1]{\noindent\underline{Note} : \\ \indent #1}
+\newcommand{\defi}[2]{\noindent\underline{Définition} : \textbf{#1}.\\ \indent #2}
+\newcommand{\slide}[2]{\textbullet ~ Slide n°#1 : \indent #2}
+%% Macro spécifiques à ce fichier (pas forcément) : pour fonctionner il faut que le fichier ai été ouvert diretcement dans le dossier du .tex ...
+\newcommand{\fileref}[2]{\hypersetup{urlcolor=\filecolor}\href{file: #1}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\pdfref}[2]{\hypersetup{urlcolor=\pdfcolor}\href{file: #1.pdf}{#2.pdf}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\csref}[2]{\hypersetup{urlcolor=\cscolor}\href{file:\exemplepath /#1.cs}{#2.cs}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\slnref}[2]{\hypersetup{urlcolor=\slncolor}\href{file:\exemplepath /#1.sln}{#2.sln}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\folderref}[2]{\hypersetup{urlcolor=\foldercolor}\href{file:\exemplepath /#1/.}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyref}[2]{\hypersetup{urlcolor=\keycolor} \href{#1}{\textbf{#2}}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyword}[3]{\noindent\underline{Mot clef} : \keyref{#1}{#2}. \\ \indent #3}
+%% Macro spécifiques à ce fichier (pas forcément)
+\newcommand{\dpat}[7]{
+\noindent \underline{Pattern} : \textbf{#1}, \indent (type : \textit{#2}) \\
+\underline{Description} : \indent #3 \\
+\underline{Exemple} : \indent #4 \\
+\noindent \underline{Avantages} : 
+\begin{itemize}
+ #5
+\end{itemize}
+\noindent \underline{Inconvénients} : 
+\begin{itemize}
+ #6 
+\end{itemize}
+\underline{Liens} : #7 
+}
+
+%% Infos document
+% Titre
+\title{Notes sur le module : \textit{Architecture .NET \& C \#}}
+% auteur
+\author{Armel Pitelet}
+% date de création du document
+\date{\today}
+
+%% Glossaire, acronymes et index
+\makeglossaries
+
+%% Glossaire et acronyme (déclarations)
+% SOLID
+\newglossaryentry{gl-solid}{
+name = {SOLID},
+description = {Ensemble de principes dont le but est de rendre le code moins bugué, plus facile à lire, plus logique, plus facilement maintenable, testable et extensible. C'est un guide de bonnes pratiques. Liens utiles:\\ 
+\url{https://github.com/harrymt/SOLID-principles}, \\ \url{https://www.c-sharpcorner.com/UploadFile/damubetha/solid-principles-in-C-Sharp/}, \\ \url{https://www.c-sharpcorner.com/article/solid-principles-in-c-sharp-interface-segregation-principle/}, \\ \url{https://williamdurand.fr/2013/07/30/from-stupid-to-solid-code/}.}
+}
+% SRP
+\newglossaryentry{gl-srp}{
+name = {SRP},
+description = {Le \textit{Single Responsibility Principle} (SRP) est le S de \gls{gl-solid}. Une classe ne devrait avoir qu'une seul tâche. Lien utile : \\ \url{https://www.c-sharpcorner.com/article/solid-single-responsibility-principle-with-c-sharp/}}
+}
+\newglossaryentry{ac-srp}{
+type = \acronymtype, name = {SRP}, 
+description = {\textit{Single Responsibility Principle} (Principe de responsabilité unique)}, 
+first = {Single Responsibility Principle (SRP)\glsadd{gl-srp}}, 
+see = [Glossaire:]{gl-srp}
+}
+% OCP
+\newglossaryentry{gl-ocp}{
+name = {OPC},
+description = {L'\textit{Open Close Principle} (OCP) est le O de \gls{gl-solid}. Une entité logicielle (classe, méthodes, fonctions, ...) devrait être ouverte à l'extension mais fermé à la modification. On devrait pouvoir étendre l'implémentation sans toucher à la logique de cette dernière (via héritage par exemple). Lien utile : \url{https://www.c-sharpcorner.com/UploadFile/pranayamr/open-close-principle/}}
+}
+\newglossaryentry{ac-ocp}{
+type = \acronymtype, name = {OCP}, 
+description = {\textit{Open Close Principle} (Principe d'ouverture et de fermeture)}, 
+first = {Open Close Principle (OCP)\glsadd{gl-ocp}}, 
+see = [Glossaire:]{gl-ocp}
+}
+% LSP
+\newglossaryentry{gl-lsp}{
+name = {LSP},
+description = {\textit{Liskov Substitution Principle} (LSP) est le L de \gls{gl-solid}. Une classe fille devrait pouvoir se substituer à une classe mère sans affecter le résultat que l'on attend de l'instance de la classe mère. On ne doit pas altérer la réaction d'une famille de classe. Lien utile : \url{https://www.c-sharpcorner.com/article/solid-principles-in-c-sharp-liskov-substitution-principle/}}
+}
+\newglossaryentry{ac-lsp}{
+type = \acronymtype, name = {LSP}, 
+description = {\textit{Liskov Subtitution Principle} (Principe de substitution de Liskov)}, 
+first = {Liskov Substitution Principle (LSP)\glsadd{gl-lsp}}, 
+see = [Glossaire:]{gl-lsp}
+}
+% ISP
+\newglossaryentry{gl-isp}{
+name = {ISP},
+description = {L'\textit{Interface Segregation Principle} (ISP) est le I de \gls{gl-solid}. Aucun clients ne devrait avoir à implémenter des méthodes / fonctions qu'ils n'utilisent pas. Plus précisément une classe ne doit pas avoir à être implémenté avec une interface qu'elle n'utilise pas. Lien utile : \url{https://www.c-sharpcorner.com/article/solid-principles-in-c-sharp-interface-segregation-principle/}}
+}
+\newglossaryentry{ac-isp}{
+type = \acronymtype, name = {ISP}, 
+description = {\textit{Interface Segregation Principle} (Principe de substitution de Liskov)}, 
+first = {Interface Segregation (ISP)\glsadd{gl-lsp}}, 
+see = [Glossaire:]{gl-lsp}
+}
+% DIP
+\newglossaryentry{gl-dip}{
+name = {DSP},
+description = {Le \textit{Dependancy Inversion Principle} (DIP) est de D de \gls{gl-solid}. Une classe doit dépendre de son abstraction, pas de son implémentation. Il est préférable d'injecter une dépendance par le constructeur plutôt que d'utiliser une dépendance directement ``hardcodée'' dans un attribut ou une méthode. Ou encore, une classe de haut niveau (qui manage des classe de bas niveaux pour des taches complexe) ne doit pas dépendre d'une classe de plus bas niveau(qui effectue les actions les plus simples). Elles doivent dépendre toutes les deux de leur abstraction. De plus, une abstraction ne doit pas dépendre de ses détails d'implémentation mais les détails d'implémentation doivent dépendre de d'abstractions. Lien utile \url{https://www.c-sharpcorner.com/article/solid-principles-in-c-sharp-dependency-inversion-principle/}}
+}
+\newglossaryentry{ac-dip}{
+type = \acronymtype, name = {DSP}, 
+description = {\textit{Dependancy Inversion Principle} (Principe d'inversion de dépendance)}, 
+first = {Dependancy Inversion Principle (DSP)\glsadd{gl-dip}}, 
+see = [Glossaire:]{gl-dip}
+}
+% DP
+\newglossaryentry{gl-dp}{
+name = {DP},
+description = {Un \textit{Design Pattern} (DP) est ... Liens utile : \\ \url{https://www.goprod.bouhours.net/}, \\
+\url{https://refactoring.guru/design-patterns/catalog}}
+}
+\newglossaryentry{ac-dp}{
+type = \acronymtype, name = {DP}, 
+description = {\textit{Design Pattern} (Patron de Conception)}, 
+first = {Design Pattern (DP)\glsadd{gl-dp}}, 
+see = [Glossaire:]{gl-dp}
+}
+
+
+\begin{document}
+%% Organisation globale 
+\maketitle
+\tableofcontents
+% \href{run:./test.txt}{hello},\href{run:test.txt}{hello}, // ne fonctionne pâs avec run:...
+%  \href{file:./test.cs}{hello}, % fonctionne
+%  \href{test.cs}{hello}, % fonctionne
+%  \href{./.}{hello}, % fonctione mais ne met pas le dossier en avant
+%  \href{file:./.}{hello}, % fonctionne  
+%	\href{file://C:/Program Files/Notepad++/notepad++.exe "./test.cs"}{tt} % ne fonctionne pas
+\newpage
+
+Fichier de cours correspondant : % \pdfref{../Cours/POEC\_Architecture}{POEC\_Architecture}
+\href{run:../Cours/POEC\_Architecture.pdf}{POEC\_Architecture.pdf} % run fichier distant fonctionne avec sumùatra
+%\href{file:../Cours/POEC\_Architecture.pdf}{POEC} % fonctionne avec sumùatra
+%\pdfref{../Cours/POEC\_Architecture}{POEC\_Architecture} % ne foncitonne pas avec sumùatra
+% Exemple pour la coloration
+%\csref{Facade/Facade/Program}{Fichier}, 
+%\slnref{Facade/Facade}{Solution}, 
+%\folderref{Facade}{Dossier}, 
+%%--------------------------------------------------------------------------------------------------------------------------------
+%% Contenue 
+\section{Sur .Net}
+
+\Note{\textbf{Il faut passer à visual studio 2022 pour tuiliser le framework .Net6.0}}\\
+
+\note{\keyref{https://fr.wikipedia.org/wiki/Microsoft\_.NET}{.Net} est un framework : qui ne gère pas que le C\#. On par exemple F\# qui fait de la programmation fonctionnelle. On a VBNet (Visual Basic sur le framework .Net). On a Q\# : programmation quantique (c'est pas une blague : basé sur le \keyref{https://fr.wikipedia.org/wiki/Particule_de_Majorana}{fermion de Majorana}). Tous ceux la sont géré par Microsoft mais Visual Studio gère aussi d'autre languages (C, C$++$), JavaScript, TypeScript (superset de JavaScript).}\\
+
+\rem{Sur la programmation fonctionnelle}{Point fort : imutabilité sur tout les objets.}\\
+
+Il existe aujourd'hui deux gros morceaux au .Net (plus une nouvelle en cours qui sera remplacé par .Net) : 
+\begin{itemize}
+\item \keyref{https://fr.wikipedia.org/wiki/.NET\_Framework}{.Net framework} (legacy : l'ancien framework) $\to$ Windows uniquement.
+\item \keyref{https://fr.wikipedia.org/wiki/.NET\_Core}{.Net Core} (Aujourd'hui simplement appelé .Net) $\to$ Linux (voir Note), Mac, Windows. $+$ IOS, Android en cours d'intégration via MAUI.
+\item Mono (implémentation libre crée à la base pour Linux). Avec Xamarin par dessus pour les applis mobile IOS, Android.\\
+\end{itemize}
+.Net framework ou Core permet de faire cu client lourd et du client Web. Les autres framework WPF, WCF viennent ensuite se rajouter par dessus le framework .Net. 
+
+\note{Linux est un cas un peu à part. A cause de la fragmentation inhérente de toutes les librairies, rien n'est garantie. .Net Core permet de faire la console mais pour les applis graphiques c'est beaucoup plus compliqué.}\\
+
+\note{.Net (Core) est \textit{sideloadé} cad qu'il est directement inclues dans les applications qu'il a permit de concevoir. On a donc un framework par application (car la place n'est plus un problème). Cela permet d'éviter les problèmes de dépendances entre différentes version du framework .Net (dans le cas ou il n'est pas \textit{sideloadé}).}\\
+
+\defi{LTS}{Long Term Support : support long terme = sécurité. Vien après le support actif : qui gère les bugs au début. Attention s'engager sur une version non LTS c'est s'engager à migrer le code vers les version supérieures LTS à un moment donné.}\\
+
+\note{partir sur .Net 6 : donc installer visual studio 2022.}
+
+\section{Sur l'architecture}
+
+\defi{Arhitecture logiciel}{
+Décrit d’une manière symbolique et schématique les différents éléments d’un ou de plusieurs systèmes informatiques, leurs interrelations et leurs interactions. Contrairement aux spécifications produites par l’analyse fonctionnelle, le modèle d'architecture, produit lors de la phase de conception, ne décrit pas ce que doit réaliser un système informatique mais plutôt comment il doit être conçu de manière à répondre aux spécifications. L’analyse décrit le « quoi faire » alors que l’architecture décrit le ``comment le faire''.}
+
+%--------------------------------------------------------------------------------------------------------------------------------
+\section{Principes \gls{gl-solid}}
+Voir directement \gls{gl-solid} pour la définition et l'intérêt.\\
+
+\slide{7}{Un code ne respectant pas le \gls{ac-srp} se repère aux commentaires du type, dans ce cas, sauf si, sauf quand, ou... Le fractionnement des responsabilité permet une meilleur maintenabilité. Le nom de la classe doit donner la responsabilité de cette dernière afin de rendre le code plus lisible.
+}\\ 
+
+\slide{8}{Pour respecter l'\gls{ac-ocp} il faut éviter de faire des conditions particulières. Il faut par exemple éviter de spécifier du code par type. Il est préférable d'utiliser l'héritage pour rajouter un comportement différent. Il vaut mieux remplacer les \incode{if}/\incode{switch} (en fonction d'un type) par de l'héritage.
+}\\ 
+
+\slide{9}{Pour respecter le \gls{ac-lsp} il faut que les classes d'un sous types (hérité d'un parent) aient le même comportement que le parent. Plus précisément on ne doit pas altérer la réaction d'une classe (un ajout doit rester un ajout, et ne pas lever une exception par exemple).
+}\\
+
+\slide{10}{Pour respecter le \gls{ac-isp} il ne faut pas implémenter des fonctionnalités que l'on ne souhaite pas utiliser. Il vaut mieux séparer (ségréger).
+}\\
+
+\slide{11}{Pour respecter le \gls{ac-dip} il vaut mieux éviter les couplage fort entre les classes. Il est préférable d'injecter une dépendance par le constructeur plutôt que d'utiliser une dépendance directement ``hardcodée''. Cela mène à un couplage faible. 
+} \\
+
+\rem{Sur le DdC}{Il va falloir sérieusement repenser le DdC pour respecter ces principes (se renseigner sur la modélisation des interfaces)}
+
+%--------------------------------------------------------------------------------------------------------------------------------
+\section{Sur les \gls{ac-dp}}
+
+\subsection{Définitions}
+
+\defi{Patrons de conception}{Solutions classiques à des problèmes récurrents de la conception de logiciels. Chaque patron est une sorte de plan ou de schéma que l'on peut personnaliser afin de résoudre un problème récurrent dans votre code. Il en existe trois types :
+\begin{itemize}
+ \item \textbf{Création} : qui fournit des mécanismes de création d'objets, ce qui augmente la flexibilité et la réutilisation du code.
+ \item \textbf{Structurel} : qui explique comment assembler des objets et des classes en de plus grandes structures, tout en les gardant flexibles et efficaces.
+ \item \textbf{Comportemental} : qui met en place une communication efficace et répartit les responsabilités entre les objets.\\
+\end{itemize}
+}
+
+\defi{Anti-patron}{Ou \textit{antipattern} est une erreur courante de conception. Il apparait quand un \gls{ac-dp} est mal utilisé, entrainant lenteur exccessive, maintenance élevé, comportements anormaux et bugs. Voir : \url{https://fr.wikipedia.org/wiki/
+Antipattern}.} 
+
+\subsection{Liste des \gls{ac-dp} vues en cours}
+
+\dpat{Singleton}
+{Création}
+{Garantie que l'instance d'une classe n'existe qu'en un seul exemplaire, tout en fournissant un point d'accès global à cette instance.}
+{\folderref{Singleton}{Singleton} $\to$ \slnref{Singleton/Singleton}{Singleton} : \indent \csref{Singleton/Singleton/Program}{Program}}
+{\item Garantie l'unicité d'une instance de classe. 
+\item Fournit un point d'accès global à cette instance.
+\item L'instance est uniquement initialisée la première fois qu'elle est appelée.}
+{\item Ne respecte pas le \gls{ac-srp} car il résout deux problèmes à la fois.
+\item Peut masquer une mauvaise conception.
+\item Doit bénéficier d'un traitement spécial pour fonctionner correctement en multithread. Sans, c'est un \textit{antipattern} puisqu'il est alors possible de créer plusieurs instances.
+\item Difficile à tester par conception car ne permet pas l'héritage (utilisé dans de nombreux frameworks de test.)}
+{\url{https://refactoring.guru/fr/design-patterns/singleton}, \\ \url{https://www.goprod.bouhours.net/?page=pattern&pat_id=19}.} \\
+
+\dpat{Facade}
+{Structurel}
+{Procure une interface unifié à un ensemble d'interfaces dans un sous système pour un accès simplifié à une librairie, un framework ou n'importe quel ensemble complexe de classe. Cela permet de masquer la complexité d'un système (comme une bibliothèque) tout en fournissant un point d'entré dans ce dernier. On peut par exemple déléguer les échanges avec une base de donnée à une Façade.}
+{\folderref{Facade}{Facade} $\to$ \slnref{Facade/Facade}{Facade} : \indent \csref{Facade/Facade/Program}{Program}, \csref{Facade/MonPackage/DataAccess}{DataAccess}, \csref{Facade/MonPackage/Facade}{Facade}, \csref{Facade/MonPackage/Subsys}{SubSys}.}
+{\item Permet d'isoler son code de la complexité d'un sous système.} 
+{\item Peut devenir un objet \href{https://fr.wikipedia.org/wiki/God_object}{omniscient} (\textit{antipattern}) qui reconnait ou fait trop de chose, ce qui viole le \gls{ac-srp}.
+\item Peut réduire les fonctionnalité de la librairi masqué par rapport à une utilisation direct de cette dernière.}
+{\url{https://refactoring.guru/fr/design-patterns/facade}, \\ \url{https://www.goprod.bouhours.net/?page=pattern&pat_id=9}.}\\
+
+\rem{Sur la façade}{il faut mettre la façade en \incode{public} et les sous systèmes de cette façade en visibilité \incode{internal}. De cette manière seule la façade a accès à ses sous systèmes.}\\
+
+\note{Pour utiliser \incode{internal} il faut placer la facade et ses sous systèmes dans un nouveau projet de type bibliothèque de classe (voir la différence dans les .csproj) sinon les fichiers sont considérés dans le même package ce qui tue l'intêret du \incode{internal}.}\\
+
+\dpat{Strategy}
+{Comportemental}
+{Définit une famille d'algorithmes, les encapsules et les rends interchangeables. Cela permet de faire varier le comportement exact d'un algorithm indépendamment de l'utilisateur.}
+{\folderref{ExempleStrategy}{ExempleStrategy} $\to$ \slnref{ExempleStrategy/ExempleStrategy}{ExempleStrategy} : \indent \csref{ExempleStrategy/ExempleStrategy/Program}{Program}, \csref{ExempleStrategy/ExempleStrategy/IRouteStrategy}{IRouteStrategy}, \csref{ExempleStrategy/ExempleStrategy/Navigator}{Navigator}, \csref{ExempleStrategy/ExempleStrategy/RoadStrategy}{RoadStrategy}, \csref{ExempleStrategy/ExempleStrategy/WalkingStrategy}{WalkingStrategy}.}
+{\item Permet de permuter un algorithme utilisé dans un objet à l'exécution.
+\item Sépare les détail d'implémentation d'un algorithme du code qui l'utilise. 
+\item Permet de remplacer l'héritage par de la composition.
+\item Respecte l'\gls{ac-ocp} ce qui permet d'ajouter de nouvelles stratégies sans avoir à modifier le contexte.}
+{\item Rend le programme plus complexe en raison du nombre de classe (devant respecter une interface) accompagnant le patron (encombre le code avec des classes et interfaces supplémentaires).
+\item C'est à l'utilisateur de comparer les stratégies pour choisir la bonne.}
+{\url{https://refactoring.guru/fr/design-patterns/strategy}, \\ \url{https://www.goprod.bouhours.net/?page=pattern&pat_id=21}.}\\
+
+\rem{Sur la Stratégie}{La classe utilisable par le client possède une interface qui définit les algorithmes utilisables. C'est cette même classe qui utilise les algorithmes mais le client doit avoir accès aux différents algorithmes pour les passer à la classe utilisable.}\\
+
+\dpat{Factory}
+{Création}
+{Définit une interface pour créer des objets dans une classe mère mais délègue le choix des types d'objets à créer aux sous classe. La création d'objets (produits) n’est cependant pas la responsabilité principale du créateur (la factory). La classe créateur a en général déjà un fonctionnement propre lié à la nature de ses produits. La fabrique aide à découpler cette logique des produits concrets.}
+{\folderref{Factory}{Factory} $\to$ \slnref{Factory/FactoryExemple}{FactoryExemple} : \indent \csref{Factory/FactoryExermple/Program}{Program}, \csref{Factory/FactoryExemple/IInstrument}{IInstrument}, \csref{Factory/FactoryExemple/Piano}{Piano}, \csref{Factory/FactoryExemple/PianoFactory}{PianoFactory}}
+{\item Permet de séparer la création d'un objet de cet objet.
+\item Respecte le \gls{ac-srp}. On peut déplacer tout le code de création d'un objet au même endroit ce qui assure une meilleure maintenabilité.
+\item Respecte l'\gls{ac-ocp} puisque l'on peut ajouter de nouveaux types de produit sans modifier les produits existants.}
+{\item Introduit de nombreuses sous classes. Interessant uniquement si l'on a déjà une hiérarchie dans la création des classes.}
+{\url{https://refactoring.guru/fr/design-patterns/factory-method}, \\ \url{https://www.goprod.bouhours.net/?page=pattern&pat_id=10}.} \\
+
+\rem{Sur la Fabrique}{La classe de création utilise une interface qui définit les sous classe à créer. La classe de création parent doit être abstraite et c'est aux sous classes de création d'instancier les objets qui doivent respecter le contrat définit par l'interface portée dans la classe de création parent.}
+
+% Template DP
+%\dpat{}
+%{}
+%{}
+%{}
+%{\item}
+%{\item}
+%{}
+
+%--------------------------------------------------------------------------------------------------------------------------------
+\section{Sur le C\#}
+
+\subsection{Mots clefs et définitions}
+
+Pour des exemples de code voir : 
+\begin{itemize}
+ \item \folderref{BasesCSharp}{BaseCSharp} $\to$ \slnref{BasesCSharp/BasesCSharp}{BaseCSharp}, 
+ \item \folderref{Exceptions}{Exceptions} $\to$ \slnref{Exceptions/Exceptions}{Exceptions}, 
+ \item \folderref{Heritage}{Heritage} $\to$ \slnref{Heritage/Heritage}{Heritage}.\\
+\end{itemize}
+
+\defi{Type valeur}{Les principaux type valeurs sont les type primitifs (\textit{built-in}) comme les \incode{int} ou \incode{string}. Un type valeur est soit un type \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/builtin-types/struct}{structures}, qui encapsule les données et les fonctionnalités associées, soit un type \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/builtin-types/enum}{énumération}, qui est défini par un ensemble de constantes nommées et qui représente un choix ou une combinaison de choix . Avec les types valeur, chaque variable a sa propre copie des données et les opérations sur une variable ne peuvent pas affecter l’autre car un type valeur contient directement la donnée et pas une référence vers cette donnée. 
+Lien : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/builtin-types/value-types}}\\
+
+\rem{Sur les types valeur}{Par convention ils commencent par une minuscule. Laz valeur par défaut d'un type valeur dépend du type en question.}\\
+
+\defi{Type reference}{Les variables de type \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/reference-types}{référence} font référence à leurs données (objets), elles pointent vers la donnée et ne la contiennent pas directement. Ce qui n'est pas de type valeur est de type référence. Les opérations sur une variable peuvent affecter le même objet référencé par une autre variable. Lien : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/reference-types}}\\
+
+\rem{Sur les types références}{Par convention ils commencent par une majuscule. Par défaut un type référence à la valeur nulle. Les classes créées sont de type référence.}\\
+
+\rem{Sur l'opérateur de comparaison ``$==$''}{Il compare par défaut la référence pointé pour les type référence et la valeur sur les types valeurs.}\\
+
+\defi{Propriété}{Champ (membre) d'une classe accessible et modifiable via \incode{getter} et \incode{setter}. C'est en fait une méthode spéciales appelées \textit{accesseur}. Une propriété est dit automatique si elle n'est pas lié à un attribut. Une propriété est dite calculé si sa définition inclue une opération. Une telle propriété n'a pas de \incode{setter}. Elle n'a pas de valeur en soit mais est directement calculé à partir d'une autre (propriété). Lien : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/classes-and-structs/properties}.}\\
+
+\rem{Sur le nommage des propriétés}{Par convention on nomme les Propriétés avec une majuscule au début (contrairement aux attributs qui commencent par ``\_'' ou bien \incode{m\_attribut} à la C$++$).}\\
+
+\rem{Sur les propriétés}{On peut faire une propriété en \incode{readonly} en ne mettant juste pas le setter! Il faut alors initialiser la propriété dans sa déclaration (pas certain sa).}\\
+
+\rem{Sur les propriétés}{On peut faire des propriété qui se base sur un attribut.}\\
+
+\rem{Sur les object initializers et les propriétés}{L'utilisation des \textit{initializers} (via les \{ Prop = ... \} au lieu de ()) passe par les propiétés et pas par le constructeur pour initialiser une instance de classe! Lien : https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers}\\
+
+\defi{Polymorphisme}{Le fait de pouvoir utiliser des objets de la même manière mais le comportement de ces objets est différents (les appels de méthodes sont identiques [signature identique] mais le résultats de ces appels est différent. L'implémentation de ces méthodes est différentes malgré une signature identique.) Plusieurs formes pour un même type d'objet (en fonction du sous type). Permet de traiter des éléments d'implémentation différentes de la même manière.  Lien : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/fundamentals/object-oriented/polymorphism}.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/interface}{interface}{Une interface est un ensemble de prototypes (déclaration sans définition) qui définie un contrat. Toute classes qui implémente ce contrat doit fournir une implémentation des membres définie dans l'interface. Une interface est instanciable, ce qui permet le polymorphisme (pour stocker un ensemble d'objet de type différents mais respectant tous la même interface).}\\
+
+\rem{Sur les interfaces}{Par convention une interface se note avec un I majuscule : IMonInterface.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/abstract}{abstract}{Modificateur qui indique que l'élément en cours de modification a une implémentation manquante ou incomplète. On ne peut définir un membre abstrait que dans une classe abstraire, qui peut posséder des membres abstrait et non-abstraits. Une classe abstraite n'est pas instanciable. Les membres définis comme abstraits doivent être implémentés par des classes non abstraites dérivées de la classe abstraite.} \\
+
+\rem{Sur l'héritage des classes abstraites}{Une classe abstraite peut hériter d'une classe abstraite.}\\
+
+\rem{Sur l'abstraction en UML}{Dans un diagramme de classe une classe abstraite est représentée par un nom de classe en \textit{italique}.} \\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/sealed}{sealed}{Modificateur qui permet de marquer une classe comme ``final'' dans une chaine d'héritage. Mutuellement exclusive avec \incode{abstract}.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/virtual}{virtual}{Modificateur de méthode, propriété ou attribut. Permet la substitution du champ dans les classes dérivées (via \incode{override}).}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/override}{override}{Modificateur qui indique la surcharge par un enfant d'un champ du parent marqué comme \incode{abstract} ou \incode{virtual}.}\\
+
+\rem{Sur l'appellation surcharge}{La surcharge est à à la fois le remplacement d'une méthode mère par une méthode fille via virtual et override (la signature de la fonction ne doit pas changer pour effectuer une surcharge) et le fait de redéfinir une fonction pour lui faire accepter différent type d'argument (la signature change).}\\
+
+\defi{signature}{la signature (ou prototype) d'une méthode se compose de son nom, son type de retour, les types de ses arguments et sa visibilité.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/base}{base}{Permet d'accéder aux membre de la classe parent à partir d'une classe dérivé. On peut s'en servir pour appeler le constructeur de la classe mère dans la classe fille. Si la classe mère a un constructeur qui n'est pas par défaut, il est obligatoire d'appeler explicitement le constructeur de la classe Mère dans celui de la classe fille.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/this}{this}{Permet de faire référeence à l'instance actuelle de la classe en cours (l'objet en cours lors de l'appel). Peut également être utilisé comme modificateur du premier paramètre d’une méthode d’extension.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/internal}{internal}{Visibilitée liée au package (donc ni privé, public ou protected). On ne peut pas accéder à ces sous systèmes en dehors du package mais toutes les classe du package voient les classes \incode{internal} comme si elle étaient \incode{public}.}\\
+
+\rem{Sur la visibilité par défaut d'une classe}{Par défaut une classe est en visibilité \incode{internal}.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/static}{static}{Modificateur qui rend une classe ou un membre statique. Une classe \incode{static} n'est pas instanciable. Le compilateur force alors le caractère static de tt les attributs, méthodes et propriétés. Un membre \incode{static} est partagé entre toutes les instances d'une classe.}\\
+
+\rem{Sur les membres statiques}{Un membre d'une classe non-statique peut être statique. On parle alors de \textit{membre de classe}}.\\
+
+\defi{Muable/Immuable}{Un objet immuable (\textit{immutable}) n'est pas modifiable après sa construction contrairement à un objet muable (\textit{mutable}). C'est une propriété \textit{runtime}. Différence avec constante : un objet imuable l'est au \textit{runtime} et pas à la compilation (\textit{compiltime}).}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/const}{const}{Permet de déclarer un champ ou un élément local comme constant. C'est une propriété \textit{compiltime}, il faut donc que les variables marqués \incode{const} soit intialisées à leur création (à leur déclaration qui doit être une définition).}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/readonly}{readonly}{Notion similaire à \incode{const} mais \textit{runtime}. L’assignation au champ peut uniquement se produire dans le cadre de la déclaration ou dans un constructeur de la même classe. Un champ en lecture seule peut être affecté et réaffecté plusieurs fois dans la déclaration de champ et le constructeur. Voir : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/readonly} pour le détail exact et les autres cas d'utilisation.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/operators/is}{is}{Opérateur qui vérifie si le résultat d'une opération est compatible avec un type donné. \incode{is} renvoie un boléen si la convertion est possible et peut également réaliser une affectation. Il est aussi utilisé pour faire correspondre une expression à un \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/operators/patterns\#property-pattern}{modèle de propriété}. Voir aussi : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/operators/type-testing-and-cast\#is-operator}.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/operators/type-testing-and-cast\#as-operator}{as}{L’opérateur \incode{as} convertit explicitement le résultat d’une expression en un type de valeur de référence ou nullable. Si la conversion n’est pas possible, l'\incode{as} opérateur retourne \incode{null}. Contrairement à une expression de \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/operators/type-testing-and-cast\#cast-expression}{cast}, l'\incode{as} opérateur ne lève jamais d’exception.}\\
+
+\rem{Sur \incode{is} et \incode{as}}{Ces deux opérateurs sont utilisés pour la conversion de type référence(De ce que j'ai compris essentiellement pour de la conversion dans une chaine d'héritage).}\\
+
+\rem{Sur la conversion de types valeur}{Pour convertir les types valeur on utilise les méthodes \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.int32.parse?view=net-6.0}{Parse} et \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.int32.tryparse?view=net-6.0}{TryParse}. Le \incode{Parse} lève une erreur en cas d'impossibilité de conversion alors que la version \incode{TryParse} prend un argument supplémentaire (par référence) dans lequel mettre le résultat de la conversion. En cas d'impossibilité, \incode{TryParse} ne lève pas d'erreur. Le \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/operators/type-testing-and-cast\#cast-expression}{cast} peut aussi fonctionner (vraiment un truc à creuser). Voir aussi les \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/language-specification/conversions\#explicit-conversions}{conversions explicites}.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/ref}{ref}{Permet d'indiquer un passage par référence. \incode{ref} force l'initialisation d'une variable avant son passage contrairement à \incode{out}. Pour les multiples cas d'utilisation voir : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/ref}.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/out-parameter-modifier}{out}{Permet d'indiquer un passage par référence. \incode{out} force la non initialisation d'une variable avant son passage contrairement à \incode{ref}.}\\
+
+\rem{Sur \incode{ref} et \incode{out}}{Permettent les passages par référence. Ils ne sont utilisable que sur les variables et pas les \textit{literals}. Attention le concept de passage par référence est différent du concept des types référence et type valeurs. On peut passer des types valeurs par référence!}\\
+
+\rem{Sur l'utilisation de \incode{ref} et \incode{out}}{Attention \incode{ref} et \incode{out} doivent être déclarés à la fois dans la déclaration des arguments (lors de la définition/déclaration) et lors de l'appel des méthodes!}\\
+
+\note{\keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/in-generic-modifier}{in} à également l'air d'être impliqué dans les passages par référence. Il sert aussi dans les \incode{foreach}. \incode{in} et \incode{out} sont impliqués dans les notions de covariance et contravariance (voir \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/concepts/covariance-contravariance/} : la covariance et la contravariance permettent la conversion de références implicite pour les types tableau).}\\
+
+\defi{Encapsulation}{Le fait de masquer l'état interne et les fonctionnalités d'un objet pour autoriser l'accès uniquement via un ensemble de fonctions déclarées \incode{public}. L'idée est d'éviter la modification intempestive du code et d'exposer une interface simple d'utilisation malgré un fonctionnement complexe d'un objet.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/namespace}{namespace}{Pour de l'encapsulation. Permet de déclarer une portée qui contient un ensemble d'objet connexe.}\\
+
+\rem{Sur la notion de \incode{namespace}}{Par convention le namespace principale \incode{Projet} est le nom du projet puis chaque dossier a contenue aura une syntaxe du type \incode{Projet.NomDeDossier}, et ainsi de suite.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/using}{using}{Instruction ou directive. Sous forme de directive il permet de charger dans l'espace local (le fichier courant) les namespaces voulus. Voir : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/using-directive} (directive) et \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/using-statement} (instruction) pour plus de détail.}\\
+
+\rem{sur les namespace et le using}{Dans un projet, si les namespace sont tous identiques il est inutiles de les appeler. De plus les sous namespace doivent quand même être appelée dans les dossier contenue dans le dossier parent.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/when}{when}{Mot cléf contextuel utilisé dans les \incode{switch} permet d'imposer une condition à l'éxécution d'un case lors d'un switch (équivalent case {\incode{if\{\}}}).}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods}{partial}{Le \incode{partial} (au sens \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/partial-type}{type partial}) devant une classe permet de définir une classe dans deux fichiers différents! public partial A dans A.cs et public partial A dans B.cs résultera en une classe A unique à la compilation. Au sens \keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/partial-method}{méthodes partielles}: une méthode déclarée \incode{partial} dans une classe \incode{partial} pourra être étendue par une méthode de signature identique dans une classe de nom identique ailleurs dans le programme. Pour plus de différence classe et méthodes partiel voir : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods}.}\\
+
+
+\subsection{Remarques et liens divers}
+
+\note{Une classe par fichier est une obligation!!!}\\
+
+\rem{dans un \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/operators/switch-expression}{switch}}{Le \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/default}{default} n'est pas obligatoire... Attention, le mot clef \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/statements/jump-statements\#the-break-statement}{break} est indispensable pour éviter le ``cascadage'' des \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/statements/selection-statements}{case}!}\\
+
+\rem{Sur les \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/fundamentals/exceptions/}{exceptions}}{Toutes les Exceptions dérivent de la classe Exception. Les exceptions remontent sur le stack jusqu'à être catch dans la chaine remontante ou bien arriver au main. Listes : \url{https://docs.microsoft.com/fr-fr/dotnet/api/system.exception?view=net-6.0\# choosing-standard-exceptions}}\\
+
+\rem{Sur les string}{Un \incode{string} est non mutable! (imuable). Un \incode{String} est mutable!}\\
+
+\rem{Sur les string}{L'override de la méthode \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.object.tostring?view=net-6.0}{ToString} permet de modifier le comportement d'un objet lors d'un appel à \incode{Console.Write(objet)}}\\
+
+\rem{Sur la méthode \keyref{https://docs.microsoft.com/en-us/dotnet/api/system.object.equals?view=net-6.0}{isEquals}}{ L'interface \incode{IEquatable<T>} permet de forcer l'overrride de la méthode \incode{isEquals} pour la comparaison entre deux objet.}
+
+\rem{Sur les \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/builtin-types/value-tuples}{tuples}}{Les tuples sont mutables en c\#!. Il vaut mieux utiliser un objet pour retourner plusieurs variables au lieu d'un tuple.}\\
+
+\note{Le symbol ``?'' dans la déclaration d'un argument (après l'argument) permet de quand même affecter une valeur \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/null}{null} à un objet non-nullable de base (comme un type valeur).}\\
+
+\rem{Sur la visibilité des constructeurs}{Les constructeurs sont public par défaut.}\\
+
+\rem{Sur l'appel d'une méthode avec paramètre par défaut}{On n'est pas obligé de donner les paramètres déclarés par défaut lors de l'appel de la méthode correspondante. On peut également directement nommé le/les arguments déclarés par défaut dans n'importe quel ordre sans avoir à donner les arguments précédents en utilisant la syntaxe \incode{fun(argNonDefault, arg3: value)} (on a ommit \incode{arg2} [sous entendu déclaré par défaut]).}\\
+
+\rem{Sur le Chainage du constructeur}{Fait via \incode{: base()} entre la déclaration des arguments et la définition d'un constructeur fille. Permet d'éviter la redondance.} \\
+
+\rem{Sur les Méthodes d'extension}{Cela permet de rajouter une méthode à une classe sans avoir à la définir dans la classe. Fonctionne uniquement avec des méthodes statiques dans une classe statique. Lien : \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/classes-and-structs/extension-methods}.}\\
+
+\note{On peut faire prop+tab pour créer une propriété!}\\
+
+\note{Voir les \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/classes-and-structs/extension-methods}{Linq Extension} (Méthode d'extension) pour tt ce qui est slice de \incode{list} et opération plus complexes sur les tableaux.}\\
+
+\rem{Lien sur les raccourcis de Visual Studio}{\url{https://docs.microsoft.com/fr-fr/visualstudio/ide/visual-csharp-code-snippets?view=vs-2022}.}\\
+
+\rem{Lien pour le site des exercices :}{\url{https://perso.esiee.fr/~perretb/I3FM/POO1/basecsharp/index.html}.}\\
+
+\rem{lien intéressant sur le $C\#$}{ \url{https://www.tutlane.com/tutorial/csharp/csharp-pass-by-reference-ref-with-examples}.}\\
+
+\note{Se renseigner sur les relational pattern (c\#9 et +) : to compare an expression result with a constant \url{https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/patterns\# relational-patterns}}\\
+
+\rem{Lien sur la vérification et la conversion de type (cast)}{\url{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/operators/type-testing-and-cast\#is-operator}.}\\
+
+\rem{Lien sur boxing unboxing : conversion de type valeur en type object}{\url{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/types/boxing-and-unboxing}}\\
+
+\rem{Pdf certification c\#}{\url{https://www.certification-questions.com/microsoft-pdf/70-483-pdf.html}}\\
+
+\subsection{Suite}
+
+\subsection{Généralités}
+
+Au final un programme ne sert au final qu'a maintenir l'état d'une donnée. C'est l'objectif d'un objet de maintenir l'état d'une donnée. C'est l'objectif de la POO que de maintenir et traiter correctement de la donnée (éviter à tt pris les erreurs et assurer à tout pris le bon fonctionnement du code). Le plus complexe est la maitrise de toute la syntaxe pour faire des objets propres, bien définie, qui traite correctement la donnée via vérification, etc...\\
+
+\note{Coder du .NET avec Visual Studio Code n'est pas forcément une bonne idée.} \\
+
+\defi{Classe}{patron de conception, blueprint, pour un objet. Attention un objet ne viens pas forcément du monde physique réelle.}\\
+
+\rem{Sur la visibilité public}{Garantie le comportement d'un objet. TT le monde à l'extérieur du programme peut utiliser la classe. Notion très dimensionnante (car peut affecter beaucoup de chose). Il faut faire très attention dès lors que l'on utilise cette visibilité (notion de sécurité).}\\
+
+\rem{Sur la visibilité internal}{Visibilité par défaut car il faut partir du principe qu'il vaut mieux travailler tt seul mais que l'on ne l'est pas. Principe POO : encapsulation, être le plus restrictif de base pour éviter de casser des compatibilité.}\\
+
+\defi{Casing}{Ce sont les conventions de nommage (à vérifier).}\\
+
+\rem{Sur les conventions de nommage des attribut}{Le \_ est là pour éviter le \incode{this.attribut}. Cela renforce (en syntax) la notion de visibilité privée.}\\
+
+\rem{Sur les propriétés et la construction d'objet}{Il vaut mieux éviter d'utiliser les property pour initialiser un objet (créer un objet) car pendant un temps cours la donnée n'existe pas dans l'objet! Passer par le constructeur est une obligation! Le seul cas particulier est lors de l'utilisation de Data Transfert Objet (objet sans constructeur).}
+
+\rem{Les 3 grosses erreurs en informatique}{
+\begin{itemize}
+ \item Le \incode{null reference exception} : les objets sont \incode{null} par défaut (avant initialisation) et l'erreur arrive lorsque l'on cherche à accéder à un objet non initialisé. Erreur de Dev.
+ \item Les problèmes de cast \textit{internationaux} : à cause des conventions sur les séparateurs comme sur les décimale ou les dates. Erreur de \textit{localisation}
+ \item \\ 
+\end{itemize}
+}
+
+\rem{Sur le constructeur par défaut}{Il intialise tout les attribut aux valeurs par défaut (qui peuvent être nulle). Si l'on ne met un constructeur, le constructeur par défaut disparait!}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/api/system.guid?view=net-6.0}{Guid}{Est un type particulier qui permet la génération d'identifiant unique. Trés important mais moins performant que de simple \incode{int}. Il n'est pas \incode{null} par défaut (ce sera une rangé de zéro).}\\
+
+\rem{Les \incode{int} en id}{Sont dangeureux, car prédictibles à cause des incrémentations. Exemple : l'admin a un id de 1 -> grosse bétise. Gros potentiel de faille de sécurité. Si les données sont privés ou personnel il vaut mieux partir directement sur des Guid.}\\
+
+\rem{Règle générale}{Dans chaque constructeur on doit avoir autant d'affectation que d'attribut privée (ou de propriété).}\\
+
+\note{Balec des performance : priorité au travail de la donnée.}
+
+\rem{Retour sur le chainage de constructeur}{Que ce soit avec \incode{base} ou \incode{this}. Cela sert surtout pour la maintenabilité du code. Eviter la redondance (et donc le risque d'erreur). Il faut que les constructeurs avec l emoins de paramètres appel ceux avec le plus de paramètres. Et donc dans la même veine c'est une bonne chose d'utiliser des valeurs par défauts.}\\
+
+\rem{Retour sur le constructeur}{Tout les constructeurs, qq que soit leur signatures, doivent garantir la même réaction!}\\
+
+\rem{Sur les exceptions et les constructeurs}{Le premier endroit ou l'on met des exceptions est dans le constructeur. On doit a tt pris éviter d'avoir des objets pas valides (bancales) -> des données \textit{pourries}.}\\
+
+\rem{Sur les exceptions}{c'est nécessaire mais le but d'une exception est de ne jamais la lever! L'idée est de sécuriser un maximum le code (pas de \incode{null}, pas de problème de \incode{cast}).}\\
+
+\rem{Retour sur le constructeur}{C'est également le role du constructeur de faire la validation des données.}\\
+
+\rem{Sur la notion d'identifiant}{Il existe des identifiants techniques, qui ne sont pas destinés à changer, et des identifiants fonctionnelles qui peuvent changer et sont beaucoup plus pratique que les identifiants techniques (ex : numéro de dossier sur une facture). En générale, on utilise un abus de language pour faire le raccourci entre \incode{id} et identifiant technique.}\\
+
+\defi{POCO}{plain old Clr Object : ou \textit{Dumb Object}, sans constructeur, qui peut accepter des \incode{null}. L'idée est ensuite de transformer le plus vite possible cette objet en objet valide via un Mapper. On dit que ces objet sont \textit{non trusted} et le but est de valider par la suite les données via le Mapper.}\\
+
+\rem{Sur la sécurité et les framework}{Penser à enlever toute références à la techno utilisée pour créer un code à la compilation (Souvent des options automatiques à désactiver donc à envlever manuellement).}\\
+
+\note{Se renseigner sur les conventions de versionning (comment décrire un cassage de compatibilité d'une version à une autre par exemple).}\\
+
+\subsection{Generique et liste}
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/var}{var}{\incode{var} permet de faire de l'inférence de type.}\\
+
+\defi{Générique}{Classe qui manipule une classe qu'elle ne connait pas. Se caractérise par des chevron <> après la déclaration de type. L'objet obj<T> adaptera son comportement en fonction de T (qui est un type). Permet d'adpater un comprtement à des classes différentes. Un générique ne sert pas à tout gérer en même temps mais à définir un ensemble de cas d'utilisation limité, avec un périmètre bien limitén(de C à E plus que de A à Z).}\\
+
+\rem{Sur la convention de nommage de type dans les génériques}{le type entre chevron commence généralement par T, exemple <TUser>.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/where-generic-type-constraint}{where}{Sert à spécifier les contraintes à appliquer sur les alias dans les génériques. Est quasiment obligatoire afin de limiter le périmètre d'utilisation du générique.}\\
+
+\rem{Sur l'utilité des générique}{pour les CrUDes, les bases de données en générales.}\\
+
+\rem{Sur la \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.collections.generic.list-1?view=net-6.0}{List}}{C'est un cas particulier de générique qui n'est pas limité par un \incode{where}. C'est une exception à l'intention originale de garder les génériques dans un périmètre bien limité.}\\
+
+\note{3 slashs d'affilés permettent de faire de la documentation. Toute classe public est obligatoirement documentée. Les exceptions levables dans les classe/méthodes doivent également être documentés}\\
+
+\rem{Sur les nom de fonctions}{Il vaut mieux avoir un nom de méthode/attribut un peu long mais correct plutôt que qq chose de trop cour et vague voir inexact.}
+
+\rem{Sur les chaines \incode{try catch}}{La bonne pratique pour une exception que l'on a pas pu régler et de la récupéré via un ctach \incode{Exception}, créer un log pour récupérer un maximum d'information puis trow à nouveaux l'exception pour arréter le programme.}\\
+
+\note{prendre de la doc pour apprendre la gestion des logs. A l'air important mais ne sera pas vu pendant la formation. Il faut éviter le log bête et méchant qui raconte tt et n'importe quoi et être conscient de l'importance de chaque ligne. Un log est généralement écrit dans un fichier afin d'être peristant, de ne pas polluer l'affichage, et encore si celui ci existe (pas d'écran sur un serveur...).}\\
+
+\rem{Qu'est ce qu'un bon log}{Regarder la lib : \keyref{https://serilog.net/}{serilog} pour exemple de log strcuturée. Différents niveaux de log : 
+\begin{itemize}
+ \item Debug : n'existe pas en production (n'existe que pendant le développement). Le log qui sort toutes les infos faites pour les développeur, très précises et détaillées (très gourmand en ressources)\footnote{A cause de l'accès disque qui est très lent par rapport au autres composant}
+ \item info : informations liées à une mutation d'état (User X à fait Y action, tel champ de tel élément à été mis à jour) avec un contexte.
+ \item warning : erreurs \textit{normales} c'est à dire prévisibles (connues). Il faut les accompagner du contexte : Ex : sa a planter lorsque l'on essayé de ...
+ \item error :  erreur grave mais localement (pour un seul user). Contexte de plantage également.
+ \item fatal : erreur qui tue l'appli. Ex : mauvaise config au démarage.
+\end{itemize}
+Dans tout les cas, le contexte est toujours essentiel dans chaque log.}\\
+
+\rem{Applications annex aux logs}{Bien organisé, il peuvent permettrent de rechercher des infos sur l'utilisation courante (par un user) d'une application : c'est à dire faire des stats sans passer par une base de donnée. Ils ne servent pas que pour la gestion des logs, ils contiennent également de la donnée! Ils sont la première entré vers les statistiques d'une application.}\\
+
+\rem{Danger du log}{Ne surtout pas logger des données sensible, comme des données privés ou un password.}\\
+
+\note{Le nom complet d'une classe contient le namespace. On a nom_total = namespace.nom_classe}\\
+
+\rem{Bonne pratique sur les \incode{namespace}}{En générale NomEntreprise.NomApplication.perimetre, ou le périmètre est une notion qui sera vue plus tard. Cette convention est en lien avec la génération des dlls. Voir propriété du projet nom d'assembly, espace de nom par défaut. Cela permet de gérer les noms en sortie des .exe et .dll que l'on retrouve dans le /bin. }\\
+
+\note{double quote et \incode{string.Empty} font exactement la meêm chose}\\
+
+\note{\incode{nameof} permet de récupérer le nom d'une variable. A creuser et linker.}\\
+
+\rem{Sur les Magic values}{Utiliser des litérals au lieux de paramètres nommés mène à une très mauvaise lisibilité et maintenabilité. Il vaut mieux créer un fichier de constantes (contenant une classe \incode{static}). Le fichier de constantes à l'avantage de pouvoir être associé à une documentation propre et claire. On peut aussi faire des sous classes dans ce fichier de constantes.}\\
+
+\rem{Sur les Magic values}{Par convention elle sont en MAJUSCULE_SUITE.}\\
+
+\note{Pour un guide de bonne pratique encore plus violent que le SOLID : https://williamdurand.fr/2013/06/03/object-calisthenics/}\\
+
+\subsection{Sur l'application console (Exercice)}
+
+Application console : ExoGarage \\
+Structure : 
+\begin{itemize}
+ \item Program.cs
+ \item Garage.cs $\to$ pas de ConsoleWrite la dedans. Maintiens une liste et fait les opérations
+\end{itemize}
+But : Stocker des véhicules 2 rous ou 4 roues\\
+Menu : 4 options
+\begin{itemize}
+ \item Lister les véhicules du garage
+ \item Ajouter un véhicules
+ \item Supprimer un véhicules 
+ \item Mettre à jour un véhicule
+ \item Quitter
+\end{itemize}
+Véhicule : 
+\begin{itemize}
+ \item identifiant,
+ \item type (2 ou 4 roues),
+ \item  un état (Bon, Moyen, Mauvais)
+ \item marque 
+ \item modele
+ \item kilométrage
+\end{itemize}
+Optionnel1 : Gérer la sauvegarde de fichier. (données dans un fichier text, ou bien json.net ou bien sérialisation) \\
+Optionnel2 : ajouter un système de log. (plus important que le système de sauvegarde).
+Optionnel3 : faire des test.
+Optionnel4 (+++) : Faire un jeu de la vie.(tableau multidimmensionnel)
+
+
+%%--------------------------------------------------------------------------------------------------------------------------------1
+%% Glossaires
+\newpage
+\printglossary[type=\acronymtype]%\addcontentsline{toc}{chapter}{Acronymes}
+%\glsaddall% force l'apparition de tt les entrées du glossaire
+\glsaddallunused % meme chose que addall mais ne force pas la numéroattion dans la liste d'acronyme
+%\printunsrtglossary[type=main]
+\printglossary[type = main,nonumberlist]%\addcontentsline{toc}{chapter}{Glossaire}
+
+\end{document}
+\end{document}
