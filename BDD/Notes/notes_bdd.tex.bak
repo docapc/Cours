@@ -214,6 +214,14 @@ liens utiles \url{https://www.w3schools.com/sql/sql_top.asp}, \url{https://sql.s
 
 \note{On peut (et on doit) mettre des alias sur les noms quand tt devient trop verbeux.}\\
 
+\rem{Pour créer une base de donnée}{Click droit sur \textit{database} $\to$ {new database}. Va créer deux fichier, la ddb et le log. Option permet ensuite de changer des choses appliqués à toutes la ddb, ex : \textit{collation} qui permet d'avoir du case sensitive ou non (à bien choisir au début car dure à changer et appliquer à toute la base!) : CI $\to$ case insensitive ou CS pour sensitive. AS ou AI pour Accent sensitive ou insensitive.}\\
+
+\rem{Lors de la création d'une table}{Click-droit dans l'onglet \textit{table} $\to$ {new table}. Les paramètres en dessous permettent une gestion plus fines des colonnes (comme identity qui définit ou non si le champ est une PK).}
+
+\note{Une fois la table créée on peut générer automatiquement les scripts de CrUDe et plus. }
+
+\note{Dans les scripts sql on peut (et on devrait) faire [schema].[table] au lieu de schema.table ou juste table.}\\
+
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
 \newpage
