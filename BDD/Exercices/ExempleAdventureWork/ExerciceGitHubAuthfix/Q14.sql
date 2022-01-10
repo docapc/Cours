@@ -1,0 +1,1 @@
+/*Retrouvez combien de commandes sont dans les intervals suivants : 0-99, 100-999, 1000-9999, 10000 */

@@ -82,7 +82,7 @@ filecolor=cyan, % ne fonctionne qu'avec run:,
 
 %% Infos document
 % Titre
-\title{Notes sur le module : \textit{Base de Données.}
+\title{Notes sur le module : \textit{Base de Données.}}
 % auteur
 \author{Armel Pitelet}
 % date de création du document
@@ -116,7 +116,7 @@ see = [Glossaire:]{gl-dip}
 
 \subsection{Généralités}
 
-Commencer par voir \url{https://github.com/Authfix/dotnet-basics/blob/main/sql-server-basics.ipynb} pour les définitions et principe de base. Pour se connecter (en local) il faut commencer par utiliser le serveur : (LocalDb)\MSSQLLocalDB.
+Commencer par voir \url{https://github.com/Authfix/dotnet-basics/blob/main/sql-server-basics.ipynb} pour les définitions et principe de base. Pour se connecter (en local) il faut commencer par utiliser le serveur : (LocalDb)\textbackslash MSSQLLocalDB.
 
 \note{Attention à l'installation d'une bdd en local. Elles sont pensé pour être seul et prennent donc toute la place et les ressources disponibles.}\\
 
@@ -140,7 +140,7 @@ On prend l'exemple de la table SalesLT.Adress (au début) et on déroule les dif
 
 \defi{table}{Liste de données obéissant à une certaine nomenclature, un certain format. Cela garantie que chaque ligne de données possèdera les même colonne. Faire click-droit $\to$ property pour plus de détails.}\\
 
-\remColumns}{Contient les infos sur les différents colonnes de la tables.}
+\rem{Columns}{Contient les infos sur les différents colonnes de la tables.}
 
 \note{Les type de valeur peuvent être différent des types du système. Pour gérer de l'upper case/lower case par exemple.}\\
 
@@ -162,7 +162,7 @@ On prend l'exemple de la table SalesLT.Adress (au début) et on déroule les dif
 
 \rem{AK}{Fait partie du mécanisme de rowguid.}\\
 
-\rem{Dans le folder keys}{FK : plutôt Foreign Key qui permet de faire le liens entre les différentes tables et de garantir l'existence de la donnée du coté des deux tables. Convention de nommage : le nom des clefs indique le liens entre les table. Ex : FK_CustomerAdress_Adress_AdressID fait le lien entre CustomerAdress et Adress_AdressID.}\\
+\rem{Dans le folder keys}{FK : plutôt Foreign Key qui permet de faire le liens entre les différentes tables et de garantir l'existence de la donnée du coté des deux tables. Convention de nommage : le nom des clefs indique le liens entre les table. Ex : FK\_CustomerAdress\_Adress\_AdressID fait le lien entre CustomerAdress et Adress\_AdressID.}\\
 
 \rem{Constraints}{Dans ce folder on trouve des objet Contrainte qui vont s'appliquer sur des colonnes particulières. On peut par exemple donner des valeurs par défauts dans ces contraintes (comme le temps en cours au moment d'une modification ou bien pour donner par défaut un nouveau guid lors d'un changement de ligne). On peut également poser une contrainte d'unicité (sans passer par une primary key), Ex : une adresse email qui doit être unique.}\\
 
@@ -180,7 +180,7 @@ On prend l'exemple de la table SalesLT.Adress (au début) et on déroule les dif
 
 \section{Divers}
 
-\rem{Sur les schéma}{Au niveau des nom des tables on a Schema.Nom_de_table. Le schéma permet de moduler le comportement des tables, par exemple pour donner des accès à certain et pas à d'autre. Ces schémas permettent de segmenter la BDD.}\\
+\rem{Sur les schéma}{Au niveau des nom des tables on a Schema.Nom\_de\_table. Le schéma permet de moduler le comportement des tables, par exemple pour donner des accès à certain et pas à d'autre. Ces schémas permettent de segmenter la BDD.}\\
 
 \note{Une application ne doit jamais authoriser la modification des schémas de la bdd (sauf admin aka superuser). Il vaut mieux avoir 2 user différents avec deux roles différent plutôt qu'un seul type de user avec deux rôles différents.}\\
 
@@ -190,9 +190,9 @@ On prend l'exemple de la table SalesLT.Adress (au début) et on déroule les dif
 
 liens utiles \url{https://www.w3schools.com/sql/sql_top.asp}, \url{https://sql.sh/}.\\
 
-\keyword{https://sql.sh/cours/select}{SELECT}{Permet de récupérer les données nécessaires (dont on a besoin). SELECT nom_de_colonne}
+\keyword{https://sql.sh/cours/select}{SELECT}{Permet de récupérer les données nécessaires (dont on a besoin). SELECT nom\_de\_colonne}
 
-\keyword{https://sql.sh/cours/select}{FROM}{Permet de sélectionner la table que l'on veut : Schema.nom_de_table}
+\keyword{https://sql.sh/cours/select}{FROM}{Permet de sélectionner la table que l'on veut : Schema.nom\_de\_table}
 
 \keyword{https://sql.sh/cours/where}{WHERE}{Permet de sélectionner par filtre. WHERE : Predicat}
 
@@ -202,15 +202,15 @@ liens utiles \url{https://www.w3schools.com/sql/sql_top.asp}, \url{https://sql.s
 
 \note{Les fichier.sql sont un bon endroit pour faire des calculs (au lieu de récupérer la donnée pour la traiter en externe). On utilise les fonction d'aggrégats}\\
 
-\rem{Quelques fonction d'aggrégat}{MAX, SUM, MIN, COUNT, AVG, TOP (n) column_name1, column_name2 [remonte les n lignes des columns]...}
+\rem{Quelques fonction d'aggrégat}{MAX, SUM, MIN, COUNT, AVG, TOP (n) column\_name1, column\_name2 [remonte les n lignes des columns]...}
 
 \note{Les mot clef ne sont pas case sensitive. MAX est équivalent à Max ou max}\\
 
-\keyword{https://sql.sh/cours/order-by}{ORDER BY}{Order by column_name opt: ordonne la remontée des données par la colonne column_name dans l'ordre opt (ASC OU DSC). En principe on en met partout pour maitriser la remontée des données.}\\
+\keyword{https://sql.sh/cours/order-by}{ORDER BY}{Order by column\_name opt: ordonne la remontée des données par la colonne column\_name dans l'ordre opt (ASC OU DSC). En principe on en met partout pour maitriser la remontée des données.}\\
 
-\keyword{https://sql.sh/cours/group-by}{GROUP BY}{Group by column .Regroupe par valeur unique dans column. Nécessite un SELECT fun_aggregation() [et pas un simple SELECT column]}
+\keyword{https://sql.sh/cours/group-by}{GROUP BY}{Group by column .Regroupe par valeur unique dans column. Nécessite un SELECT fun\_aggregation() [et pas un simple SELECT column]}
 
-\keyword{https://sql.sh/cours/jointures}{JOIN}{JOIN schema.table ON schema.table.column_interessante = schema.Autretable.column_interessante. schema.table.column_interessante est une colonne de FK qui font référence à schema.Autretable.column_interessante. Le nom des colonnes n'est pas forcément le même dans les deux tables mais le types doit rester cohérent. Le JOIN permet de mapper une table à une autre. Le join va joindre les primary keys de la table cible aux foreign keys de la table mère (celle qui demande la jointure).} \\
+\keyword{https://sql.sh/cours/jointures}{JOIN}{JOIN schema.table ON schema.table.column\_interessante = schema.Autretable.column\_interessante. schema.table.column\_interessante est une colonne de FK qui font référence à schema.Autretable.column\_interessante. Le nom des colonnes n'est pas forcément le même dans les deux tables mais le types doit rester cohérent. Le JOIN permet de mapper une table à une autre. Le join va joindre les primary keys de la table cible aux foreign keys de la table mère (celle qui demande la jointure).} \\
 
 \note{On peut (et on doit) mettre des alias sur les noms quand tt devient trop verbeux.}\\
 
