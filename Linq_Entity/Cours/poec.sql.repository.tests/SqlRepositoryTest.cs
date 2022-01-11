@@ -31,6 +31,8 @@ public class SqlRepositoryTest
         Assert.NotNull(userSqlDto);
         Assert.Equal(userSqlDto?.UserId, id); //(?. récupère une valeur que si il n'est pas nulle)
         //Assert.Equal(userSqlDto.UserId, id); 
+
+        
     }
 
 }
