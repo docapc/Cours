@@ -1,0 +1,196 @@
+%\listfiles
+\documentclass[a4paper,12pt,twoside]{article}
+
+%% packages
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,mathrsfs} 
+%\usepackage{import}
+\usepackage{float, subfig, caption}
+\usepackage{libertine}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{xcolor} %/ pour \Definecolor
+\usepackage[pdftex,final=true]{hyperref}
+%\usepackage[]{hyperref}
+\hypersetup{
+colorlinks=true,
+linkcolor=blue,
+urlcolor=magenta, %/ file: adopte également cette couleur
+filecolor=cyan, % ne fonctionne qu'avec run:, 
+%citecolor=red
+}
+\urlstyle{same}
+\usepackage[french]{minitoc}
+\usepackage[acronym,toc,automake]{glossaries} % acronym pour les acronymes et toc pour inclusion des glossary dans la table des matières
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+%\usepackage{minted} % pour code avec coloration dans le texte
+\usepackage{url} % Pour avoir de belles url
+%% package ticks spécifiquement (pour les schémas) 
+%\usepackage{tikz}%
+%\usepackage[top=2cm,bottom=2cm]{geometry}
+%% paramètres tikz
+%\usetikzlibrary{patterns,decorations.pathreplacing,shapes.misc}
+%\usetikzlibrary{calc}
+%\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+%cross/.default={5pt}}
+% \definecolor{Gray}{gray}{0.9}
+% \definecolor{LightCyan}{rgb}{0.88,1,1}
+% \newcommand{\RN}[1]{\textup{\uppercase\expandafter{\romannumeral#1}}}    
+
+%% Macros comme variable
+%\newcommand{\editorpath}{C:/Program Files/Notepad++/notepad++.exe}
+\newcommand{\exemplepath}{../Exercices}
+\newcommand{\urlcolor}{magenta}  % couleur des liens https
+\newcommand{\filecolor}{cyan} % couleur des liens file: file
+\newcommand{\pdfcolor}{red} % couleur des liens file: .pdf
+\newcommand{\foldercolor}{orange} % couleur des liens file: Folder
+\newcommand{\cscolor}{green!60!black} % couleur des liens file: .cs
+\newcommand{\slncolor}{violet} % couleur des liens file: .sln
+\newcommand{\keycolor}{purple} % couleur des liens  de type mot clefs
+%% Macros commun
+\newcommand{\incode}[1]{{\footnotesize\ttfamily #1}} % pour du pseudo-code simple
+\newcommand{\rem}[2]{\noindent\underline{Remarque} : \textit{#1}.\\ \indent #2}
+\newcommand{\note}[1]{\noindent\underline{Note} : \\ \indent #1}
+\newcommand{\defi}[2]{\noindent\underline{Définition} : \textbf{#1}.\\ \indent #2}
+\newcommand{\slide}[2]{\textbullet ~ Slide n°#1 : \indent #2}
+%% Macro spécifiques à ce fichier (pas forcément) : pour fonctionner il faut que le fichier ai été ouvert diretcement dans le dossier du .tex ...
+\newcommand{\fileref}[2]{\hypersetup{urlcolor=\filecolor}\href{file: #1}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\pdfref}[2]{\hypersetup{urlcolor=\pdfcolor}\href{file: #1.pdf}{#2.pdf}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\csref}[2]{\hypersetup{urlcolor=\cscolor}\href{file:\exemplepath /#1.cs}{#2.cs}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\slnref}[2]{\hypersetup{urlcolor=\slncolor}\href{file:\exemplepath /#1.sln}{#2.sln}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\folderref}[2]{\hypersetup{urlcolor=\foldercolor}\href{file:\exemplepath /#1/.}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyref}[2]{\hypersetup{urlcolor=\keycolor} \href{#1}{\textbf{#2}}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyword}[3]{\noindent\underline{Mot clef} : \keyref{#1}{#2}. \\ \indent #3}
+%% Macro spécifiques à ce fichier (pas forcément)
+\newcommand{\dpat}[7]{
+\noindent \underline{Pattern} : \textbf{#1}, \indent (type : \textit{#2}) \\
+\underline{Description} : \indent #3 \\
+\underline{Exemple} : \indent #4 \\
+\noindent \underline{Avantages} : 
+\begin{itemize}
+ #5
+\end{itemize}
+\noindent \underline{Inconvénients} : 
+\begin{itemize}
+ #6 
+\end{itemize}
+\underline{Liens} : #7 
+}
+
+%% Infos document
+% Titre
+\title{Notes sur le module : \textit{LInQ et Entity}.}
+% auteur
+\author{Armel Pitelet}
+% date de création du document
+\date{\today}
+
+%% Glossaire, acronymes et index
+\makeglossaries
+
+%% Glossaire et acronyme (déclarations)
+
+% DIP : exemple de formalisme
+\newglossaryentry{gl-dip}{
+name = {DSP},
+description = {la description détaillé}
+}
+\newglossaryentry{ac-dip}{
+type = \acronymtype, name = {DSP}, 
+description = {Nom simple}, 
+first = {Première occurence\glsadd{gl-dip}}, 
+see = [Glossaire:]{gl-dip}
+}
+
+
+\begin{document}
+%% Organisation globale 
+\maketitle
+\tableofcontents
+
+%%--------------------------------------------------------------------------------------------------------------------------------
+%% Contenue
+Dans le folder Cours: ce qui a été fait et projeté, Exercice : ce que j'ai pris au passsage.
+
+\section{LInQ}
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/concepts/linq/}{LInQ}{Language intergrated Query : Façon d'interroger une collection comme 
+\begin{itemize}
+ \item Set (liste qui garantie l'unicité les valeurs) : fonctionne via itérateur et pas indexeur. Très performant pour des petites collections, moins pour les grosses car il faut parcourir toute la collection.
+ \item ICollection ou IList: la liste classique (ICollection est plus haut dans la chaine d'interface). IList : list avec accesseur numérique (indexeur) et des méthodes supplémentaire par rapport à ICollection.
+ \item IDictionnary : système clef-valeur. Clef unique. Plus rapide que l'accès via une liste (ex d'un dictionnary de int, string) mais plus complexe à gérer. On s'en sert plutôt quand la clef est complexe (string ou objet). Utilisé avec des clefs int si la gestion de l'int n'est pas accessible (et donc pas connu). 
+ \end{itemize}
+ Voir aussi pour la liste des méthodes LinQ : \url{https://docs.microsoft.com/fr-fr/dotnet/api/system.linq.enumerable?view=net-6.0}\\
+ }
+
+\rem{Sur les types}{Il faut connaitre la correspondance de type en c\# et SQL : \url{UserFakeRepositoryTest}. Le type doit être choisi en fonction de l aplace que l'on veut allouer en mémoire (en octets).}\\
+
+\rem{sur text et ntext}{Il vaut mieux éviter de s'en servir car ils ne sont pas limité en taille.}\\
+
+Pour la suite on va lister ce qu'il y a dans l'exercice LinqEntityFramework : \\
+
+\rem{Fake repository}{Donne des données pour faire du LinQ dessus (repository sera un objet qui renverra des données à partir d'une base).}\\
+
+\note{Les méthodes Linq Prennent des fonctions anonymes en paramètre. $=>$ indique la déclaration d'une fonction. Ces fonction recoive comme paramètre l'élément courant (les contenues du conteneurs)}\\
+
+\rem{First et FirstOrDefault}{First renvoie l'élément et une erreur si il ne le trouve pas. FirstOrDefault renvoie l'élement ou null si il ne trouve pas}\\
+
+\rem{Single et SingleOrDefault}{// Single renvoie l'élément et une erreur si il ne le trouve pas ou si il y en a plusieur. SingleOrDefault renvoie l'élement ou null si il ne trouve pas ou bien une exception si il en trouve plusieurs}\\
+
+\section{Entity Framework}
+
+ORM  : Mapping Objet relationnel (\textit{object-relational mapping }); Voir : \url{https://fr.wikipedia.org/wiki/Mapping_objet-relationnel}. Interface entre la ddb et le code.
+Donne accès à des listes en base de donnée sur lesquel en va pouvoir venir faire des requêtes.\\
+
+\note{Entity Framework ne gère pas les uint.}\\
+
+Dans poec.sql.repository (SqlDbContext). On a besoin des package Microsoft.EntityFrameworkCore et Microsoft.EntityFrameworkCore.SqlServer
+
+\rem{Lazi Loading Enabled}{permet de faire eleve.classe, ou classe.eleve, pour arriver à eleve.classe.eleve....A creuser...}\\
+
+\rem{AutoDetectChangesEnabled}{Sauvegarde automatique des changement, peut être dangeureux car on peut enregistrer des choses que l'on ne veut pas. On préfère le apsser à false pour maitriser la donnée de bout en bout.}\\
+
+\rem{DbSet}{Exécute une requete uniquement au moment ou l'on demande de récupérer un élément. Renvoie la plupart du temps une image de la base de donnée et ne fera la requete qu'au dernier moment. C'est une projection de la base de donnée.}\\
+
+\rem{DbContext}{Objet qui fait le lien avec la base de donnée.}\\
+
+\rem{Sur le mapping}{On peut le faire coté SqlDto (et un peu du DbContext) via des attribut décorateur ou bien directement dans le DbContext (voir DbContext.cs). Il faut faire soit l'un soit l'autre.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/api/system.data.entity.dbcontext.savechanges?view=entity-framework-6.2.0}SaveChanges}{Permet de valider la transaction [qu'on appelle commit](tant que l'on ne fait pas le save change, le DbContext n'applique pas les modification à la BDD) $\to$ Principe de transaction (possible aussi en SQL pure). En cas d'erreur le DbContext fait un roll back depuis le dernier \incode{SaveChanges}. \incode{SaveChange} retourne un int correspondant au nombre de ligne affectée par les changement. Cela permet de tester la réussite ou non d'"une opération \incode{Remove} par exemple.}\\
+
+\rem{Sur l'autoincrément dans la bdd}{Dans une BDD, l'autoincrément ne prend pas la dernière ligne mais le dernier élément inséré. Après une supression la base garde quand même en mémoire l'id de l'élément supprimé. Un ajout après cela aura donc un incrément de $+1$ par rapport au dernier supprimé et non pas par rapport à la dernière ligne actuelle.}\\
+
+\rem{Sur les Add et Update}{La bonne pratique est de renvoyer l'objet ajouter/modifier pour tester la nullité de l'objet ou non (et potentiellement vérifier son identité).}\\
+
+\note{SqlContext.Where() retourne un IQueryable qui a le comportement donnée dans la remarque suivante.}\\
+
+\rem{Sur les performance}{SqlContext.Set<UserSqlDto>().Where(), projette une requete mais ne l'éxécute pas immédiattement. Il faut ensuite faire un .Fisrt, .List, ... pour que la requete soit éxécuté. Cela permet de ne pas faire de requet inutile à chauqe Set ou Where et de ne les éxécuter qu'au besoin}\\
+
+\section{Divers}
+
+\note{\keyref{https://www.jetbrains.com/fr-fr/resharper/}{Resharper} (jetBrains) : analyse de code, changement dynamique, code helper,... Attention Payant.}\\
+
+\rem{Sur les région}{Se déclare avec des \#region \#endregion (directive \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/preprocessor-directives}{prépocesseur}).}\\
+
+\rem{Sur less CRUD}{Il faut essayer un maximum de faire les CRUD avec des types primitifs (pour rester le plus générique possible $\to$ notion de \textit{scalabilité} du code).}\\
+
+\rem{Pattern AAA}{Arrange, Action, Assert : utiliser pour du test. Evite de recopier du code plusieurs fois. Attention, On peut avoir autant d'arrange et assert que l'on veut mais une seule action (car test unitaire!!!).}\\
+
+\rem{Bonne pratique}{Il vaut mieux renvoyer des interfaces si possible (IList au lieu de List).}\\
+
+\note{On peut utiliser \incode{default} pour forcer une valeur par défaut sur un des paramètres passés lors de l'appel d'une méthode, d'une instanciation ou autre.}\\
+
+%%--------------------------------------------------------------------------------------------------------------------------------1
+%% Glossaires
+\newpage
+\printglossary[type=\acronymtype]%\addcontentsline{toc}{chapter}{Acronymes}
+%\glsaddall% force l'apparition de tt les entrées du glossaire
+\glsaddallunused % meme chose que addall mais ne force pas la numéroattion dans la liste d'acronyme
+%\printunsrtglossary[type=main]
+\printglossary[type = main,nonumberlist]%\addcontentsline{toc}{chapter}{Glossaire}
+
+\end{document}
+\end{document}

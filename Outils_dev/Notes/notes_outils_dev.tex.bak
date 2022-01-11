@@ -82,7 +82,7 @@ filecolor=cyan, % ne fonctionne qu'avec run:,
 
 %% Infos document
 % Titre
-\title{Notes sur le module : \textit{Outils du développeur.}
+\title{Notes sur le module : \textit{Outils du développeur.}}
 % auteur
 \author{Armel Pitelet}
 % date de création du document
@@ -123,7 +123,7 @@ see = [Glossaire:]{gl-dip}
 
 \section{Azure DevOps}
 
-Il s'agit d'une \textbf{forge logicielle} : outils qui regroupe tt les outils nécessaires au développement d'un projet. Par microsoft, donc intégré à visual Studio et pensé pour du .NET.
+Il s'agit d'une \textbf{forge logicielle} : outils qui regroupe tt les outils nécessaires au développement d'un projet. Par microsoft, donc intégré à visual Studio et pensé pour du .NET. \\
 
 \note{Equivalent microsoft de gitlab. (voir \keyref{https://www.atlassian.com/fr/software/jira}{Jira} (par atlassian) également)}\\
 
