@@ -9,8 +9,8 @@ JOIN SalesLT.Product as p ON sod.ProductID = p.ProductID
 GROUP BY soh.SalesOrderID, soh.SubTotal
 ORDER BY soh.SalesOrderID
 
+-- Pour verif. Conclusion : Ne colle pas du tout au niveau des résultats de calculs, rien n'est cohérent...
 SELECT sod.SalesOrderID, soh.SubTotal, sod.UnitPrice, sod.OrderQty, sod.LineTotal, p.ProductId, p.ListPrice, p.StandardCost
 FROM SalesLT.SalesOrderHeader as soh
 JOIN SalesLT.SalesOrderDetail as sod ON soh.SalesOrderID = sod.SalesOrderID
 JOIN SalesLT.Product as p ON sod.ProductID = p.ProductID
--- Ne colle pas du tout au niveau des résultats de calculs, rien n'est cohérent...
