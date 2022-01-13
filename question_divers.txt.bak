@@ -1,0 +1,6 @@
+// Question pour thomas ou Nico
+
+-Sur les Dto, vaut il mieux les faire uniquement avec des Property publiques ou bien les rendre immutables avec juste un getter et un constructeur?
+-Sur les Id des objets et les BDD ? Est il mieux d'utiliser des Guid pour les id en bdd que des int?
+-Sur l'inclusion de wcf et wpf dans le projet. Doit on passer systématiquement pas un ServiceClient de wcf pour récupérer des données dans le wpf?
+-Comment implémente on une liste dans une BDD (aggrégation one-to-many)?

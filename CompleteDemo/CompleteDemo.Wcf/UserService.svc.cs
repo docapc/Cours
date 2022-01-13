@@ -16,7 +16,7 @@ namespace CompleteDemo.Wcf
 
         public UserService()
         {
-            var dbContext = new SqlDbContext(@"Data Source = (LocalDb)\MSSQLLocalDB; Initial Catalog = SqlDbEntity; Integrated Security = True");
+            var dbContext = new SqlDbContext(@"Data Source = (LocalDb)\MSSQLLocalDB; Initial Catalog = PoecEntity; Integrated Security = True");
             dbContext.Database.EnsureCreated();
             _userRepository = new UserRepository(dbContext);
         }

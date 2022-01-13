@@ -1,0 +1,200 @@
+%\listfiles
+\documentclass[a4paper,12pt,twoside]{article}
+
+%% packages
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,mathrsfs} 
+%\usepackage{import}
+\usepackage{float, subfig, caption}
+\usepackage{libertine}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{xcolor} %/ pour \Definecolor
+\usepackage[pdftex,final=true]{hyperref}
+%\usepackage[]{hyperref}
+\hypersetup{
+colorlinks=true,
+linkcolor=blue,
+urlcolor=magenta, %/ file: adopte également cette couleur
+filecolor=cyan, % ne fonctionne qu'avec run:, 
+%citecolor=red
+}
+\urlstyle{same}
+\usepackage[french]{minitoc}
+\usepackage[acronym,toc,automake]{glossaries} % acronym pour les acronymes et toc pour inclusion des glossary dans la table des matières
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+%\usepackage{minted} % pour code avec coloration dans le texte
+\usepackage{url} % Pour avoir de belles url
+%% package ticks spécifiquement (pour les schémas) 
+%\usepackage{tikz}%
+%\usepackage[top=2cm,bottom=2cm]{geometry}
+%% paramètres tikz
+%\usetikzlibrary{patterns,decorations.pathreplacing,shapes.misc}
+%\usetikzlibrary{calc}
+%\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+%cross/.default={5pt}}
+% \definecolor{Gray}{gray}{0.9}
+% \definecolor{LightCyan}{rgb}{0.88,1,1}
+% \newcommand{\RN}[1]{\textup{\uppercase\expandafter{\romannumeral#1}}}    
+
+%% Macros comme variable
+%\newcommand{\editorpath}{C:/Program Files/Notepad++/notepad++.exe}
+\newcommand{\exemplepath}{../Exercices}
+\newcommand{\urlcolor}{magenta}  % couleur des liens https
+\newcommand{\filecolor}{cyan} % couleur des liens file: file
+\newcommand{\pdfcolor}{red} % couleur des liens file: .pdf
+\newcommand{\foldercolor}{orange} % couleur des liens file: Folder
+\newcommand{\cscolor}{green!60!black} % couleur des liens file: .cs
+\newcommand{\slncolor}{violet} % couleur des liens file: .sln
+\newcommand{\keycolor}{purple} % couleur des liens  de type mot clefs
+%% Macros commun
+\newcommand{\incode}[1]{{\footnotesize\ttfamily #1}} % pour du pseudo-code simple
+\newcommand{\rem}[2]{\noindent\underline{Remarque} : \textit{#1}.\\ \indent #2}
+\newcommand{\note}[1]{\noindent\underline{Note} : \\ \indent #1}
+\newcommand{\defi}[2]{\noindent\underline{Définition} : \textbf{#1}.\\ \indent #2}
+\newcommand{\slide}[2]{\textbullet ~ Slide n°#1 : \indent #2}
+%% Macro spécifiques à ce fichier (pas forcément) : pour fonctionner il faut que le fichier ai été ouvert diretcement dans le dossier du .tex ...
+\newcommand{\fileref}[2]{\hypersetup{urlcolor=\filecolor}\href{file: #1}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\pdfref}[2]{\hypersetup{urlcolor=\pdfcolor}\href{file: #1.pdf}{#2.pdf}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\csref}[2]{\hypersetup{urlcolor=\cscolor}\href{file:\exemplepath /#1.cs}{#2.cs}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\slnref}[2]{\hypersetup{urlcolor=\slncolor}\href{file:\exemplepath /#1.sln}{#2.sln}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\folderref}[2]{\hypersetup{urlcolor=\foldercolor}\href{file:\exemplepath /#1/.}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyref}[2]{\hypersetup{urlcolor=\keycolor} \href{#1}{\textbf{#2}}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyword}[3]{\noindent\underline{Mot clef} : \keyref{#1}{#2}. \\ \indent #3}
+%% Macro spécifiques à ce fichier (pas forcément)
+\newcommand{\dpat}[7]{
+\noindent \underline{Pattern} : \textbf{#1}, \indent (type : \textit{#2}) \\
+\underline{Description} : \indent #3 \\
+\underline{Exemple} : \indent #4 \\
+\noindent \underline{Avantages} : 
+\begin{itemize}
+ #5
+\end{itemize}
+\noindent \underline{Inconvénients} : 
+\begin{itemize}
+ #6 
+\end{itemize}
+\underline{Liens} : #7 
+}
+
+%% Infos document
+% Titre
+\title{Notes sur le module : \textit{Api en .NET}.}
+% auteur
+\author{Armel Pitelet}
+% date de création du document
+\date{\today}
+
+%% Glossaire, acronymes et index
+\makeglossaries
+
+%% Glossaire et acronyme (déclarations)
+
+% DIP : exemple de formalisme
+\newglossaryentry{gl-dip}{
+name = {DSP},
+description = {la description détaillé}
+}
+\newglossaryentry{ac-dip}{
+type = \acronymtype, name = {DSP}, 
+description = {Nom simple}, 
+first = {Première occurence\glsadd{gl-dip}}, 
+see = [Glossaire:]{gl-dip}
+}
+
+
+\begin{document}
+%% Organisation globale 
+\maketitle
+\tableofcontents
+
+%%--------------------------------------------------------------------------------------------------------------------------------
+\section{Introduction}
+
+\defi{API}{Application Programming Interface : interface entre un client, un serveur $\to$ interface pour l'échange de données vers les apllications.}\\
+
+\defi{Restfull}{Representationel State Transfert  : style d'architechture. En 2000 en parallèle du https 1.1. Framework c\# : Asp.Net.}\\
+
+\rem{Les principes REST}{\begin{itemize} 
+\item Séparation client/serveur : on sépare les responsabilité et on communique via l'API car elle est standardisée. Cela permet de la modularité de chaque coté (on peut faire des modifications de chaques cotés sans que cela impact l'autre.)
+\item Absence d'état de session (stateless) : l'état d'une session est inclus dans une requete. Les requetes sont traités de manière isolée. Le serveur n'a pas a mémoriser les informations entre les requêtes (performance, et permet de mélanger de gros voluymes de données. L'API ne connait pas les applications avec lesquelles elle discute.)
+\item Uniformité de l'interface : permet de découpler client et serveur. Permet au serveur de répondre dans un autre format que celui utilisée par l'application (découplage fort pour modularité).
+\item Mise en cache (caching) : on garde les information régulièrement utilisée en mélmoire (performance). Le cache se fait coté client.
+\item Architecture en couches (Layered) : Interface uniforme à tt les niveaux. Chaque ressources est identifiée de manière unique et canonicalisée\footnote{Forme censément la plus simple et en tout cas à laquelle se ramènent toutes les expressions d’un certain type} avec son URL. Cela permet d'avoir une API scalable, modulable, et invisible coté client en cas de modifications de l'application.\\
+\end{itemize}}
+
+\slide{15}{L'API est ici le point d'entrée à la base de donnée (On a ici un exemple possible d'implémentation : on pourrait avoir EFCore entre l'API et la BDD).}\\
+
+\defi{UFI}{Uniform Resource Identifier. url + resource (cf shéma slide 16) $\to$ la ressource est la requête.}\\
+
+\defi{Endpoint}{Point d'entrée de l'API.}
+
+\slide{17}{Nommage important : le endpoint doit correspondre à une requête métier. Note sur l'exemple le /API est important dans le endpoint.}\\
+
+\slide{18}{Les \keyref{https://developer.mozilla.org/fr/docs/Web/HTTP/Methods}{verbes} http sont les opérations que l'on peut demander à l'API.}\\
+
+\slide{20}{Une fois une requête construite et envoyé, c'est le code de retour qui indique si tt c'est bien passé.}\\
+
+\slide{21}{Ex 404, le client à crée une mauvaise requête. 5.xx l'erreur provient du serveur.}\\
+
+\slide{22}{Le param ou body permet d'envoyer des information complémentaires lors d'une requete. Attention le Endpoint est bien l'entièreté du https:... et pas uniquement le /users/1 (qui ici serait plus la ressource.)}\\
+
+\slide{23}{Ici le contenu peut être vide (souvent le cas sur une demande de GET).}\\
+
+\slide{24}{Négociation de contenue : ce que la requête envoie (content-type) et ce qu'elle attend en retour (accept). Cette partie est contenue dans le header de la requête.}\\
+%%--------------------------------------------------------------------------------------------------------------------------------
+
+\section{API en ASP.Net}
+
+\note{Controller est le endpoint de l'application. C'est une classe.}
+
+\rem{Swagger}{Permet de voir les ressource que l'on a dans l'API. Correspond à la liste des controller.}\\
+
+\note{Attention les API changent pas mal entre les version de .NET.}\\
+
+\rem{Pour créer une API}{Créer un projet API : ASP with .NET Core. Type d'authentification : pour la sécurité.}\\
+
+\keyword{https://fr.wikipedia.org/wiki/CURL}{Curl}{ est une interface en ligne de commande, destinée à récupérer le contenu d'une ressource accessible par un réseau informatique.}\\
+
+\rem{Pour faire des requêtes directement depuis c\#}{voir : \url{https://docs.microsoft.com/fr-fr/aspnet/core/fundamentals/http-requests?view=aspnetcore-6.0}. On utilise l'interface \incode{IHttpClientFactory}.}\\
+
+\rem{Pour tester une requete get}{On peut mettre dans le browser le endpoint et cela effectue automatiquement une requete get.}\\
+
+\rem{Pour tester l'API}{On peut passer par le site \keyref{https://www.postman.com/}{postman} $\to$ un peu comme swagger (inclues avec visual studio 2022) mais en plus évolué.}\\
+
+\rem{Sur le type de retour de l'API}{L'API ne retourne pas des classe de base mais des DTO. Les controller doivent renvoyer des DTO.}\\
+
+\rem{Sur la durée de vie des controlleurs}{Lors de la requete l'objet controller est crée, utilisé, puis détruit directement aprés. Il n'y a pas de persistence des controlleurs entre les requetes.}\\
+
+\rem{Sur les types de retour dans L'API}{voir \url{https://docs.microsoft.com/fr-fr/aspnet/core/web-api/action-return-types?view=aspnetcore-6.0}, pour la gestion des erreurs et des choses comme sa.}\\
+
+\rem{Sur les liaisons de données en ASP.Net}{POur plus de détail sur [FromBody], [FromQuery] voir \url{https://docs.microsoft.com/fr-fr/aspnet/core/mvc/models/model-binding?view=aspnetcore-6.0}.}\\
+
+\rem{Sur le découpage d'un projet ASP Net}{appsetting.json et appsetting.json.development : contient les log de la version release et de la version debug. Dans les properties on a lunchSetting.json qui contient notamment l'url de l'application, le nom du projet, des options diverses, les options swagger.}\\
+
+\rem{Dans le Program.cs}{Les \input{Service} servent à configurer l'API}
+
+\rem{Sur les DTO}{En théorie il faudrait mettre les setter au moins en private (voir en readonly) et gérer via le constructeur. $\to$ peut cependnat poser des problèmes avec certaines fonctions de mapping qui viennent se rajouter par dessus.}\\
+
+\note{Sur les potentiels problèmes de versionning, voir : \url{https://referbruv.com/blog/posts/integrating-aspnet-core-api-versions-with-swagger-ui}.}\\
+
+\rem{Sur le mapping}{On peut utiliser Automappeur pour passer de POCO à DTO facilement. voir \url{https://dev.to/moe23/add-automapper-to-net-6-3fdn}.}\\
+
+\rem{Pour l'utilisation d'un DbContext}{voir \url{https://docs.microsoft.com/fr-fr/ef/ef6/fundamentals/configuring/code-based} et \url{https://docs.microsoft.com/fr-fr/aspnet/core/data/ef-mvc/intro?view=aspnetcore-6.0}.}\\
+
+\rem{Dans le DbContext}{Il faut avoir des property DbContext correspondant aux tables dans la base de donnée.}\\
+
+%%--------------------------------------------------------------------------------------------------------------------------------1
+%% Glossaires
+\newpage
+\printglossary[type=\acronymtype]%\addcontentsline{toc}{chapter}{Acronymes}
+%\glsaddall% force l'apparition de tt les entrées du glossaire
+\glsaddallunused % meme chose que addall mais ne force pas la numéroattion dans la liste d'acronyme
+%\printunsrtglossary[type=main]
+\printglossary[type = main,nonumberlist]%\addcontentsline{toc}{chapter}{Glossaire}
+
+\end{document}
+\end{document}

@@ -27,7 +27,8 @@ namespace CompleteDemo.Persistance
         {
             base.OnModelCreating(modelBuilder);
 
-            EntityTypeBuilder<UserEntity> entityTypeBuilder = modelBuilder.Entity<UserEntity>();
+            // sert pour la suite et est de toute facon nécessaire pour utiliser les [Tables], [Key]
+            EntityTypeBuilder<UserEntity> entityTypeBuilder = modelBuilder.Entity<UserEntity>(); 
 
             //[Column("Pseudo")] //Si nom de colonne différent
             //entityTypeBuilder.Property(u => u.Login).HasColumnName("Pseudo");
