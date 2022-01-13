@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using poec.sql.dtos;
 using Xunit;
 
@@ -5,8 +6,8 @@ namespace poec.sql.repository.tests;
 
 public class SqlRepositoryTest
 {
-    private SqlDbContext SqlDbContext { get; }
-    private UserSqlRepository UserSqlRepository { get; }
+    private DbContext SqlDbContext { get; }
+    private IUserRepository UserSqlRepository { get; }
 
     public SqlRepositoryTest()
     {

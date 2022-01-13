@@ -1,0 +1,156 @@
+%\listfiles
+\documentclass[a4paper,12pt,twoside]{article}
+
+%% packages
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,mathrsfs} 
+%\usepackage{import}
+\usepackage{float, subfig, caption}
+\usepackage{libertine}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{xcolor} %/ pour \Definecolor
+\usepackage[pdftex,final=true]{hyperref}
+%\usepackage[]{hyperref}
+\hypersetup{
+colorlinks=true,
+linkcolor=blue,
+urlcolor=magenta, %/ file: adopte également cette couleur
+filecolor=cyan, % ne fonctionne qu'avec run:, 
+%citecolor=red
+}
+\urlstyle{same}
+\usepackage[french]{minitoc}
+\usepackage[acronym,toc,automake]{glossaries} % acronym pour les acronymes et toc pour inclusion des glossary dans la table des matières
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+%\usepackage{minted} % pour code avec coloration dans le texte
+\usepackage{url} % Pour avoir de belles url
+%% package ticks spécifiquement (pour les schémas) 
+%\usepackage{tikz}%
+%\usepackage[top=2cm,bottom=2cm]{geometry}
+%% paramètres tikz
+%\usetikzlibrary{patterns,decorations.pathreplacing,shapes.misc}
+%\usetikzlibrary{calc}
+%\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+%cross/.default={5pt}}
+% \definecolor{Gray}{gray}{0.9}
+% \definecolor{LightCyan}{rgb}{0.88,1,1}
+% \newcommand{\RN}[1]{\textup{\uppercase\expandafter{\romannumeral#1}}}    
+
+%% Macros comme variable
+%\newcommand{\editorpath}{C:/Program Files/Notepad++/notepad++.exe}
+\newcommand{\exemplepath}{../Exercices}
+\newcommand{\urlcolor}{magenta}  % couleur des liens https
+\newcommand{\filecolor}{cyan} % couleur des liens file: file
+\newcommand{\pdfcolor}{red} % couleur des liens file: .pdf
+\newcommand{\foldercolor}{orange} % couleur des liens file: Folder
+\newcommand{\cscolor}{green!60!black} % couleur des liens file: .cs
+\newcommand{\slncolor}{violet} % couleur des liens file: .sln
+\newcommand{\keycolor}{purple} % couleur des liens  de type mot clefs
+%% Macros commun
+\newcommand{\incode}[1]{{\footnotesize\ttfamily #1}} % pour du pseudo-code simple
+\newcommand{\rem}[2]{\noindent\underline{Remarque} : \textit{#1}.\\ \indent #2}
+\newcommand{\note}[1]{\noindent\underline{Note} : \\ \indent #1}
+\newcommand{\defi}[2]{\noindent\underline{Définition} : \textbf{#1}.\\ \indent #2}
+\newcommand{\slide}[2]{\textbullet ~ Slide n°#1 : \indent #2}
+%% Macro spécifiques à ce fichier (pas forcément) : pour fonctionner il faut que le fichier ai été ouvert diretcement dans le dossier du .tex ...
+\newcommand{\fileref}[2]{\hypersetup{urlcolor=\filecolor}\href{file: #1}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\pdfref}[2]{\hypersetup{urlcolor=\pdfcolor}\href{file: #1.pdf}{#2.pdf}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\csref}[2]{\hypersetup{urlcolor=\cscolor}\href{file:\exemplepath /#1.cs}{#2.cs}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\slnref}[2]{\hypersetup{urlcolor=\slncolor}\href{file:\exemplepath /#1.sln}{#2.sln}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\folderref}[2]{\hypersetup{urlcolor=\foldercolor}\href{file:\exemplepath /#1/.}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyref}[2]{\hypersetup{urlcolor=\keycolor} \href{#1}{\textbf{#2}}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyword}[3]{\noindent\underline{Mot clef} : \keyref{#1}{#2}. \\ \indent #3}
+%% Macro spécifiques à ce fichier (pas forcément)
+\newcommand{\dpat}[7]{
+\noindent \underline{Pattern} : \textbf{#1}, \indent (type : \textit{#2}) \\
+\underline{Description} : \indent #3 \\
+\underline{Exemple} : \indent #4 \\
+\noindent \underline{Avantages} : 
+\begin{itemize}
+ #5
+\end{itemize}
+\noindent \underline{Inconvénients} : 
+\begin{itemize}
+ #6 
+\end{itemize}
+\underline{Liens} : #7 
+}
+
+%% Infos document
+% Titre
+\title{Notes sur le module : \textit{Git et GitHub}.}
+% auteur
+\author{Armel Pitelet}
+% date de création du document
+\date{\today}
+
+%% Glossaire, acronymes et index
+\makeglossaries
+
+%% Glossaire et acronyme (déclarations)
+
+% DIP : exemple de formalisme
+\newglossaryentry{gl-dip}{
+name = {DSP},
+description = {la description détaillé}
+}
+\newglossaryentry{ac-dip}{
+type = \acronymtype, name = {DSP}, 
+description = {Nom simple}, 
+first = {Première occurence\glsadd{gl-dip}}, 
+see = [Glossaire:]{gl-dip}
+}
+
+
+\begin{document}
+%% Organisation globale 
+\maketitle
+\tableofcontents
+
+%%--------------------------------------------------------------------------------------------------------------------------------
+%% Contenue
+\section{GitHub}
+
+\note{Il faut faire le readme le plus vite possible.}\\
+
+\note{Il faut faire des \textit{issue} pour chaque tache à réaliser.}\\
+
+\rem{Sur la partie project}{En utilisant le template \textbf{kanban} on a ensuite accès à un tableau type agile (Todo, in progress, done). Une fois dans ce menu on peut également assigné une personne à une tache.}\\
+
+\rem{Sur les pull-request}{La syntax \# issu number peut être utilisé dans le comment d'une pull request pour mentionner la résilution d'une \textit{issue} en particulier.}\\
+
+\defi{Code smells}{Petite typo, code inutile, redondance inutiles, mauvaise visibilité, mauvaise convention de nommage...}\\
+
+\note{\keyref{https://www.sonarqube.org/}{Sonarqube} et \keyref{https://sonarcloud.io/}{Sonarcloud} permettent l'analyse du code : coverage, code smells, duplication de code, vulnérabilité...}\\
+
+\rem{Lors d'une pull request}{Il vaut mieux faire des commentaires pour puis les résoudre.}\\
+
+\rem{Sur le squash}{Permet de compacter les différents commits pour les fusionner en un seul (utile si beaucoup de commits pas très utiles).}\\
+
+\rem{Sur les forks}{On peut faire des \textit{forks} qui vont ouvrir un nouveau repo puis pull request ces \textit{forks} pour les remerge dans le repos principale.}\\
+
+\note{Pendant un \textit{pull request} tt les nouveaux commits de la branche en question apparaitront dans la pull request. Cela permet de modifier le code de la branche pendant l'opération de pull request.}\\
+
+\note{Il est possible de faire des branches à partir de branches, puis de pull request pour merge ces sous branches dans une branche.}\\
+
+\note{\incode{git push --set-upstream origin branch_name} permet de pousser une branche locale sur le github.}\\
+
+\rem{Sur les Actions}{Il faut utiliser un fichier action.yml pour configurer les différentes actions qui doivent être réalisé correctement pour valider un pull-request (compilation du code, test sonar, test unitaire,...). Voir le \keyref{https://github.com/SonarSource/sonarcloud-github-action}{github} de sonar cloud pour commencer ce genre de chose}\\
+
+
+
+%%--------------------------------------------------------------------------------------------------------------------------------1
+%% Glossaires
+\newpage
+\printglossary[type=\acronymtype]%\addcontentsline{toc}{chapter}{Acronymes}
+%\glsaddall% force l'apparition de tt les entrées du glossaire
+\glsaddallunused % meme chose que addall mais ne force pas la numéroattion dans la liste d'acronyme
+%\printunsrtglossary[type=main]
+\printglossary[type = main,nonumberlist]%\addcontentsline{toc}{chapter}{Glossaire}
+
+\end{document}
+\end{document}

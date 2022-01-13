@@ -2,8 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using poec.sql.dtos;
+using poec.sql.repository;
 using Xunit;
 
+/// <summary>
+/// Le GetPredicate Devrait être implémenté.
+/// </summary>
 namespace poec.fake.repository.tests;
 
 /// <summary>
@@ -11,7 +15,8 @@ namespace poec.fake.repository.tests;
 /// </summary>
 public class UserFakeRepositoryTest
 {
-    private UserFakeRepository Repo { get; }= new();
+    //private IUserRepository Repo { get; }= new UserFakeRepository(); // doit etre comme sa
+    private UserFakeRepository Repo { get; } = new();// Mauvaise manière de faire car n'implémente pas l'interface 
 
     [Fact]
     public void GetTest()
@@ -37,7 +42,7 @@ public class UserFakeRepositoryTest
         //équivalet à Func<UserSqlDto, bool> predicate = user => user.Birthday.Year == 1990;
 
         //Action
-        IList<UserSqlDto> userSqlDto = Repo.GetPredicate(Predicate);
+        IList<UserSqlDto> userSqlDto = Repo.GetPredicate(Predicate); // qu'il faut alors implémenter à cause de l'interface
 
         //Assert
         Assert.NotNull(userSqlDto);

@@ -1,12 +1,14 @@
-﻿using poec.sql.dtos;
+﻿using Microsoft.EntityFrameworkCore;
+using poec.sql.dtos;
 
 namespace poec.sql.repository;
 
-public class UserSqlRepository
+public class UserSqlRepository :IUserRepository
 {
-    private SqlDbContext SqlContext { get; }
+    private DbContext SqlContext { get; } // Il vaut mieux utiliser un DbContext plûtot qu'un SqlDbContext
+                                             // pour généraliser le Repository (et pouvoir changer de type de context)
 
-    public UserSqlRepository(SqlDbContext sqlContext)
+    public UserSqlRepository(DbContext sqlContext)
     {
         SqlContext = sqlContext;
     }

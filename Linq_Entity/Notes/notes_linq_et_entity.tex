@@ -149,15 +149,15 @@ Donne accès à des listes en base de donnée sur lesquel en va pouvoir venir fa
 
 Dans poec.sql.repository (SqlDbContext). On a besoin des package Microsoft.EntityFrameworkCore et Microsoft.EntityFrameworkCore.SqlServer
 
-\rem{Lazi Loading Enabled}{permet de faire eleve.classe, ou classe.eleve, pour arriver à eleve.classe.eleve....A creuser...}\\
+\rem{Lazi Loading Enabled}{Chargement différé. permet de faire eleve.classe, ou classe.eleve, pour arriver à eleve.classe.eleve....A creuser... Si activé les table sont récupéré à la volé ce qui mène à plus de requete qu'un chargement au début (il va faire des requetes à des moments non maitrisés). En le désactivant, soit on ne charge pas les données de la table, soit on les charges au moment de la demande via une seule requête.}\\
 
-\rem{AutoDetectChangesEnabled}{Sauvegarde automatique des changement, peut être dangeureux car on peut enregistrer des choses que l'on ne veut pas. On préfère le apsser à false pour maitriser la donnée de bout en bout.}\\
+\rem{AutoDetectChangesEnabled}{Sauvegarde automatique des changements, peut être dangeureux car on peut enregistrer des choses que l'on ne veut pas. On préfère le passer à false pour maitriser la donnée de bout en bout. Entity track tt les changement d'état d'un objet, si autodetectChangeEnable est à false, les changement ne sont plus tracké en permanence mais uniquement explicitement via SaveChange.}\\
 
 \rem{DbSet}{Exécute une requete uniquement au moment ou l'on demande de récupérer un élément. Renvoie la plupart du temps une image de la base de donnée et ne fera la requete qu'au dernier moment. C'est une projection de la base de donnée.}\\
 
 \rem{DbContext}{Objet qui fait le lien avec la base de donnée.}\\
 
-\rem{Sur le mapping}{On peut le faire coté SqlDto (et un peu du DbContext) via des attribut décorateur ou bien directement dans le DbContext (voir DbContext.cs). Il faut faire soit l'un soit l'autre.}\\
+\rem{Sur le mapping}{On peut le faire coté SqlDto (et un peu du DbContext) via des attribut (annotation [blabla] au dessus d'une classe, méthode, property) ou bien directement dans le DbContext (voir DbContext.cs). Il faut faire soit l'un soit l'autre.}\\
 
 \keyword{https://docs.microsoft.com/fr-fr/dotnet/api/system.data.entity.dbcontext.savechanges?view=entity-framework-6.2.0}{SaveChanges}{Permet de valider la transaction [qu'on appelle commit](tant que l'on ne fait pas le save change, le DbContext n'applique pas les modification à la BDD) $\to$ Principe de transaction (possible aussi en SQL pure). En cas d'erreur le DbContext fait un roll back depuis le dernier \incode{SaveChanges}. \incode{SaveChange} retourne un int correspondant au nombre de ligne affectée par les changement. Cela permet de tester la réussite ou non d'"une opération \incode{Remove} par exemple.}\\
 
@@ -168,6 +168,14 @@ Dans poec.sql.repository (SqlDbContext). On a besoin des package Microsoft.Entit
 \note{SqlContext.Where() retourne un IQueryable qui a le comportement donnée dans la remarque suivante.}\\
 
 \rem{Sur les performance}{SqlContext.Set<UserSqlDto>().Where(), projette une requete mais ne l'éxécute pas immédiattement. Il faut ensuite faire un .Fisrt, .List, ... pour que la requete soit éxécuté. Cela permet de ne pas faire de requet inutile à chauqe Set ou Where et de ne les éxécuter qu'au besoin}\\
+
+\rem{sur le optionBuilder}{Il est préférable de le sortir du DbContext et le passer en paramètre pour pouvoir découpler la ConnectionString du DbContext.}\\
+
+\rem{Sur les UserRepository}{Il faut une interface sur les XUserRepository pour découpler le UserRepository du type de SQL que l'on utilises. Les fichiers de test et d'utilisation utilise alors un IUserRepository au lieu d'un SqlUserRepository}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/ef/core/dbcontext-configuration/}{Queries option}{Voir ce lien pour configurer les options proprement à la place de ce que l'on à fait dans SqlDbContext.OnConfiguration.}\\
+
+\note{Il faut Entity Framework Cor 3.x pour fonctionner avec Wcf et .Net stadart 2.0}
 
 \section{Divers}
 
@@ -182,6 +190,16 @@ Dans poec.sql.repository (SqlDbContext). On a besoin des package Microsoft.Entit
 \rem{Bonne pratique}{Il vaut mieux renvoyer des interfaces si possible (IList au lieu de List).}\\
 
 \note{On peut utiliser \incode{default} pour forcer une valeur par défaut sur un des paramètres passés lors de l'appel d'une méthode, d'une instanciation ou autre.}\\
+
+\rem{Sur les Dto}{Attention les dto sont réservé à la couche de transfert (communication back et front : communication client et serveur). En BDD on parlera plutôt des Entity (entre le back et le BDD). Exemple : UserEntity au lieu de UserSqlDto.}\\
+
+\rem{Select}{Permet de faire une projection d'un objet vers l'espace des f(objet).}\\
+
+\rem{Sur BDD}{On peut faire miger les base de données. Voir \url{https://docs.microsoft.com/fr-fr/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli}.}\\
+
+\rem{Sur la migration}{Attention pour faire une migration il faut passer par un projet en .NET 6 et pas en standart 2.0 (juste pour faire la migration). Il faut juste référencer le projet en .Net 6 pour faire migrer l'ensembel de la solution.}\\
+
+\note{Il faut probablement utiliser entity framework et par core pour que tt fonctionne avec wcf.}\\
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires

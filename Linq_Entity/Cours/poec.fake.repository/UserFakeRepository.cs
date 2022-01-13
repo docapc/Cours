@@ -1,8 +1,9 @@
 ﻿using poec.sql.dtos;
+using poec.sql.repository;
 
 namespace poec.fake.repository;
 
-public class UserFakeRepository
+public class UserFakeRepository : IUserRepository
 {
     private IList<UserSqlDto> Users { get; } = new List<UserSqlDto>();
     private IDictionary<short, UserSqlDto> KeyUsers { get; }

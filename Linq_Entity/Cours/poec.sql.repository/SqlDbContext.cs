@@ -4,7 +4,7 @@ using poec.sql.dtos;
 
 namespace poec.sql.repository;
 
-public class SqlDbContext : DbContext
+public class SqlDbContext : Microsoft.EntityFrameworkCore.DbContext
 {
     private string ConnectionString { get; }
 
