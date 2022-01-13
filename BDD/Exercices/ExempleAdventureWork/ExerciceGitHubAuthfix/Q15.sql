@@ -9,6 +9,9 @@ catégorie de produits de premier niveau par rapport à chaque ville. */
 --Il nous faut des variables pour ce genre de choses!!! ou une autre table
 
 SELECT *
+FROM SalesLT.Address
+
+SELECT *
 FROM SalesLT.ProductCategory
 
 --Retrouve les trois villes les plus importantes
@@ -24,18 +27,19 @@ ORDER BY MoneyByCity DESC
 
 --SELECT a.City, pc.ParentProductCategoryID, pc.Name, pc.ProductCategoryID--,SUM(sod.UnitPrice*sod.OrderQty) as MoneyByCity
 --SELECT a.City, pc.ProductCategoryID, pc.Name, pc.ProductCategoryID--,SUM(sod.UnitPrice*sod.OrderQty) as MoneyByCity
-SELECT a.City
---(SELECT COUNT(pc.Name)
---FROM SalesLT.CustomerAddress as ca
---JOIN SalesLT.Address as a ON ca.AddressID = a.AddressID
---JOIN SalesLT.SalesOrderHeader as soh ON ca.CustomerID = soh.CustomerID
---JOIN SalesLT.SalesOrderDetail as sod ON soh.SalesOrderID = sod.SalesOrderID
---JOIN SalesLT.Product as p ON sod.ProductID = p.ProductID
---JOIN SalesLT.ProductCategory as pc ON p.ProductCategoryID = pc.ProductCategoryID 
---WHERE pc.Name = 'Mountain Bikes'
---GROUP BY a.City
---HAVING a.City in ('London', 'Woolston', 'Union City')
---) as Mountain_Bikes,
+SELECT 
+(SELECT COUNT(pc.Name)
+FROM SalesLT.CustomerAddress as ca
+JOIN SalesLT.Address as a ON ca.AddressID = a.AddressID
+JOIN SalesLT.SalesOrderHeader as soh ON ca.CustomerID = soh.CustomerID
+JOIN SalesLT.SalesOrderDetail as sod ON soh.SalesOrderID = sod.SalesOrderID
+JOIN SalesLT.Product as p ON sod.ProductID = p.ProductID
+JOIN SalesLT.ProductCategory as pc ON p.ProductCategoryID = pc.ProductCategoryID 
+WHERE pc.Name = 'Mountain Bikes'
+GROUP BY a.City
+HAVING a.City in ('London','Woolston','Union City')
+					) as Mountain_Bikes
+FROM SalesLT.Address
 --(SELECT COUNT(pc.Name)
 --FROM SalesLT.CustomerAddress as ca
 --JOIN SalesLT.Address as a ON ca.AddressID = a.AddressID
@@ -58,9 +62,21 @@ SELECT a.City
 --WHERE pc.Name = 'Touring Bikes'
 --GROUP BY a.City
 --HAVING a.City in ('London', 'Woolston', 'Union City')) as Touring_Bikes
-FROM SalesLT.Address as a
+
 
 SELECT a.City, COUNT(pc.Name) as Mountain_Bikes
+FROM SalesLT.CustomerAddress as ca
+JOIN SalesLT.Address as a ON ca.AddressID = a.AddressID
+JOIN SalesLT.SalesOrderHeader as soh ON ca.CustomerID = soh.CustomerID
+JOIN SalesLT.SalesOrderDetail as sod ON soh.SalesOrderID = sod.SalesOrderID
+JOIN SalesLT.Product as p ON sod.ProductID = p.ProductID
+JOIN SalesLT.ProductCategory as pc ON p.ProductCategoryID = pc.ProductCategoryID 
+WHERE pc.Name = 'Mountain Bikes' or a.City in ('London', 'Woolston', 'Union City')
+GROUP BY a.City
+--HAVING a.City in ('London', 'Woolston', 'Union City')
+
+
+SELECT COUNT(*) as Road_Bikes
 FROM SalesLT.CustomerAddress as ca
 JOIN SalesLT.Address as a ON ca.AddressID = a.AddressID
 JOIN SalesLT.SalesOrderHeader as soh ON ca.CustomerID = soh.CustomerID
