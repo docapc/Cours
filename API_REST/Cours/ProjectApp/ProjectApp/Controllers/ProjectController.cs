@@ -45,7 +45,7 @@ namespace ProjectApp.Controllers
             //    Description = "desc"
             //};
 
-            var p = _context.Project.Find(id);
+            var p = _context.Project.Find(id); 
 
             var mapProj = _mapper.Map<ProjectDto>(p);
 
