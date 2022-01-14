@@ -187,6 +187,17 @@ see = [Glossaire:]{gl-dip}
 
 \rem{Dans le DbContext}{Il faut avoir des property DbContext correspondant aux tables dans la base de donnée.}\\
 
+\rem{Quelques liens utiles}{\url{https://docs.microsoft.com/fr-fr/aspnet/core/tutorials/first-web-api?view=aspnetcore-6.0&tabs=visual-studio}, \url{https://docs.microsoft.com/fr-fr/aspnet/web-api/overview/advanced/calling-a-web-api-from-a-net-client}, \url{https://docs.microsoft.com/fr-fr/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-6.0}.}\\
+
+\rem{Sur l'envoie d'une requête via client}{On peut faire client.Send(request) ou bien client.MethodeAutiliser("endpoint") sans avoir à construire la request.. client est un HttpClient Class. exemple a \url{https://zetcode.com/csharp/httpclient/}.}\\
+
+\rem{Sur la sécurisation de l'API}{JsonSerializer microsoft \url{https://docs.microsoft.com/fr-fr/dotnet/architecture/microservices/secure-net-microservices-web-applications/}.}\\
+
+\rem{Sur la sérialization en Json}{\net{https://docs.microsoft.com/fr-fr/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-6-0}, ou NewtonSoft : \url{https://www.newtonsoft.com/json}.NewtonSoft semble beaucoup mieux, il n'y a pas besoin de décorer les attribut pour retrouver les bonnes chaines de caractères après sérialisation/désérialisation.}\\
+
+\rem{Sur la migration de base}{Il faut passer par le gestionnaire de passage nugget. Dans le terminal EntityFrameWorkCore\Add-Migration (il faut également EntitityFrameworkCore.Tools). Une fois la migration commencé il faut faire EntityFrameWorkCore\textbackslash update-database.A refaire à chaque nouvelle migration. voir (pour qq chose qui marche) : \url{https://docs.microsoft.com/fr-fr/ef/core/managing-schemas/migrations/?tabs=vs} et \url{https://docs.microsoft.com/fr-fr/ef/core/managing-schemas/migrations/applying?tabs=vs} pour plus de détails. Attention pour jouer avec sa il faut le faire dès la création de la table, avant même le remplissage de la première table.}\\
+
+\rem{Sur le launchsettings.json}{Pour passer par les ligne de commande il faut mettre launchBrowser à faux et launch url a "".}\\
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
 \newpage

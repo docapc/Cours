@@ -10,23 +10,36 @@ namespace Persistance
 
         public DbSet<TestEntity> Tests { get; set; } // Normalement propre à ASP donc l'API
 
+        public TestDbContext()
+        {
+
+        }
         public TestDbContext(DbContextOptions<TestDbContext> options) : base(options)
         {
+
         }
 
+        /// <summary>
+        /// Version sans injection de dépendance
+        /// </summary>
+        //public TestDbContext()
+        //{
+        //    ConnectionString = "Data Source = (LocalDb)\\MSSQLLocalDB; Initial Catalog = PoecEntity; Integrated Security = True;";
+        //}
         //public TestDbContext(string connectionString)
         //{
         //    ConnectionString = connectionString;
         //}
 
         // Devrait être inutile au vu du programme API
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    base.OnConfiguring(optionsBuilder);
-
-        //    optionsBuilder.UseSqlServer(ConnectionString);
-        //}
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+//            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=projectdb;Trusted_Connection=True;"; // pour la migration
+            optionsBuilder.UseSqlServer("Data Source = (LocalDb)\\MSSQLLocalDB; Initial Catalog = PoecEntity; Integrated Security = True;"); // pour la migration 
+        //   optionsBuilder.UseSqlServer(ConnectionString); /pour injection de dépendance
+        }
+        //Data Source = (LocalDb)\\MSSQLLocalDB; Initial Catalog = PoecEntity; Integrated Security = True;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

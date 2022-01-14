@@ -1,13 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Entities
+﻿namespace Models
 {
-    [Table("User")]
-    public class TestEntity
+    public class Test
     {
-        [Key]
-        //[Column("UserId")]
         public short UserId { get; set; }
 
         public string? UserName { get; set; }
@@ -16,12 +10,17 @@ namespace Entities
 
         public DateTime? Birthday { get; set; }
 
-        public TestEntity(short userId, string? userName, string? login, DateTime? birthday)
+        public Test(short userId, string? userName, string? login, DateTime? birthday)
         {
             UserId = userId;
             UserName = userName;
             Login = login;
             Birthday = birthday;
         }
-    }    
+
+        public override string ToString()
+        {
+            return $"Id : {UserId}, Name : {UserName}, Login : {Login}, Birthday : {Birthday}";
+        }
+    }
 }

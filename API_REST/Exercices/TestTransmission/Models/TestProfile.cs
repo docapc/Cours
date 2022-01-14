@@ -2,7 +2,7 @@
 using Dtos;
 using Entities;
 
-namespace API.Model
+namespace Models
 {
     public class TestProfile : Profile
     { 
