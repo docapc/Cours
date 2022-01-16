@@ -4,7 +4,7 @@ public class AddressSqlDto
 {
     public short AddressId { get; set; }
     
-    public short UserId { get; set; } 
+    public UserSqlDto User { get; set; } 
 
     public string Label { get; set; }
 

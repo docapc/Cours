@@ -6,7 +6,7 @@ CREATE TABLE [User]
     Birthday DATETIME
 );
 
-INSERT INTO [User] VALUES ('Alex', 'Lelexxx', '30/10/1990');
+INSERT INTO [User] VALUES ('Alex', 'Lelexxx', '10/30/1990');
 INSERT INTO [User] VALUES ('Toto', null, '4/9/2000 05:01:00');
 INSERT INTO [User] VALUES ('Titi', 'Tit', '1/11/2000');
 INSERT INTO [User] VALUES ('Tutu', null, '4/9/2000 05:00:00');

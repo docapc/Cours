@@ -25,12 +25,12 @@ public class SqlDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         EntityTypeBuilder<UserSqlDto> entityTypeBuilder = modelBuilder.Entity<UserSqlDto>();
-        entityTypeBuilder.HasMany(u => u.Addresses).WithOne();
+        entityTypeBuilder.HasMany(u => u.Addresses).WithOne(a => a.User); // jointure en API Fluent
         entityTypeBuilder.Navigation(u => u.Addresses).AutoInclude(); //Chargement automatique de la propriété de dépendance
 
         EntityTypeBuilder<AddressSqlDto> addressEntityBuilder = modelBuilder.Entity<AddressSqlDto>();
-        addressEntityBuilder.ToTable("Address").HasKey(a => a.AddressId);
-        //addressEntityBuilder.HasOne(a => a.User).WithMany();
+        addressEntityBuilder.ToTable("Address").HasKey(a => a.AddressId); // 
+        addressEntityBuilder.HasOne(a => a.User).WithMany(u => u.Addresses);
         //addressEntityBuilder.Property(a => a.Address).HasColumnName("Address"); //équivalent à [Column("Address")]
 
         //si pas de clé
