@@ -195,9 +195,18 @@ see = [Glossaire:]{gl-dip}
 
 \rem{Sur la sérialization en Json}{\net{https://docs.microsoft.com/fr-fr/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-6-0}, ou NewtonSoft : \url{https://www.newtonsoft.com/json}.NewtonSoft semble beaucoup mieux, il n'y a pas besoin de décorer les attribut pour retrouver les bonnes chaines de caractères après sérialisation/désérialisation.}\\
 
-\rem{Sur la migration de base}{Il faut passer par le gestionnaire de passage nugget. Dans le terminal EntityFrameWorkCore\Add-Migration (il faut également EntitityFrameworkCore.Tools). Une fois la migration commencé il faut faire EntityFrameWorkCore\textbackslash update-database.A refaire à chaque nouvelle migration. voir (pour qq chose qui marche) : \url{https://docs.microsoft.com/fr-fr/ef/core/managing-schemas/migrations/?tabs=vs}.}\\
+\rem{Sur la migration de base}{Il faut passer par le gestionnaire de passage nugget. Dans le terminal EntityFrameWorkCore\Add-Migration (il faut également EntitityFrameworkCore.Tools). Une fois la migration commencé il faut faire EntityFrameWorkCore\textbackslash update-database.A refaire à chaque nouvelle migration. voir (pour qq chose qui marche) : \url{https://docs.microsoft.com/fr-fr/ef/core/managing-schemas/migrations/?tabs=vs} et \url{https://docs.microsoft.com/fr-fr/ef/core/managing-schemas/migrations/applying?tabs=vs} pour plus de détails. Attention pour jouer avec sa il faut le faire dès la création de la table, avant même le remplissage de la première table.}\\
 
 \rem{Sur le launchsettings.json}{Pour passer par les ligne de commande il faut mettre launchBrowser à faux et launch url a "".}\\
+
+\rem{Sur Swagger}{Ce dernier utilise le Open APi Specification : \url{https://swagger.io/specification/}.}\\
+
+\rem{Sur les génériques}{where T: class, new (). T doit être une classe, et doit avoir un constructeur (pour povoir l'instancier).}\\
+
+\rem{Sur ou mettre la connection string}{Il faut la décaller dans un appsetting dans persistence.}
+
+\rem{Sur Resharp}{Un framework qui permet de générer des appel http (sans avoir à manipuler dircectement le httpClient.)}
+
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
 \newpage

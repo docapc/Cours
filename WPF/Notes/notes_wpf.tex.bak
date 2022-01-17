@@ -82,7 +82,7 @@ filecolor=cyan, % ne fonctionne qu'avec run:,
 
 %% Infos document
 % Titre
-\title{Notes sur le module : \textit{WPF.}
+\title{Notes sur le module : \textit{WPF.}}
 % auteur
 \author{Armel Pitelet}
 % date de création du document
@@ -112,6 +112,8 @@ see = [Glossaire:]{gl-dip}
 \tableofcontents
 
 %%--------------------------------------------------------------------------------------------------------------------------------
+\section{Bases}
+
 \keyword{WPF}{https://fr.wikipedia.org/wiki/Windows_Presentation_Foundation}{Permet de créer des application en mode fenêtre.Pour utiliser WPF, soit on passe par du .Net Framework (ancienne version) soit on passe sur du .Net Core (nouvelle).}\\
 
 \rem{XAML}{Language balise associé au WPF. C'est via XAML que l'on définit le design. Voir les différents layout ci dessous}\\
@@ -144,7 +146,54 @@ see = [Glossaire:]{gl-dip}
 
 \note{Pour de la génération de classe automatique \url{https://github.com/AutoFixture} et \url{https://github.com/bchavez/Bogus}.}\\
 
-\rem{Utiliser les ToString}{Mauvaise pratique pour faire de l'affichage en WPF}
+
+\rem{Utiliser les ToString}{Mauvaise pratique pour faire de l'affichage en WPF}\\
+
+\section{Event et Binding}
+
+\rem{Sur les events}{Les events sont en fait des implémentation du pattern observateur qui permettent de déclencher les évènement sur un changement d'état. POur ce sur quoi c'est basé Nico pour son cour voir : \url{https://docs.microsoft.com/fr-fr/dotnet/standard/events/}.}\\
+
+\rem{Sur le remplacant de WCF}{Il s'agit de gRPC : google remote protocole col (service gRPC ASP.Net Core). S'appuie sur http 2 (sérialisation binaire). Très proche sur du wcf (basé sur SOAP : sérialisation xml) mais avec de bien meilleur performance.}\\
+
+\rem{Sur le binding}{Il est possible d'utiliser le Binding pour relier n'importe quel élément. Attention on ne bind que les propriétés, pas les attributs.}\\
+
+\rem{DataContext}{Définit la source des bindings. (peut etre un objet fenêtre ou un objet de type manager, ou autre...).}\\
+
+\rem{ObservableCollection}{Permet de définir des collections observables : permet de s'abonner par la suite pour suivre les changements.}\\
+
+\rem{Sur IList et IEnumerable}{Si l'on veut faire la modif autant passer par le IList mais si l'on veut just eliste autant avoir un IEnumerable pour garder la généricité la plus haute possible.}\\
+
+\rem{Sur le mapping}{Il ne fuat pas faire trop de profile de mapping, mais les grouper par grand groupes d'objets (et pas par objets).}\\
+
+\rem{Sur la notion de Model}{ Un ObjectModel (dédié à la vue) sert pour l'affichage : c'est encore différent d'un Dto(transfert sérialisation), d'une Entity (classe de bdd) ou d'un objet métier. Il peut contenir de la validation de données supplémentaire.}\\
+
+\rem{Sur les Entity}{Les Entities peuvent contenir des méthodes.}\\
+
+\rem{Element Name}{après un binding = qqchose (comme SelectedItem), ElementName=UnAutre élément () permet de binder à autre chose que le context courant (sur un autre élément graphique). On peut également changer le \incode{mode} de binding (voir one way, two way, ...). \incode{UpdateSourceTrigger} permet de changer l'élément déclencheur (PropertyChanged,...)}\\
+
+\rem{Pour les changement sur les property soient appliqué sans passer par un SelectedItem}{On peut utiliser INotifyPropertyChanged dans nos modèles. Cela impose de définir un évènement handler PropertyChangedEventHandler. L'implémentation de la méthode associée impose de changer les propriétés classiques en attribut + propriété set qui track le changement (voir le UserModel dans le code de nico.). En fait SelectedItem a en interne ces propriété qui font que les changement dessus sont suivis.}\\
+
+\rem{L'annotation [CallerMemberName]}{devant un argument dans une méthode permet de récupérer le nom de la propriété qui appel cette méthode.}\\
+
+\rem{ILSPie}{permet de récupérer du code décompiler à partir d'un ..dll. Le fichier pdb permet de faire le lien entre le .dll et le code .cs}\\
+
+\rem{Lors d'un Binding : Trois questions à se poser}{\begin{itemize}
+\item 1 - Quel est le DataContext? Si il n'y en a pas on remonte à l'élément du dessus. (dans le xaml, jusqu'au niveau de la fenêtre.). Ici on a set le DataContext au niveau de la main window.
+\item 2 - Quelle est la propriété source (itemsource ou à droite du binding), propriété cible (selecteditem ou à gauche du binding),
+\item 3 - Quel mode de binding utilisé (dans un sens, dans l'autre, dans les deux sens, property Mode=... dans un binding).\\
+\end{itemize}}
+
+\rem{Exemple implicite du binding}{Le textBlock Text = "{Binding Name}" est un binding implicite dans le context définies par itemsource}.\\
+
+\rem{Pour un équivalent du apt get-install}{Voir ChocolaTey (présent dans node.js) pour un équivalent sous windows.}\\
+
+\note{Voir Bogus pour un autre genre de AutoFixture.}\\
+
+\rem{Sur les converter}{Il faut hériter de IValueConverter et décorer avec ValueConversion(source, destination). Il faut ensuite implémenter Convert (du modèle à la vue) et ConvertBack(de la vue vers le modèle). Dans les namespace (xlmns en début de fichier xaml), puis les ressources (Env Windows ressource) il faut ensuite inclure les converter. On peut ensuite utiliser le converter.}\\
+
+\rem{Sur la vue}{On appel vue la partie xaml du wpf. Les donnéès provenant de la vue proviennent de la fenêtre. Voir la v2 du code de nico.}\\
+
+
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
 \newpage

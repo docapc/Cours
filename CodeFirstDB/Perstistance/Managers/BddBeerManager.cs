@@ -26,6 +26,7 @@ namespace Perstistance.Managers
         {
             // Obligatoirement ici pou rréussir l'injection de dépendance...
             _beerRepository = new BeerRepository(new WikiBeerSqlContext(@"Server=(localdb)\MSSQLLocalDB;Database=WikiBeer"));
+            //_beerRepository = new BeerRepository(new WikiBeerSqlContext());
         }
 
         #region CRUD

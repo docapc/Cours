@@ -1,0 +1,51 @@
+﻿<Window x:Class="Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Column="0" Orientation="Vertical">
+            <ListBox ItemsSource="{Binding}" x:Name="ListId">
+<!--ce binding ItemsSource est nécessaire pour alimenter la liste.--> 
+                <ListBox.ItemTemplate>
+                    <DataTemplate> 
+<!--dans l'environnement DataTemplate, on bind implicitement au itemsource-->
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Id : " />
+                            <TextBlock Text="{Binding BeerId}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>               
+        </StackPanel>
+
+        <WrapPanel Grid.Column="1" Margin="50,50,0,0">
+            <StackPanel DataContext="{Binding SelectedItem,ElementName=ListId}" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Name : " />
+<!--,  UpdateSourceTrigger=PropertyChanged n'est pas nécessaire car 
+on utilise SelectedItem. Il le serait si l'on passe par un objet intermédiaire
+comme dans l'exemple-->
+                    <TextBlock Text="{Binding Name}" />
+                </StackPanel >
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Degree : " />
+                    <TextBlock Text="{Binding Degree}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Ibu : " />
+                    <TextBlock Text="{Binding Ibu}" />
+                </StackPanel>
+            </StackPanel>
+        </WrapPanel>
+
+    </Grid>
+</Window>

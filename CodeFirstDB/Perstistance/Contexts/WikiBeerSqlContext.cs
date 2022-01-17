@@ -20,9 +20,9 @@ namespace Contexts
         // Gestion
         private string ConnectionString { get; }
 
-        public WikiBeerSqlContext()  
-        {
-        }
+        //public WikiBeerSqlContext()  
+        //{
+        //}
 
         /// <summary>
         /// Nécessaire au bon fonctionnement avec l'API (au moins pour la migration)
@@ -31,12 +31,16 @@ namespace Contexts
         //public WikiBeerSqlContext(DbContextOptions<WikiBeerSqlContext> options) : base(options)
         //{
         //}
+        public WikiBeerSqlContext(DbContextOptions<WikiBeerSqlContext> options) : base(options)
+        {
+        }
 
         public WikiBeerSqlContext(string connectionString)
         {
             ConnectionString = connectionString;
         }
 
+		/// TODO Ici il faut tester si UseSqlServer à déja été appelé et donner ou non la chaine de connection.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
