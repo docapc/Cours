@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CodeFirstDB
+namespace Contexts
 {
-    public class WikiBeerContext : DbContext
+    public class WikiBeerSqlContext : DbContext
     {
         // Tables
         public DbSet<BeerEntity> Beers { get; set; }
@@ -19,15 +19,19 @@ namespace CodeFirstDB
 
         // Gestion
         private string ConnectionString { get; }
+
+        public WikiBeerSqlContext()         {
+        }
+
         /// <summary>
         /// Nécessaire au bon fonctionnement avec l'API (au moins pour la migration)
         /// </summary>
         /// <param name="options"></param>
-        public WikiBeerContext(DbContextOptions<WikiBeerContext> options) : base(options)
+        public WikiBeerSqlContext(DbContextOptions<WikiBeerSqlContext> options) : base(options)
         {
         }
 
-        public WikiBeerContext(string connectionString)
+        public WikiBeerSqlContext(string connectionString)
         {
             ConnectionString = connectionString;
         }

@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using Contexts;
+using Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,33 +8,37 @@ using System.Threading.Tasks;
 
 namespace Perstistance.Managers
 {
-    internal class BddBeerManager : IBeerRepository
+    public class BddBeerManager : IBeerRepository
     {
         private readonly IBeerRepository _beerRepository;
+        //private readonly WikiBeerSqlContext _beerRepository;
 
-        public BddBeerManager()
+        public BddBeerManager(string connectionString)
         {
-            _beerRepository = new BeerRepository();
+            _beerRepository = new BeerRepository(new WikiBeerSqlContext(connectionString));
         }
 
-        public void CreateBeer(BeerEntity beerEntityToCreate)
+        #region CRUD
+        //C:\Users\armel\git\Formation_IPME_dot_net\Cours\CodeFirstDB\Perstistance\Contexts\WikiBeerSqlContext.cs
+        public BeerEntity CreateBeer(BeerEntity beerEntityToCreate)
         {
-            throw new NotImplementedException();
+            return _beerRepository.CreateBeer(beerEntityToCreate);
         }
 
-        public void DeleteBeerById(Guid id)
+        public IList<BeerEntity> GetAllBeers()
         {
-            throw new NotImplementedException();
+            return _beerRepository.GetAllBeers();
         }
 
-        public IEnumerable<BeerEntity> GetAllBeers()
+        public BeerEntity? GetBeerById(Guid id)
         {
-            throw new NotImplementedException();
+            return _beerRepository.GetBeerById(id);
         }
 
-        public BeerEntity GetBeerById(Guid id)
+        public bool DeleteBeerById(Guid id)
         {
-            throw new NotImplementedException();
+            return _beerRepository.DeleteBeerById(id);
         }
+        #endregion
     }
 }

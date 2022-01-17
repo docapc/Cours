@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Contexts;
+using Dtos;
+using Microsoft.AspNetCore.Mvc;
+using Perstistance;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,11 +12,24 @@ namespace API.Controllers
     [ApiController]
     public class BeerController : ControllerBase
     {
+        private readonly IMapper _beerMapper;
+        private readonly IBeerRepository _beerManager; // pour ne pas avoir à réecrire les CRUD...
+        //private readonly WikiBeerSqlContext _beerContext; // avec sa on doit se retapper les crude en version API
+
+        public BeerController(IBeerRepository beerManager, IMapper beerMapper)
+        //public BeerController(WikiBeerSqlContext beerContext, IMapper beerMapper)
+        {
+            //_beerContext = beerContext;
+            _beerManager = beerManager;
+            _beerMapper = beerMapper;
+        }
+
         // GET: api/<BeerController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<BeerDto> Get()
         {
-            return new string[] { "value1", "value2" };
+            var allBeers = _beerMapper.Map<IEnumerable<BeerDto>>(_beerManager.GetAllBeers());
+            return allBeers;
         }
 
         // GET api/<BeerController>/5

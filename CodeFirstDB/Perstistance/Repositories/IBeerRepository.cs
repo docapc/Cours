@@ -4,18 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+/// <summary>
+/// TODO : Rajouter le update pui scompléter dans BeerRepository et BddBeerManager
+/// </summary>
 namespace Perstistance
 {
     public interface IBeerRepository
     {
-        IEnumerable<BeerEntity> GetAllBeers();
+        BeerEntity CreateBeer(BeerEntity beerEntityToCreate);
 
-        BeerEntity GetBeerById(Guid id);
+        IList<BeerEntity> GetAllBeers();
 
-        void CreateBeer(BeerEntity beerEntityToCreate);
+        BeerEntity? GetBeerById(Guid id);
 
-        void DeleteBeerById(Guid id);
+        bool DeleteBeerById(Guid id);
 
     }
 }
