@@ -24,12 +24,12 @@ builder.Services.AddAutoMapper(typeof(DtoEntityProfile).Assembly);
 //builder.Services.AddDbContextPool<WikiBeerSqlContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultContext")));
 //builder.Services.AddDbContextPool<WikiBeerSqlContext>(opt => opt.UseSqlServer(ConnectionStrings, b => b.MigrationsAssembly("Persistance")));
 
-//builder.Services.AddScoped<IBeerRepository, BddBeerManager>();
+builder.Services.AddScoped<IBeerRepository, BddBeerManager>();
 //builder.Services.AddScoped<IBeerRepository, BeerRepository>();
-builder.Services.AddDbContext<WikiBeerSqlContext>(options =>
-   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultContext")));
+//builder.Services.AddDbContext<WikiBeerSqlContext>(options =>
+//   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultContext")));
 // a creuser à la place de ce qu'il y a au dessu: https://www.c-sharpcorner.com/blogs/net-core-mvc-with-entity-framework-core-using-dependency-injection-and-repository
-//builder.Services.AddDbContextPool<WikiBeerSqlContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultContext")));
+builder.Services.AddDbContextPool<WikiBeerSqlContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultContext")));
 
 
 var app = builder.Build();

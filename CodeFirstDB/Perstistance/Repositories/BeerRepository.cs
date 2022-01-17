@@ -7,6 +7,10 @@ namespace Perstistance
     {
         private DbContext BeerContext { get; }
 
+        public BeerRepository()
+        {
+        }
+
         public BeerRepository(DbContext beerContext)
         {
             BeerContext = beerContext;

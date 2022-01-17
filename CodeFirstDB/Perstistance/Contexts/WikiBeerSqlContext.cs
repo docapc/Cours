@@ -20,16 +20,17 @@ namespace Contexts
         // Gestion
         private string ConnectionString { get; }
 
-        public WikiBeerSqlContext()         {
+        public WikiBeerSqlContext()  
+        {
         }
 
         /// <summary>
         /// Nécessaire au bon fonctionnement avec l'API (au moins pour la migration)
         /// </summary>
         /// <param name="options"></param>
-        public WikiBeerSqlContext(DbContextOptions<WikiBeerSqlContext> options) : base(options)
-        {
-        }
+        //public WikiBeerSqlContext(DbContextOptions<WikiBeerSqlContext> options) : base(options)
+        //{
+        //}
 
         public WikiBeerSqlContext(string connectionString)
         {

@@ -13,9 +13,19 @@ namespace Perstistance.Managers
         private readonly IBeerRepository _beerRepository;
         //private readonly WikiBeerSqlContext _beerRepository;
 
-        public BddBeerManager(string connectionString)
+        //public BddBeerManager()
+        //{
+        //}
+
+        //public BddBeerManager(string connectionString)
+        //{
+        //    _beerRepository = new BeerRepository(new WikiBeerSqlContext(connectionString));
+        //}
+
+        public BddBeerManager()
         {
-            _beerRepository = new BeerRepository(new WikiBeerSqlContext(connectionString));
+            // Obligatoirement ici pou rréussir l'injection de dépendance...
+            _beerRepository = new BeerRepository(new WikiBeerSqlContext(@"Server=(localdb)\MSSQLLocalDB;Database=WikiBeer"));
         }
 
         #region CRUD
