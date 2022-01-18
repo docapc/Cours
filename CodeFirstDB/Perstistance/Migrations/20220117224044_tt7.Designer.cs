@@ -4,6 +4,7 @@ using Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Perstistance.Migrations
 {
     [DbContext(typeof(WikiBeerSqlContext))]
-    partial class WikiBeerSqlContextModelSnapshot : ModelSnapshot
+    [Migration("20220117224044_tt7")]
+    partial class tt7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,7 +56,7 @@ namespace Perstistance.Migrations
 
             modelBuilder.Entity("Entities.BeerEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("BeerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -77,7 +79,7 @@ namespace Perstistance.Migrations
                     b.Property<Guid>("StyleId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("BeerId");
 
                     b.HasIndex("BreweryId");
 

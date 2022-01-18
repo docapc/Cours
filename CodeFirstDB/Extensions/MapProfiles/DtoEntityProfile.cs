@@ -16,8 +16,8 @@ namespace Models
         {
             CreateMap<BeerDto, BeerEntity>()
                 .ForMember(
-                dest => dest.BeerId,
-                opt => opt.MapFrom(src => src.BeerId)
+                dest => dest.Id,
+                opt => opt.MapFrom(src => src.Id)
                 )
                 .ForMember(
                 dest => dest.Name,

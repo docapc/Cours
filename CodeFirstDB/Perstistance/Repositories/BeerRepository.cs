@@ -1,15 +1,18 @@
 ﻿using Entities;
 using Microsoft.EntityFrameworkCore;
 
+/// <summary>
+/// Repository pour CRUD sur bdd : à besoin d'une instance de DBcontext.
+/// </summary>
 namespace Perstistance
 {
     public class BeerRepository : IBeerRepository
     {
         private DbContext BeerContext { get; }
 
-        public BeerRepository()
-        {
-        }
+        //public BeerRepository()
+        //{
+        //}
 
         public BeerRepository(DbContext beerContext)
         {
@@ -37,7 +40,7 @@ namespace Perstistance
         /// <returns></returns>
         public BeerEntity? GetBeerById(Guid id)
         {
-            return BeerContext.Set<BeerEntity>().SingleOrDefault(beer => beer.BeerId == id);
+            return BeerContext.Set<BeerEntity>().SingleOrDefault(beer => beer.Id == id);
         } 
 
         public bool DeleteBeerById(Guid id)

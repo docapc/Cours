@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Entities
 {
     [Table("Beer")]
-    public class BeerEntity
-    {
+    public class BeerEntity : IEntity
+    { 
         [Key]
-        public Guid BeerId { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 

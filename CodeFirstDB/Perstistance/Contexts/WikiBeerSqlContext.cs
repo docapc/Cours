@@ -6,7 +6,7 @@ namespace Contexts
 {
     public class WikiBeerSqlContext : DbContext
     {
-        // Tables
+        // Tables : nécessaire pour la migration (au moins pour les associations)
         public DbSet<BeerEntity> Beers { get; set; }
         public DbSet<BreweryEntity> Brewerys { get; set; }
         public DbSet<BeerColorEntity> BeerColors { get; set; }
@@ -18,35 +18,41 @@ namespace Contexts
         public DbSet<CerealEntity> Cereals { get; set; }
 
         // Gestion
-        private string ConnectionString { get; }
+        public string ConnectionString { get; private set; }
 
-        //public WikiBeerSqlContext()  
+        //public WikiBeerSqlContext()
         //{
         //}
 
         /// <summary>
-        /// Nécessaire au bon fonctionnement avec l'API (au moins pour la migration)
+        /// Nécessaire au bon fonctionnement avec l'API (AddDbContext) et de la factory de migration
         /// </summary>
         /// <param name="options"></param>
-        //public WikiBeerSqlContext(DbContextOptions<WikiBeerSqlContext> options) : base(options)
-        //{
-        //}
         public WikiBeerSqlContext(DbContextOptions<WikiBeerSqlContext> options) : base(options)
         {
         }
 
+        /// <summary>
+        /// Pour test divers et BddToAPIManager (pour donner une connection string)
+        /// </summary>
+        /// <param name="connectionString"></param>
         public WikiBeerSqlContext(string connectionString)
         {
             ConnectionString = connectionString;
         }
 
-		/// TODO Ici il faut tester si UseSqlServer à déja été appelé et donner ou non la chaine de connection.
+        /// <summary>
+        /// Pour test divers et BddToAPIManager (pour donner une connection string)
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // comportement par défaut si l'on ne fournit pas de connection string au constructeur (via AddDbContext dans l'api -> on passe par DbContextOptions<>...)
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=WikiBeer"); // pour la migration dans persitance
-            //optionsBuilder.UseSqlServer(ConnectionString); // pour injection de dépendance
-            //optionsBuilder.UseSqlServer(ConnectionString, b => b.MigrationsAssembly("API")); // pour injection de dépendance
+            if (string.IsNullOrEmpty(ConnectionString)) 
+                return;
+            else 
+                optionsBuilder.UseSqlServer(ConnectionString); 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
