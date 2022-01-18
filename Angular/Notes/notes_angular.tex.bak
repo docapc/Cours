@@ -1,0 +1,227 @@
+%\listfiles
+\documentclass[a4paper,12pt,twoside]{article}
+
+%% packages
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,mathrsfs} 
+%\usepackage{import}
+\usepackage{float, subfig, caption}
+\usepackage{libertine}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{xcolor} %/ pour \Definecolor
+\usepackage[pdftex,final=true]{hyperref}
+%\usepackage[]{hyperref}
+\hypersetup{
+colorlinks=true,
+linkcolor=blue,
+urlcolor=magenta, %/ file: adopte également cette couleur
+filecolor=cyan, % ne fonctionne qu'avec run:, 
+%citecolor=red
+}
+\urlstyle{same}
+\usepackage[french]{minitoc}
+\usepackage[acronym,toc,automake]{glossaries} % acronym pour les acronymes et toc pour inclusion des glossary dans la table des matières
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+%\usepackage{minted} % pour code avec coloration dans le texte
+\usepackage{url} % Pour avoir de belles url
+%% package ticks spécifiquement (pour les schémas) 
+%\usepackage{tikz}%
+%\usepackage[top=2cm,bottom=2cm]{geometry}
+%% paramètres tikz
+%\usetikzlibrary{patterns,decorations.pathreplacing,shapes.misc}
+%\usetikzlibrary{calc}
+%\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+%cross/.default={5pt}}
+% \definecolor{Gray}{gray}{0.9}
+% \definecolor{LightCyan}{rgb}{0.88,1,1}
+% \newcommand{\RN}[1]{\textup{\uppercase\expandafter{\romannumeral#1}}}    
+
+%% Macros comme variable
+%\newcommand{\editorpath}{C:/Program Files/Notepad++/notepad++.exe}
+\newcommand{\exemplepath}{../Exercices}
+\newcommand{\urlcolor}{magenta}  % couleur des liens https
+\newcommand{\filecolor}{cyan} % couleur des liens file: file
+\newcommand{\pdfcolor}{red} % couleur des liens file: .pdf
+\newcommand{\foldercolor}{orange} % couleur des liens file: Folder
+\newcommand{\cscolor}{green!60!black} % couleur des liens file: .cs
+\newcommand{\slncolor}{violet} % couleur des liens file: .sln
+\newcommand{\keycolor}{purple} % couleur des liens  de type mot clefs
+%% Macros commun
+\newcommand{\incode}[1]{{\footnotesize\ttfamily #1}} % pour du pseudo-code simple
+\newcommand{\rem}[2]{\noindent\underline{Remarque} : \textit{#1}.\\ \indent #2}
+\newcommand{\note}[1]{\noindent\underline{Note} : \\ \indent #1}
+\newcommand{\defi}[2]{\noindent\underline{Définition} : \textbf{#1}.\\ \indent #2}
+\newcommand{\slide}[2]{\textbullet ~ Slide n°#1 : \indent #2}
+%% Macro spécifiques à ce fichier (pas forcément) : pour fonctionner il faut que le fichier ai été ouvert diretcement dans le dossier du .tex ...
+\newcommand{\fileref}[2]{\hypersetup{urlcolor=\filecolor}\href{file: #1}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\pdfref}[2]{\hypersetup{urlcolor=\pdfcolor}\href{file: #1.pdf}{#2.pdf}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\csref}[2]{\hypersetup{urlcolor=\cscolor}\href{file:\exemplepath /#1.cs}{#2.cs}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\slnref}[2]{\hypersetup{urlcolor=\slncolor}\href{file:\exemplepath /#1.sln}{#2.sln}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\folderref}[2]{\hypersetup{urlcolor=\foldercolor}\href{file:\exemplepath /#1/.}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyref}[2]{\hypersetup{urlcolor=\keycolor} \href{#1}{\textbf{#2}}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyword}[3]{\noindent\underline{Mot clef} : \keyref{#1}{#2}. \\ \indent #3}
+%% Macro spécifiques à ce fichier (pas forcément)
+\newcommand{\dpat}[7]{
+\noindent \underline{Pattern} : \textbf{#1}, \indent (type : \textit{#2}) \\
+\underline{Description} : \indent #3 \\
+\underline{Exemple} : \indent #4 \\
+\noindent \underline{Avantages} : 
+\begin{itemize}
+ #5
+\end{itemize}
+\noindent \underline{Inconvénients} : 
+\begin{itemize}
+ #6 
+\end{itemize}
+\underline{Liens} : #7 
+}
+
+%% Infos document
+% Titre
+\title{Notes sur le module : \textit{Angular.}}
+% auteur
+\author{Armel Pitelet}
+% date de création du document
+\date{\today}
+
+%% Glossaire, acronymes et index
+\makeglossaries
+
+%% Glossaire et acronyme (déclarations)
+
+% DIP : exemple de formalisme
+\newglossaryentry{gl-dip}{
+name = {DSP},
+description = {la description détaillé}
+}
+\newglossaryentry{ac-dip}{
+type = \acronymtype, name = {DSP}, 
+description = {Nom simple}, 
+first = {Première occurence\glsadd{gl-dip}}, 
+see = [Glossaire:]{gl-dip}
+}
+
+
+\begin{document}
+%% Organisation globale 
+\maketitle
+\tableofcontents
+
+%%--------------------------------------------------------------------------------------------------------------------------------
+\section{Bases}
+
+defi{Angular}{framework (cadre de travail) permettant de faire des applications bureau mais surtout web. Historiquement c'était Angularjs et maintenant Angular 13. Maintenue par google, il est réttocompatible et sécurisé. C'est un framework principalement front-end.}\\
+
+\rem{Sur les commandes angular}{Ces commandes commencent par \incode{ng} (dans un terminal).}\\
+
+\rem{Any desk}{Un genre de team viewer (mais en ligne).}\\
+
+\rem{Pour créer un projet}{\incode{neg new NOM_PROJET}. puis (\incode{n} : pas dans la dernière version), \incode{y} (routing) et sélectionner un language de style.}\\
+
+\rem{Sur html et css}{html sert à faire du formatage de page et css (fiche de style en cascade) à faire du formatage de style. Angular utilise les deux pour faire des pages web.}\\
+
+\defi{SCSS}{CSS avec une écriture moins lourde que css. Attention dans un navigateur on ne peut voir que du css. SCSS doit être compiler vers CSS avec Angular pour être interprété par un naviguateur.}\\
+
+\note{Pour l'édition de code il faut ensuite passer par Visual Studio Code ou bien PhpStorm (payant mais un mois de licence gratuite...)}\\
+
+\rem{Pour excécuter des scripts (angular mais pas que)}{\incode{set-executionpolicy unrestricted} dasn un powershell en mode administrateur (2 conditions obligatoires). Nécessaire pour travailler avec Angular.}\\
+
+\note{Les projets Angular sont super Fat en terme de place sur le disque.}\\
+
+\note{Il faut ouvrir le dossier de projet entier (dans VSCode) pour que le serveur puisse fonctionner par la suite.}\\
+
+\rem{Sur l'arborescence d'un projet}{\begin{itemize}
+\item \incode{tsconfig.json} : config pour la compilation du Typescript vers du javascript (javascript est par contre un Typescript valide). \Ce fichier est nécessairepour faire du typescript (et ce n'est pas propre à Angular).
+\item \incode{package.json} : fichier de dépendance du projet. Si l'on utilise ce fichier la première chose à faire est un \incode{npm install} : pour installer les dépendances d'un projet (va charger le package json dans le nodemodule).
+\item Dans le dossier \incode{app} : \incode{app.component.xxx} permet de partitionner l'application en component. Un compenent à un rôle précis $\to$ il gère un seule et unique action. Chaque componenet doit être l eplus indépendant possible. Exemple : le html gère le rendu d'affichage, le css les style, spec.ts sert aux test et le ts est le \textit{controlleur} en lui même. Chaque nouneau component aura 4 fichier mon_component_component associés.
+\item Dans le dossier \incode{app} : \incode{app.module.ts} permet d'indiquer les librairies nécessaires à l'application (unqiuement ceux inclues dans l'application et pas tt les modules du node module).
+\item Dans le dossier \incode{app} : \incode{app-routing.modules.ts} : pour gérer les routes associées aux différents components. Ce fichier lie chaque component à un nom.
+\item Dans le dossier \incode{index.html} : est la page principale du projet (dans laquel sera importer le projet après compilation).
+\item Dans le dossier \incode{styles.scss} : fichier scss mère qui sera utilisé partout ailleurs dans le projet. Par contre le scss des components est généré en premier (ce qui est important car l'ordre de redéfinition des classe est important.).\\
+\end{itemize}}
+
+\rem{En css}{L'ordre des importation est très important. On peut modifier un import précédent avec un import suivant.}\\
+
+\defi{Bootstrap}{Une bibliothèque CSS qui fournit un ensemble d'objets.}\\
+
+\note{Pour récupérer des données en Angular il faut forcément passer par une API, il n'est pas possible d'interroger directement une base de donnée.}\\
+
+\rem{Sur la compilation}{Une fois la compilation et le serveur lancé (\incode{np serve --open}) il n'est pas nécessaire de l'arréter. En JavaScript le code est rechargé en permanence.}\\
+
+\rem{Sur l'objet en Angular}{En Angular (et typescript) tt est objet. On en revient donc au un fichier, une classe. Au niveau de la syntax d'une variable nom: type = valeur.}\\
+
+\keyword{}{let}{permet de déclarer une varibale locale modifiable. Le typage n'est pas obligatoire mais est en théorie obligatoire.}\\
+
+\keyword{}{const}{permet de déclarer une varibale locale non-modifiable. Le typage n'est pas obligatoire mais est en théorie obligatoire.}\\
+
+\keyword{}{any}{à la place d'un type, permet de déclarer n'importe quel type. A oublier le plus vite possible (car l'intrêt du typescript est de typé au maximum le code.)}\\
+
+\note{A partir du moment ou un attribut ou une fonction (dans le component.ts) est public (visibilité par défaut) il est possible de l'utiliser dans la partie html du component.}\\
+
+\keyword{}{export}{devant la déclaration d'une classe. permet de dire que la classe va pouvoir etre utilisée en dehors du fichier de déclaration. Sans \incode{export} le componet ne peut être utilisé nulle part.}\\
+
+\rem{ng-template}{est un template qui est masqué sur une page tant qu'il n'a pas été appelé. Peut servir avec un *ngIf. Voir Cours et exemple}\\
+
+\keyword{https://developer.mozilla.org/fr/}{Doc html/css}{regarder ce site en cas de questions sur les languages balises à la con.}\\
+
+\rem{POur créer un nouveau component}{ng generate component component_name (ou ng g c component_name si on passe par les alias).}\\
+
+\keyword{}{implements}{permet d'implémenter une interface.}\\
+
+\keyword{}{extends}{permet de déclarer un héritage.}\\
+
+\rem{Sur l'interface OnInit}{fait partie du cycle de vie des objets de type component. OnInit indique un traitement appliqués après l'initialisation d'un objet (constructeur, injection de dépendance). Le OnInit est fait avant que la vue soit générer. En générale on fait dans le OnInit les requêtes à l'api, gérer les paramètres de root.}\\
+
+\keyref{https://www.cuelogic.com/blog/angular-lifecycle}{Sur le cycle de vie des objets angular.}\\
+
+\rem{Sur OnDestroy}{Est appelé lorsque la fenêtre associée au component disparait. }\\
+
+\rem{pour installer une dépendance/librairie}{\incode{npm install un_truc} ou \incode{npm i un_truc} si l'on passe par les alias. Met à jour le package.json.}\\
+
+\rem{Sur le SCSS}{On peut définir des variables en SCSS en préfixant le nom d'un d'un dollar : \$variable . \& rappel l'élément courant (parent plutôt, un peu l'équivalent du this).}\\
+
+\rem{console.log(string)}{permet d'afficher une string dans la console log. Si on lui passe un objet la console affichera tt les attributs de la console}
+
+\rem{[ngStyle]="\{'x' ; source\}"}{ est une directive Angular qui permet de chercher une propriété dans une classe source pour l'affecter ici un Style html. Permet de binder à la propriété Style la valeur x extraite de source. Pour plus de détails voir : \url{https://angular.io/api/common/NgStyle}.}\\
+
+\keyword{}{super}{permet de rappeler le constructeur de la classe mère. Dans le constructeur c'est la première instruction qu'il faut appeler. En dehors on peut l'appler à tt moment.}\\
+
+\rem{rem}{unité de mesure qui se base sur la police du body (environnement le plus extérieur dans une page). Pour plus de détail sur les tailles : \url{https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units}}\\
+
+\rem{Sur le padding}{Il s'agit de l'écart entre entre le placement d'objet dans unvironnement et les bords de l'environnement. Il faut regarder sur une page (dans les outils de debug) pour visualiser sa.}\\
+
+\rem{sur le *ngFor}{Ce dernier peut fonctionner sur des container entier tant qu'ils sont contenue à l'intérieur de ces derniers.}\\
+
+\rem{Sur le dossier \incode{asset}}{Dans ce dossier ; tt les ressources nécessaires pour le site (images, musique, video, gif...).}\\
+
+\rem{Pour afficher une image}{balise \<img src = "chemin">. Attention la balise ne se ferme pas comme les autres. On peut également utiliser le Binding d'Angular [img]=hero.image au lieu de src = "\{\{hero.image\}\}".}\\
+
+\rem{Pour régler les problèmes de taille d'image}{Il faut faire un environnement <div class="container-image"> ou container-image qui est définit dans le .scss avec un enfant de type balise image (déclaré > img\{width = x\%, height = y\%\} dans le scss. Se lit pour tt balises image contenues dans un container-image alors on appliques ces règles).}\\
+
+\rem{sur [class.une_classe] = condition}{Signifie que l'on applique la classe css si la condition est vrai.}
+
+
+
+
+
+
+
+
+
+
+
+%%--------------------------------------------------------------------------------------------------------------------------------1
+%% Glossaires
+% \newpage
+% \printglossary[type=\acronymtype]%\addcontentsline{toc}{chapter}{Acronymes}
+% %\glsaddall% force l'apparition de tt les entrées du glossaire
+% \glsaddallunused % meme chose que addall mais ne force pas la numéroattion dans la liste d'acronyme
+% %\printunsrtglossary[type=main]
+% \printglossary[type = main,nonumberlist]%\addcontentsline{toc}{chapter}{Glossaire}
+
+\end{document}
+\end{document}
