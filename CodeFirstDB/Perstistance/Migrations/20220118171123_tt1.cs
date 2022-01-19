@@ -52,8 +52,7 @@ namespace Perstistance.Migrations
                     IngredientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    HopEntity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Use = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Ebc = table.Column<float>(type: "real", nullable: true),
                     AlphaAcid = table.Column<float>(type: "real", nullable: true)
@@ -87,7 +86,7 @@ namespace Perstistance.Migrations
                 name: "Beer",
                 columns: table => new
                 {
-                    BeerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Ibu = table.Column<float>(type: "real", nullable: false),
                     Degree = table.Column<float>(type: "real", nullable: false),
@@ -97,7 +96,7 @@ namespace Perstistance.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Beer", x => x.BeerId);
+                    table.PrimaryKey("PK_Beer", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Beer_BeerColor_ColorID",
                         column: x => x.ColorID,
@@ -132,7 +131,7 @@ namespace Perstistance.Migrations
                         name: "FK_BeerIngredient_Beer_BeerId",
                         column: x => x.BeerId,
                         principalTable: "Beer",
-                        principalColumn: "BeerId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BeerIngredient_Ingredient_IngredientId",

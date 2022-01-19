@@ -8,12 +8,18 @@ namespace Perstistance.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
+            migrationBuilder.RenameColumn(
+                name: "BreweryId",
+                table: "Brewery",
+                newName: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
+            migrationBuilder.RenameColumn(
+                name: "Id",
+                table: "Brewery",
+                newName: "BreweryId");
         }
     }
 }

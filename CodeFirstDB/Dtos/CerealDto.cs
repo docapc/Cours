@@ -9,5 +9,10 @@ namespace Dtos
     public class CerealDto : IngredientDto
     {
         public float Ebc { get; set; }
+
+        public CerealDto(string name, string description, float ebc) : base(name, description)
+        {
+            Ebc = Ebc;
+        }
     }
 }

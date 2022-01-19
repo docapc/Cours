@@ -7,8 +7,8 @@ namespace Entities
     public class BreweryEntity
     {
         [Key]
-        //Primary Key
-        public Guid BreweryId { get; set; }
+        [Column("BreweryId")] // Pas nécessaire si Id correctement nommée
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
@@ -18,6 +18,14 @@ namespace Entities
 
         public BreweryEntity()
         {
+        }
+
+        public BreweryEntity(string name, String description, CountryEntity country)
+        {
+            Id = Guid.NewGuid();
+            Name = name;
+            Description = description;
+            Country = country;
         }
     }
 }

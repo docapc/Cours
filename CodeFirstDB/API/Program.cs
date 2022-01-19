@@ -2,15 +2,18 @@ using Contexts;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using Newtonsoft.Json;
 using Perstistance;
-using Perstistance.Managers;
 using Perstistance.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers();
+// AddNewtonSoftJson (de AspNetCore.Mvc.NewtonSoftJson pour sérialiser des objets dérivées)
+// ---> Absoluement indispensable
+builder.Services.AddControllers().AddNewtonsoftJson(
+    opt => opt.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto);
+//builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -65,8 +68,9 @@ var cs = builder.Configuration.GetConnectionString("DefaultContext"); // TODO : 
 //builder.Services.AddScoped<IBeerRepository>(param => new BeerRepository(new WikiBeerSqlContext(cs)));
 // Syntax pour passer un IBeerRepository générique de type Beer avec un DbContext associé de type WikiBeerSqlContext
 builder.Services.AddScoped<IGenericDbRepository<BeerEntity>>(param => new GenericDbRepository<BeerEntity>(new WikiBeerSqlContext(cs)));
-
-
+// Syntax pour passer ler repositories de test (utilisation d'AutoFixture)
+builder.Services.AddSingleton<IFakeBeerRepository, FakeBeerRepository>(); // Singleton pour reproductilibilité dans swagger
+                                                                          // et test put/post via copié collé des Guid id
 
 
 

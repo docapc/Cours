@@ -2,7 +2,7 @@
 {
     public class BeerStyleDto
     {
-        public Guid StyleId { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
     }

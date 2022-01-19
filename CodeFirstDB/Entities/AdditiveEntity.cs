@@ -10,8 +10,9 @@ namespace Entities
     {
         public string Use { get; set; }
 
-        public AdditiveEntity()
+        public AdditiveEntity(string name, string description, string use) : base(name, description)
         {
+            Use = use;
         }
     }
 }

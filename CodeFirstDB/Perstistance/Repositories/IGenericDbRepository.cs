@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Perstistance.Repositories
+namespace Perstistance
 {
     public interface IGenericDbRepository<T> where T : class, IEntity, new()
     {
-        DbContext Context { get; }
+        //DbContext Context { get; }
         T Create(T entityToCreate);
 
         IList<T> GetAll();

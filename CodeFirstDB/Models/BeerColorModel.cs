@@ -1,6 +1,6 @@
-﻿namespace Dtos
+﻿namespace Models
 {
-    public class BeerColorDto
+    public class BeerColorModel
     {
         public Guid Id { get; set; }
 

@@ -17,26 +17,44 @@ namespace Perstistance.Repositories
             Context = context;
         }
 
-        public T Create(T entityToCreate)
+        public virtual T Create(T entityToCreate)
         {
             T entity = Context.Add(entityToCreate).Entity;
             Context.SaveChanges(); // Enregistre les changements en base
             return entity;
         }
 
-        public IList<T> GetAll()
+        public virtual IList<T> GetAll()
         {
             return Context.Set<T>().ToList();
         }
 
-        public T? GetById(Guid id)
+
+        //public IEnumerable<T> GetIAll()
+        //{
+        //    return Context.Set<T>();
+        //}
+
+        /// <summary>
+        /// TODO : rajouter une exception sur le trhow possible du SingleOrDefault
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public virtual T? GetById(Guid id)
         {
             return Context.Set<T>().SingleOrDefault(entity => entity.Id == id);
         }
 
-        public bool DeleteById(Guid id)
+        public virtual bool DeleteById(Guid id)
         {
-            throw new NotImplementedException();
+            T? entity = GetById(id);
+            if (entity == null)
+                return false;
+
+            Context.Set<T>().Remove(entity);
+
+            //SaveChanges() retourne le nombre de ligne modifiée
+            return Context.SaveChanges() >= 1;
         }  
     }
 }

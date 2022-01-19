@@ -9,15 +9,8 @@ using System.Threading.Tasks;
 /// </summary>
 namespace Perstistance
 {
-    public interface IBeerRepository
+    public interface IBeerRepository : IGenericDbRepository<BeerEntity>
     {
-        BeerEntity CreateBeer(BeerEntity beerEntityToCreate);
-
-        IList<BeerEntity> GetAllBeers();
-
-        BeerEntity? GetBeerById(Guid id);
-
-        bool DeleteBeerById(Guid id);
-
+        //IEnumerable<IngredientEntity> GetIngredients();
     }
 }

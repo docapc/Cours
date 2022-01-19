@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Perstistance.Migrations
 {
     [DbContext(typeof(WikiBeerSqlContext))]
-    [Migration("20220117075527_tt2")]
-    partial class tt2
+    [Migration("20220118172044_tt5")]
+    partial class tt5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,7 +56,7 @@ namespace Perstistance.Migrations
 
             modelBuilder.Entity("Entities.BeerEntity", b =>
                 {
-                    b.Property<Guid>("BeerId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -79,7 +79,7 @@ namespace Perstistance.Migrations
                     b.Property<Guid>("StyleId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("BeerId");
+                    b.HasKey("Id");
 
                     b.HasIndex("BreweryId");
 
@@ -107,9 +107,10 @@ namespace Perstistance.Migrations
 
             modelBuilder.Entity("Entities.BreweryEntity", b =>
                 {
-                    b.Property<Guid>("BreweryId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
 
                     b.Property<Guid>("CountryId")
                         .HasColumnType("uniqueidentifier");
@@ -122,7 +123,7 @@ namespace Perstistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("BreweryId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CountryId");
 
@@ -146,7 +147,7 @@ namespace Perstistance.Migrations
 
             modelBuilder.Entity("Entities.IngredientEntity", b =>
                 {
-                    b.Property<Guid>("IngredientId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -155,24 +156,21 @@ namespace Perstistance.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
-                    b.Property<string>("Discriminator")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("HopEntity")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("IngredientId");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Ingredient");
 
-                    b.HasDiscriminator<string>("HopEntity").HasValue("IngredientEntity");
+                    b.HasDiscriminator<string>("Type").HasValue("IngredientEntity");
                 });
 
             modelBuilder.Entity("Entities.AdditiveEntity", b =>
@@ -185,7 +183,7 @@ namespace Perstistance.Migrations
 
                     b.ToTable("Ingredient");
 
-                    b.HasDiscriminator().HasValue("AdditiveEntity");
+                    b.HasDiscriminator().HasValue("Additive");
                 });
 
             modelBuilder.Entity("Entities.CerealEntity", b =>
@@ -197,7 +195,7 @@ namespace Perstistance.Migrations
 
                     b.ToTable("Ingredient");
 
-                    b.HasDiscriminator().HasValue("CerealEntity");
+                    b.HasDiscriminator().HasValue("Cereal");
                 });
 
             modelBuilder.Entity("Entities.HopEntity", b =>
@@ -209,7 +207,7 @@ namespace Perstistance.Migrations
 
                     b.ToTable("Ingredient");
 
-                    b.HasDiscriminator().HasValue("HopEntity");
+                    b.HasDiscriminator().HasValue("Hop");
                 });
 
             modelBuilder.Entity("BeerEntityIngredientEntity", b =>

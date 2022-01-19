@@ -6,7 +6,7 @@ namespace Contexts
 {
     public class WikiBeerSqlContext : DbContext
     {
-        // Tables : nécessaire pour la migration (au moins pour les associations)
+        // Tables : absolument nécessaire pour utiliser l'API (pas vraiment certain sa, à tester une fois la bdd remplie)
         public DbSet<BeerEntity> Beers { get; set; }
         public DbSet<BreweryEntity> Brewerys { get; set; }
         public DbSet<BeerColorEntity> BeerColors { get; set; }
@@ -59,12 +59,12 @@ namespace Contexts
         {
             base.OnModelCreating(modelBuilder);
 
-            // Beers
-            EntityTypeBuilder<BeerEntity> beerTypeBuilder = modelBuilder.Entity<BeerEntity>();
-            beerTypeBuilder.HasMany(b => b.Ingredients)
-                           .WithMany(i => i.Beers)
-                           .UsingEntity(bi => bi.ToTable("BeerIngredient")); // permet de faire la table entity de manière automatique
-            beerTypeBuilder.Navigation(b => b.Ingredients).AutoInclude(); //Chargement automatique de la propriété de dépendance
+            // Beers : a désactiver pour les test fixture -> a réactiver pour la migration
+            //EntityTypeBuilder<BeerEntity> beerTypeBuilder = modelBuilder.Entity<BeerEntity>();
+            //beerTypeBuilder.HasMany(b => b.Ingredients)
+            //               .WithMany(i => i.Beers)
+            //               .UsingEntity(bi => bi.ToTable("BeerIngredient")); // permet de faire la table entity de manière automatique
+            //beerTypeBuilder.Navigation(b => b.Ingredients).AutoInclude(); //Chargement automatique de la propriété de dépendance
 
             //Si pas d'auto-include alors on doit charger en 2 fois
             //BeerEntity beer = GetById();
@@ -76,11 +76,19 @@ namespace Contexts
             //                     .WithMany(b => b.Ingredients)
             //                     .UsingEntity(bi => bi.ToTable("BeersIngredients"));
             //ingredientTypeBuilder.Navigation(i => i.Beers).AutoInclude();
-            EntityTypeBuilder<IngredientEntity> ingredientTypeBuilder = modelBuilder.Entity<IngredientEntity>();
-            ingredientTypeBuilder.Property("Discriminator").HasMaxLength(50);
 
-            EntityTypeBuilder<HopEntity> hopTypeBuilder = modelBuilder.Entity<HopEntity>();
-            hopTypeBuilder.HasDiscriminator<string>(typeof(HopEntity).Name);
+            EntityTypeBuilder<IngredientEntity> ingredientBuilder = modelBuilder.Entity<IngredientEntity>();
+
+
+            // Configuration du Discriminateur de sous type dans la table BeerIngredient
+            ingredientBuilder.HasDiscriminator<string>("Type")
+                .HasValue<HopEntity>("Hop")
+                .HasValue<CerealEntity>("Cereal")
+                .HasValue<AdditiveEntity>("Additive");
+            ingredientBuilder.Property("Type").HasMaxLength(50);
+            //EntityTypeBuilder<HopEntity> hopTypeBuilder = modelBuilder.Entity<HopEntity>();
+            //hopTypeBuilder.HasDiscriminator<string>(typeof(HopEntity).Name); // ne fonctionen pas comme voulue, ajoute simplement une colonne
+            // au lieu de remplacer donner une valeur à la colonne Discriminator
 
             // BeersIngredients --> plus besoin car on charge directement la liste d'ingrédients dans la bière (et inversement) sans passer par la table d'association
             //EntityTypeBuilder<BeerIngredientEntity> beerIngredientTypeBuilder = modelBuilder.Entity<BeerIngredientEntity>();

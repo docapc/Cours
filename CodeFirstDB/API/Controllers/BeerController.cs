@@ -42,43 +42,14 @@ namespace API.Controllers
         {
             var allBeers = _mapper.Map<IEnumerable<BeerDto>>(_ddbRepository.GetAll());
             return allBeers;
-        }
-
-        [HttpGet("details")]
-        public IEnumerable<BeerDto> GetDetails([FromQuery] string name)
-        {
-            var beers = _ddbRepository.Context.Set<BeerEntity>().Select(b => b.Name == name);
-//            var projects = _context.Project.Select(p => p.Name == name).ToList();
-
-            var dto = _mapper.Map<IEnumerable<BeerDto>>(beers);
-
-            return dto;
-        }
+        } 
 
         // GET api/<BeerController>/5
-        [HttpGet("{id}")]
+        [HttpGet("GetById/{id}")]
         public BeerDto Get(Guid id)
         {
             var beer = _ddbRepository.GetById(id);
             return _mapper.Map<BeerDto>(beer);
-        }
-
-        // POST api/<BeerController> -> Create
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<BeerController>/5 -> Update
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<BeerController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

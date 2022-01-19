@@ -9,5 +9,9 @@ namespace Dtos
     public class HopDto : IngredientDto
     {
         public float AlphaAcid { get; set; }
-    }
+        public HopDto(string name, string description, float alphaAcid) : base(name, description)
+        {
+            AlphaAcid = alphaAcid;
+        }
+    }    
 }

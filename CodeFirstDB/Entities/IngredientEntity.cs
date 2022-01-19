@@ -7,7 +7,8 @@ namespace Entities
     public abstract class IngredientEntity
     {
         [Key]
-        public Guid IngredientId { get; set; }
+        [Column("IngredientId")]
+        public Guid Id { get; set; }
 
         [MaxLength(50)] // Ou StringLength(x), voir comment du dessous pour la différence
         //[StringLength(50)] // minimum ET maximum
@@ -19,11 +20,15 @@ namespace Entities
         [MaxLength(400)]
         public string Description { get; set; }
 
-        [ForeignKey("IngredientId")]
-        public ICollection<BeerEntity> Beers { get; set; } // nécessaire pour la table d'association
+        // A commenter pour les tests fixtures
+        //[ForeignKey("IngredientId")]
+        //public ICollection<BeerEntity> Beers { get; set; } // nécessaire pour la table d'association
 
-        public IngredientEntity()
+        protected IngredientEntity(string name, string description)
         {
+            Id = Guid.NewGuid();
+            Name = name;
+            Description = description;
         }
 
     }

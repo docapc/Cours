@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities
-{ 
-    public class HopEntity : IngredientEntity
+namespace Models
+{
+    public class HopModel : IngredientModel
     {
         public float AlphaAcid { get; set; }
-
-        public HopEntity(string name, string description, float alphaAcid) : base(name, description)
+        public HopModel(string name, string description, float alphaAcid) : base(name, description)
         {
             AlphaAcid = alphaAcid;
         }

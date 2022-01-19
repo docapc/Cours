@@ -9,5 +9,10 @@ namespace Dtos
     public class AdditiveDto : IngredientDto
     {
         public string Use { get; set; }
+
+        public AdditiveDto(string name, string description, string Use): base(name,description)
+        {
+            Use = Use;
+        }
     }
 }

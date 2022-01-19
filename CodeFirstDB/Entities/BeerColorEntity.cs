@@ -7,12 +7,15 @@ namespace Entities
     public class BeerColorEntity
     {
         [Key]
-        public Guid ColorID { get; set; }
+        [Column("ColorId")]
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
-        public BeerColorEntity()
+        public BeerColorEntity(string name)
         {
+            Id = Guid.NewGuid();
+            Name = name;
         }
     }
 }

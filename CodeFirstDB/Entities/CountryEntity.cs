@@ -7,12 +7,15 @@ namespace Entities
     public class CountryEntity
     {
         [Key]
-        public Guid CountryId { get; set; }
+        [Column("CountryId")]
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
-        public CountryEntity()
+        public CountryEntity(string name)
         {
+            Id = Guid.NewGuid();
+            Name = name;
         }
 
     }

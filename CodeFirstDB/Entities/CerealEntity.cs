@@ -10,8 +10,9 @@ namespace Entities
     {
         public float Ebc { get; set; }
 
-        public CerealEntity()
+        public CerealEntity(string name, string description, float ebc): base(name, description)
         {
+            Ebc = ebc;
         }
     }
 }
