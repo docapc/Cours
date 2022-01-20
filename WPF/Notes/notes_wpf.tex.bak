@@ -189,9 +189,25 @@ see = [Glossaire:]{gl-dip}
 
 \note{Voir Bogus pour un autre genre de AutoFixture.}\\
 
-\rem{Sur les converter}{Il faut hériter de IValueConverter et décorer avec ValueConversion(source, destination). Il faut ensuite implémenter Convert (du modèle à la vue) et ConvertBack(de la vue vers le modèle). Dans les namespace (xlmns en début de fichier xaml), puis les ressources (Env Windows ressource) il faut ensuite inclure les converter. On peut ensuite utiliser le converter.}\\
+\rem{Sur les converter}{Il faut hériter de IValueConverter et décorer avec ValueConversion(source, destination). Il faut ensuite implémenter Convert (du modèle à la vue) et ConvertBack(de la vue vers le modèle). Dans les namespace (xlmns en début de fichier xaml), puis les ressources (Env Windows ressource) il faut ensuite inclure les converter. On peut ensuite utiliser le converter. Ces converters peuvent servir pour les images par exemple (convertion d'image) ou bien faire de la vérifiction de droit.}\\
 
 \rem{Sur la vue}{On appel vue la partie xaml du wpf. Les donnéès provenant de la vue proviennent de la fenêtre. Voir la v2 du code de nico.}\\
+
+\section{Sur lien wpf et api}
+
+\rem{Si l'on oublie les chaines deconnection}{Il existe un site connection string qui répertorie tt les synatxes possiblent en fonction du type de bdd : \url{https://www.connectionstrings.com/}.}\\
+
+\rem{Sur les migrations avec CLI}{\incode{dotnet ef migrations add InitialCreate --projet chemin\_vers\_le.csproj} pour initialiser la première migration (il faut lui indiquer le chemin du projet ou est le DbContext). On doit aussi pouvoir faire -- output projetcible.csproj pour déplacer la migration ailleur. Pour faire la migration il est nécessaire d'avoir un constructeur qui prend un DbContextOptions. }\\
+
+\rem{Pour utiliser la chaine de connexion du appsettings.json pour la migration}{Parait compliqué. On peut au mieux lui passer la chaine via le programme de l'API).}\\
+
+\rem{Sur l'update de la bdd}{Soit on passe par les ligne de commande (via update) ou bien le configurer dans le program.cs de l'api. (voir la partie \incode{app.Services.CreateScope()})}\\
+
+\rem{Sur le \incode{using} en inline}{Inline \incode{using (IDisposable) {des truc} permet de créer un scope locale dans lequel les \incode{trucs} seront détruit à la fin du scope. IDisposable est une interface qui implémente la méthode Dispose (qui permet de \textit{refermer} des ressources (les rendre inaccessible jusqua ce que le Garbage collector les désaloues)). Ex : un DbContext est un disposable et pourrait être utilisé de cette manière.}\\
+
+\rem{Sur le Set du DbContext}{Lorsque l'on fait un Context.Set<Type> on crée une représentation de la bdd. Si l'on fait un Where dessus on récupère juste un IQueryable sur la représentation. La requête vers la bdd n'est faite qu'à partir du moment ou l'on fait un ToList() ou un AsEnumerable() dessus.}\\
+
+\rem{Sur les retry de requête}{Il faut utiliser des bibliothèques externes comme Polly qui permet d'implémenter un retry avec condition et nombre d'essaie avec ou sans attente.}\\
 
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
