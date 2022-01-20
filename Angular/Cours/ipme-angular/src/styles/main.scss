@@ -3,12 +3,13 @@ body {
   background-color: antiquewhite;
 }
 
+/* Cette classe ne sert a rien dans l'appli yahtzee */
 .btn-primary {
-  background-color: darken($primary, 15%);
+  background-color: darken(green, 15%);
   color: lighten($default-font-color, 5%);
 
   &:hover {
-    background-color: lighten($primary, 10%);
+    background-color: darken($primary, 15%);
     color: $default-font-color;
   }
 }
@@ -29,7 +30,7 @@ body {
 
 }
 
-.lifePoint-bar {
+.lifePoint-bar { 
   background-color: black;
   color: antiquewhite;
   max-width: 200px;
@@ -37,6 +38,7 @@ body {
   position: relative;
   border-radius: 0.3em;
 
+  /* pourquoi cette bar est elle au dessus de l'autre? */
   .lifePoint-loss {
     height: 24px;
     border-radius: 0.3em;

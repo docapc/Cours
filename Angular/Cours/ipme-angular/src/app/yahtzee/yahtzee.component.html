@@ -22,8 +22,9 @@
       </td>
       <td>
         {{ hero.name }}
-        <div class="lifePoint-bar mt-1">
-          <div  class="lifePoint-loss"
+        <div class="lifePoint-bar mt-1"> <!-- pourquoi mt-1??? -->
+          <!-- POurquoi lifePoint loss est graphiquement au dessus de life point bar? -->
+          <div  class="lifePoint-loss" 
                 [class.lp-100]="hero.getPercentLife() > 75"
                 [class.lp-75]="hero.getPercentLife() <= 75"
                 [class.lp-50]="hero.getPercentLife() <= 50"
