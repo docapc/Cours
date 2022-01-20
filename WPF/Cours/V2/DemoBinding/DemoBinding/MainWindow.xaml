@@ -30,7 +30,7 @@
         <StackPanel Grid.Column="1" >
             <WrapPanel>
                 <TextBlock Text="Modifier le nom :" />
-                <TextBlock Width="500" Text="{Binding CurrentUser.Name}"  />
+                <TextBlock Width="500" Text="{Binding CurrentUser.Name, UpdateSourceTrigger=PropertyChanged}"  />
             </WrapPanel>
         </StackPanel>
         <ListBox Visibility="{Binding IsVisible, Converter={StaticResource VisibilityConverter}}" Grid.ColumnSpan="2" SelectedItem="{Binding CurrentUser}" ItemsSource="{Binding Users}" Grid.Row="1" x:Name="ListUser">

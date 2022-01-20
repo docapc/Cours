@@ -11,39 +11,66 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        
-        <StackPanel Grid.Column="0" Orientation="Vertical">
-            <ListBox ItemsSource="{Binding}" x:Name="ListId">
-<!--ce binding ItemsSource est nécessaire pour alimenter la liste.--> 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+            <WrapPanel>
+                <TextBlock Text="Name"/>
+                <TextBox x:Name ="TbName" Width="100"/>
+                <Button Content=" Ajouter" Width="100" Click="Click_AddButton"/>
+            </WrapPanel>
+            <!--<TextBlock Degree>
+            <TextBlock Ibu>-->
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical">
+            <ListBox ItemsSource="{Binding }" x:Name="ListId"> <!--Binding ce lie ici au Data Context dans le main-->
+                <!--ce binding ItemsSource est nécessaire pour alimenter la liste. UpdateSourceTrigger=PropertyChanged n'est pas nécessaire car
+                la list dans le DataContext est Observable???--> 
                 <ListBox.ItemTemplate>
                     <DataTemplate> 
-<!--dans l'environnement DataTemplate, on bind implicitement au itemsource-->
+<!--dans l'environnement DataTemplate, on bind implicitement au itemsource car on a un ItemTemplate, DataTemplate-->
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Id : " />
-                            <TextBlock Text="{Binding BeerId}" />
+                            <!--<TextBlock Text="Id : " />
+                            <TextBlock Text="{Binding BeerId}" />-->
+                            <TextBlock Text="Name : " />
+                            <TextBlock Text="{Binding Name}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>               
         </StackPanel>
 
-        <WrapPanel Grid.Column="1" Margin="50,50,0,0">
-            <StackPanel DataContext="{Binding SelectedItem,ElementName=ListId}" Orientation="Vertical">
+        <WrapPanel Grid.Column="1" Grid.Row="1" Margin="50,50,0,0">
+            <StackPanel DataContext="{Binding SelectedItem,ElementName=ListId}" Orientation="Vertical" x:Name="DetailedBeer">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Id : " />
+                    <TextBlock Text="{Binding BeerId}"/>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Name : " />
-<!--,  UpdateSourceTrigger=PropertyChanged n'est pas nécessaire car 
+<!--,  UpdateSourceTrigger=PropertyChanged/LostFocus n'est pas nécessaire car 
 on utilise SelectedItem. Il le serait si l'on passe par un objet intermédiaire
 comme dans l'exemple-->
-                    <TextBlock Text="{Binding Name}" />
+                    <TextBox Text="{Binding Name, Mode=OneTime}" x:Name ="DetailedTbName"/>
                 </StackPanel >
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Degree : " />
-                    <TextBlock Text="{Binding Degree}" />
+                    <TextBox Text="{Binding Degree}" x:Name ="DetailedTbDegree"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Ibu : " />
-                    <TextBlock Text="{Binding Ibu}" />
+                    <TextBox Text="{Binding Ibu}" x:Name ="DetailedTbIbu"/>
+                    <!--UpdateSourceTrigger=PropertyChanged n'est nécessaire que si la liaison va dans les deux sens 
+                    et si l'on veut faire appraitre les changement (qui sont effectué quoi qu'il arrive) à un 
+                    certain moment-->
                 </StackPanel>
+                <Button Content="Enregistrer Modification" Click="Click_UpdateButton"/>
+                <Button Content="Remplacer" Click="Click_ReplaceButton"/>
+                <Button Content="Supprimer" Click="Click_DelButton"/>
             </StackPanel>
         </WrapPanel>
 
