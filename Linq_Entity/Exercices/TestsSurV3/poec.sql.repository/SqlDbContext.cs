@@ -27,15 +27,13 @@ public class SqlDbContext : DbContext
 
         modelBuilder.Entity<StringWrapperDto>().HasNoKey();
 
-        // A découper en méthode : bonne pratique
-
         EntityTypeBuilder<UserSqlDto> entityTypeBuilder = modelBuilder.Entity<UserSqlDto>();
         //entityTypeBuilder.HasMany(u => u.Addresses).WithOne(a => a.User); //équivalent à [ForeignKey("UserId")]
         entityTypeBuilder.Navigation(u => u.Addresses).AutoInclude(); //Chargement automatique de la propriété de dépendance
 
         EntityTypeBuilder<AddressSqlDto> addressEntityBuilder = modelBuilder.Entity<AddressSqlDto>();
         addressEntityBuilder.ToTable("Address").HasKey(a => a.AddressId);
-        addressEntityBuilder.HasOne(a => a.User).WithMany(u => u.Addresses);
+        //addressEntityBuilder.HasOne(a => a.User).WithMany(u => u.Addresses);
         //addressEntityBuilder.Property(a => a.Address).HasColumnName("Address"); //équivalent à [Column("Address")]
 
         //si pas de clé

@@ -1,8 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿namespace poec.sql.repository.Dtos;
 
-namespace poec.sql.repository.Dtos;
-
-[Keyless] // Permet de ne pas avoir de PK dans l'entité
 public class StringWrapperDto : IEquatable<StringWrapperDto>
 {
     public string Value { get; set; }

@@ -43,7 +43,6 @@ public class UserSqlRepository
 
     public IList<UserSqlDto> GetPredicate(Func<UserSqlDto, bool> predicate)
     {
-        //SqlContext.Set<UserSqlDto>().Where(predicate).Select();
         return SqlContext.Set<UserSqlDto>().Where(predicate).ToList();
     }
 
@@ -57,8 +56,7 @@ public class UserSqlRepository
         entity.Login = userSqlDto.Login;
         entity.Birthday = userSqlDto.Birthday;
 
-        SqlContext.Update(entity);// Faire un .Entity pourrait être une bonne pratique
-                                  // mais ici comme on fait un Get avant 
+        SqlContext.Update(entity);
         SqlContext.SaveChanges();
 
         return entity;
@@ -69,7 +67,7 @@ public class UserSqlRepository
         UserSqlDto? entity = Get(id);
         if (entity == null)
             return false;
-        //SqlContext.Set<UserSqlDto>().Where(entity);
+
         SqlContext.Set<UserSqlDto>().Remove(entity);
 
         return SqlContext.SaveChanges() >= 1; //prise en compte de la supression d'adresses (1 user + X adresses)
@@ -84,7 +82,7 @@ public class UserSqlRepository
                                ORDER BY LEN(UserName) DESC";
 
         //SqlContext.Database.ExecuteSqlRaw retourne le nombre de ligne affecté par la requête. On va donc l'utiliser pour un INSERT, UPDATE ou DELETE
-        return SqlContext.Set<StringWrapperDto>().FromSqlRaw(query).FirstOrDefault(); //  FromRawSql(query) : Pour récupérer des données depuis la BDD, via une requête SQL
+        return SqlContext.Set<StringWrapperDto>().FromSqlRaw(query).FirstOrDefault();
     }
 
     public IList<UserSqlDto> GetBestUsers()
