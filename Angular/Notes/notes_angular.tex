@@ -217,7 +217,7 @@ Lien de la doc Mozilla \url{https://developer.mozilla.org/en-US/} (html, css, ja
 
 \rem{Sur le fichier app-touting.module.ts}{On donne à la variables Routes un objet json (d'ou les accolades). Pour chaques routes on doit définir le \incode{path :'chemin\_du\_path', component:nom\_du\_component}.}\\
 
-\rem{Sur la balise <router-outlet></router-outlet>}{Indique à partir de quel endroit on intègre un component par rapport à la route que l'on saisie dans l'url. C'est un dicateur qui indique que l'on veut afficher des components à partir d'une route. Avant l'appel à <router-outlet></router-outlet> on peut déclarer une balise header avec une balise <a class ="btn" routerLink ="/chemin\_du\_path">Nom\_du\_bouton</a> (qui déclare un lien sur la route routerLink qui doit être déclarer dans le ficheir app-routing.modules.ts). On aurait aussi pu faire [routerLink]="nom_d_une_variable".}\\
+\rem{Sur la balise <router-outlet></router-outlet>}{Indique à partir de quel endroit on intègre un component par rapport à la route que l'on saisie dans l'url. C'est un dicateur qui indique que l'on veut afficher des components à partir d'une route. Avant l'appel à <router-outlet></router-outlet> on peut déclarer une balise header avec une balise <a class $=$"btn" routerLink ="/chemin\_du\_path">Nom\_du\_bouton</a> (qui déclare un lien sur la route routerLink qui doit être déclarer dans le ficheir app-routing.modules.ts). On aurait aussi pu faire [routerLink]="nom\_d\_une\_variable".}\\
 
 \rem{<footer></footer>}{déclare un footer (footnote) sur une page.}
 
@@ -229,7 +229,7 @@ Lien de la doc Mozilla \url{https://developer.mozilla.org/en-US/} (html, css, ja
 
 \note{En générale un componenet est lié à une route.}\\
 
-\rem{Sur l'appel d'un compoenent}{On peut appeler un component directement par sa route bien via son séelecteur. Exemple : \incde{<component\_name></component\_name>}.}\\
+\rem{Sur l'appel d'un component}{On peut appeler un component directement par sa route bien via son sélecteur. Exemple : \incode{<component\_name></component\_name>}.}\\
 
 \rem{Sur la balise title}{La balise \incode{<title>MonTitre</title>} de changer le nom afficher dans le naviguateur au niveau de la page. Il faut en définir une par component. Cela ne fonctionne pas. Il faut mieux passer par un service (ici setTitle) à injecter dans chaque component dans le OnInit.}\\
 
@@ -259,27 +259,27 @@ Lien de la doc Mozilla \url{https://developer.mozilla.org/en-US/} (html, css, ja
 
 \note{Comme on ne peut pas instancier une interface. Pour l'initialiser à une valeur valide (mm si vide ou null) on peut lui rajouter \incode{|undefinded} après le type.}\\
 
-\rem{Sur le raisonnement en colonne de bootstrap}{Bootstrap peut fonctionner en colonnes (col) allant de 1 à 12. col-4 correspond à 1 tier de la largeur totale (\frac{4}{12}), col-3 à un quart, col-6 à la moitié,... On peut aussi utiliser offset qui utilise le même système numéraire que col. Tt sa pour gérer des tailles ou espacements entre éléments. En plus : my-3 correspond à une marge dans le même système le long de l'axe y. mt marge en haut. Le total des colonnes sur une seul ligne doit au final faire 12.}\\
+\rem{Sur le raisonnement en colonne de bootstrap}{Bootstrap peut fonctionner en colonnes (col) allant de 1 à 12. col-4 correspond à 1 tier de la largeur totale ($\frac{4}{12}$), col-3 à un quart, col-6 à la moitié,... On peut aussi utiliser offset qui utilise le même système numéraire que col. Tt sa pour gérer des tailles ou espacements entre éléments. En plus : my-3 correspond à une marge dans le même système le long de l'axe y. mt marge en haut. Le total des colonnes sur une seul ligne doit au final faire 12.}\\
 
-\rem{Un peu plus de Bootstrap}{Boorstrap a des alias. Exemple col-3 peut etre remplacé par col-md-3, ou col-sm-2 (voir remarque au dessus). A ce moment la le chiffre est un maximum et l'alias md, sm (yen a d'autre) gère la partie responsive de la page (l'ajustement auto en fonction de la taille total de la fenêtre.) Voir : \url{https://getbootstrap.com/docs/4.0/layout/grid/} pour plus de détails. On doit par contre enchainer ces indicateurs pour gérer tt les types d'écran possibles.}\\
+\rem{Un peu plus de Bootstrap}{Bootstrap a des alias. Exemple col-3 peut être remplacé par col-md-3, ou col-sm-2 (voir remarque au dessus). A ce moment la le chiffre est un maximum et l'alias md, sm (y'en a d'autre) gère la partie responsive de la page (l'ajustement auto en fonction de la taille total de la fenêtre.) Voir : \url{https://getbootstrap.com/docs/4.0/layout/grid/} pour plus de détails. On doit par contre enchainer ces indicateurs pour gérer tt les types d'écrans (de vue dans le navigateur) possibles.}\\
 
-\rem{sur le \incode{sort}}{sur une liste (déclaré comme \incode{variable[]}) on peut farei \incode{variable.sort(fonction\_decomparaison)}. Voir dans le code car vraiment contre intuitif.}\\
+\rem{sur le \incode{sort}}{sur une liste (déclaré comme \incode{variable[]}) on peut faire \incode{variable.sort(fonction\_decomparaison)}. Voir dans le code car vraiment contre intuitif.}\\
 
-\rem{Sur le passage de paramètres à des components}{Lorsque l'on écrit le path dans la approuting on peut faire \incode{path = mon_path+'/:name'} pour pouvoir ensuite injecter un nom déterminer à la place du paramètre name donné dans le path. Dans le component on peut injecter dans le constructeur un objet de type \incode{ActivatedRoute} qui est l'objet qui va permettre de récupérer le nom (via un subscribe sur la réception des paramètres). }\\
+\rem{Sur le passage de paramètres à des components}{Lorsque l'on écrit le path dans la \incode{approuting.cs} on peut faire \incode{path $=$ mon\_path$+$'/:name'} pour pouvoir ensuite injecter un nom déterminé à la place du paramètre \incode{name} donné dans le path. Dans le component on peut injecter dans le constructeur un objet de type \incode{ActivatedRoute} qui est l'objet qui va permettre de récupérer le nom (via un \incode{subscribe}sur la réception des paramètres). }\\
 
-\note{Pour faire des test via \incode{consol.log} il faut le faire dans les \incode{subscribe}. Cela vient du fait que en dehors du subscribe la donnée n'est pas récupérée tant qu'elle n'est pas explicitement demandé (le \incode{console.log} en lui même ne suffit pas pour être considéré comme une demande).}\\
+\note{Pour faire des test via \incode{consol.log} il faut le faire dans les \incode{subscribe}. Cela vient du fait qu'en dehors du \incode{subscribe} la donnée n'est pas récupérée tant qu'elle n'est pas explicitement demandée (le \incode{console.log} en lui même ne suffit pas pour être considéré comme une demande).}\\
 
-\note{Si il y a un tiret - dans le nom d'une variable dans l'api, il faut \textit{protéger} ce nom dans la déclaration de variable dans notre interface (au sens container json) avec des guillement simple ''.}\\
+\note{Si il y a un tiret - dans le nom d'une variable dans l'api, il faut \textit{protéger} ce nom dans la déclaration de variable dans notre interface (au sens container json) avec des guillemets simples ''.}\\
 
-\rem{Sur le routerLink}{On est pas obligé d'être dans un environnement <a/> pour utiliser cette propriété. (voi rla manière donc les pokemon sont atteint via leurs listes).}\\
+\rem{Sur le routerLink}{On est pas obligé d'être dans un environnement <a/> pour utiliser cette propriété. (voir la manière dont les pokemons sont atteint via leurs listes).}\\
 
-\rem{Sur \incode{subscribe}}{Le \incode{subscribe} sert un peu comme de gestionnaire de requête async. Sa à l'air différent du subscribe du pattern \textit{Observer}. $\to$ A creuser.}\
+\rem{Sur \incode{subscribe}}{Le \incode{subscribe} sert un peu comme un gestionnaire de requête async. Sa à l'air différent du subscribe du pattern \textit{Observer}. $\to$ \textbf{A creuser}.}\
 
 \rem{Sur le \incode{?}}{Permet de déclare un objet (une instance de classe) comme probablement indéfinie. C'est un tricks html.}
 
-\rem{Pour transférer un objet d'un compenent à un autre}{Il faut décorer l'attribut que l'on veut récupérer avec l'attribut  \incode{@input} (et ne pas oublier d'import le input dans la lsite de package au débeut du fichier .ts).}\\
+\rem{Pour transférer un objet d'un component à un autre}{Il faut décorer l'attribut que l'on veut récupérer avec l'attribut  \incode{@input} (et ne pas oublier d'\incode{import} le input dans la liste de package au début du fichier .ts).}\\
 
-\rem{Sur les sélecteur et le transfert d'objet}{On peut avec sa appeler un objet OA provenant d'un component CB, dans le component CA pour ensuite appeler le component CA dans le component CB $\to$ voir le yahtzee/hero-detail.}\\
+\rem{Sur les sélecteurs et le transfert d'objet}{On peut avec sa appeler un objet OA provenant d'un component CB, dans le component CA pour ensuite appeler le component CA dans le component CB $\to$ voir le yahtzee/hero-detail. C'est un exemple alambiqué mais en gros on peut transférer les objet et appeler les components dans d'autres components.}\\
 
 
 
