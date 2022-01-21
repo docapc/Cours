@@ -112,15 +112,18 @@ see = [Glossaire:]{gl-dip}
 \tableofcontents
 
 %%--------------------------------------------------------------------------------------------------------------------------------
+Lien de la doc Angular \url{https://angular.io/docs}. \\
+Lien de la doc Mozilla \url{https://developer.mozilla.org/en-US/} (html, css, javascript, typescript).\\
+
 \section{Bases}
 
-defi{Angular}{framework (cadre de travail) permettant de faire des applications bureau mais surtout web. Historiquement c'était Angularjs et maintenant Angular 13. Maintenue par google, il est réttocompatible et sécurisé. C'est un framework principalement front-end.}\\
+\defi{Angular}{framework (cadre de travail) permettant de faire des applications bureau mais surtout web. Historiquement c'était Angularjs et maintenant Angular 13. Maintenue par google, il est réttocompatible et sécurisé. C'est un framework principalement front-end.}\\
 
 \rem{Sur les commandes angular}{Ces commandes commencent par \incode{ng} (dans un terminal).}\\
 
 \rem{Any desk}{Un genre de team viewer (mais en ligne).}\\
 
-\rem{Pour créer un projet}{\incode{neg new NOM_PROJET}. puis (\incode{n} : pas dans la dernière version), \incode{y} (routing) et sélectionner un language de style.}\\
+\rem{Pour créer un projet}{\incode{neg new NOM\_PROJET}. puis (\incode{n} : pas dans la dernière version), \incode{y} (routing) et sélectionner un language de style.}\\
 
 \rem{Sur html et css}{html sert à faire du formatage de page et css (fiche de style en cascade) à faire du formatage de style. Angular utilise les deux pour faire des pages web.}\\
 
@@ -134,15 +137,17 @@ defi{Angular}{framework (cadre de travail) permettant de faire des applications 
 
 \note{Il faut ouvrir le dossier de projet entier (dans VSCode) pour que le serveur puisse fonctionner par la suite.}\\
 
-\rem{Sur l'arborescence d'un projet}{\begin{itemize}
-\item \incode{tsconfig.json} : config pour la compilation du Typescript vers du javascript (javascript est par contre un Typescript valide). \Ce fichier est nécessairepour faire du typescript (et ce n'est pas propre à Angular).
+\rem{Sur l'arborescence d'un projet}{
+\begin{itemize}
+\item \incode{tsconfig.json} : config pour la compilation du Typescript vers du javascript (javascript est par contre un Typescript valide). Ce fichier est nécessairepour faire du typescript (et ce n'est pas propre à Angular).
 \item \incode{package.json} : fichier de dépendance du projet. Si l'on utilise ce fichier la première chose à faire est un \incode{npm install} : pour installer les dépendances d'un projet (va charger le package json dans le nodemodule).
-\item Dans le dossier \incode{app} : \incode{app.component.xxx} permet de partitionner l'application en component. Un compenent à un rôle précis $\to$ il gère un seule et unique action. Chaque componenet doit être l eplus indépendant possible. Exemple : le html gère le rendu d'affichage, le css les style, spec.ts sert aux test et le ts est le \textit{controlleur} en lui même. Chaque nouneau component aura 4 fichier mon_component_component associés.
+\item Dans le dossier \incode{app} : \incode{app.component.xxx} permet de partitionner l'application en component. Un compenent à un rôle précis $\to$ il gère un seule et unique action. Chaque componenet doit être l eplus indépendant possible. Exemple : le html gère le rendu d'affichage, le css les style, spec.ts sert aux test et le ts est le \textit{controlleur} en lui même. Chaque nouveau component aura 4 fichier mon\_component\_component associés.
 \item Dans le dossier \incode{app} : \incode{app.module.ts} permet d'indiquer les librairies nécessaires à l'application (unqiuement ceux inclues dans l'application et pas tt les modules du node module).
 \item Dans le dossier \incode{app} : \incode{app-routing.modules.ts} : pour gérer les routes associées aux différents components. Ce fichier lie chaque component à un nom.
 \item Dans le dossier \incode{index.html} : est la page principale du projet (dans laquel sera importer le projet après compilation).
 \item Dans le dossier \incode{styles.scss} : fichier scss mère qui sera utilisé partout ailleurs dans le projet. Par contre le scss des components est généré en premier (ce qui est important car l'ordre de redéfinition des classe est important.).\\
-\end{itemize}}
+\end{itemize}
+}
 
 \rem{En css}{L'ordre des importation est très important. On peut modifier un import précédent avec un import suivant.}\\
 
@@ -150,13 +155,13 @@ defi{Angular}{framework (cadre de travail) permettant de faire des applications 
 
 \note{Pour récupérer des données en Angular il faut forcément passer par une API, il n'est pas possible d'interroger directement une base de donnée.}\\
 
-\rem{Sur la compilation}{Une fois la compilation et le serveur lancé (\incode{np serve --open}) il n'est pas nécessaire de l'arréter. En JavaScript le code est rechargé en permanence.}\\
+\rem{Sur la compilation}{Une fois la compilation et le serveur lancé (\incode{ng serve --open}) il n'est pas nécessaire de l'arréter. En JavaScript le code est rechargé en permanence.}\\
 
 \rem{Sur l'objet en Angular}{En Angular (et typescript) tt est objet. On en revient donc au un fichier, une classe. Au niveau de la syntax d'une variable nom: type = valeur.}\\
 
-\keyword{}{let}{permet de déclarer une varibale locale modifiable. Le typage n'est pas obligatoire mais est en théorie obligatoire.}\\
+\keyword{https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/let}{let}{permet de déclarer une varibale locale modifiable (javascript). Le typage n'est pas obligatoire mais est en théorie obligatoire.}\\
 
-\keyword{}{const}{permet de déclarer une varibale locale non-modifiable. Le typage n'est pas obligatoire mais est en théorie obligatoire.}\\
+\keyword{https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/const}{const}{permet de déclarer une varibale locale non-modifiable (javascript). Le typage n'est pas obligatoire mais est en théorie obligatoire.}\\
 
 \keyword{}{any}{à la place d'un type, permet de déclarer n'importe quel type. A oublier le plus vite possible (car l'intrêt du typescript est de typé au maximum le code.)}\\
 
@@ -168,7 +173,7 @@ defi{Angular}{framework (cadre de travail) permettant de faire des applications 
 
 \keyword{https://developer.mozilla.org/fr/}{Doc html/css}{regarder ce site en cas de questions sur les languages balises à la con.}\\
 
-\rem{POur créer un nouveau component}{ng generate component component_name (ou ng g c component_name si on passe par les alias).}\\
+\rem{Pour créer un nouveau component}{ng generate component component\_name (ou ng g c component\_name si on passe par les alias).}\\
 
 \keyword{}{implements}{permet d'implémenter une interface.}\\
 
@@ -180,7 +185,7 @@ defi{Angular}{framework (cadre de travail) permettant de faire des applications 
 
 \rem{Sur OnDestroy}{Est appelé lorsque la fenêtre associée au component disparait. }\\
 
-\rem{pour installer une dépendance/librairie}{\incode{npm install un_truc} ou \incode{npm i un_truc} si l'on passe par les alias. Met à jour le package.json.}\\
+\rem{pour installer une dépendance/librairie}{\incode{npm install un\_truc} ou \incode{npm i un\_truc} si l'on passe par les alias. Met à jour le package.json.}\\
 
 \rem{Sur le SCSS}{On peut définir des variables en SCSS en préfixant le nom d'un d'un dollar : \$variable . \& rappel l'élément courant (parent plutôt, un peu l'équivalent du this).}\\
 
@@ -198,19 +203,29 @@ defi{Angular}{framework (cadre de travail) permettant de faire des applications 
 
 \rem{Sur le dossier \incode{asset}}{Dans ce dossier ; tt les ressources nécessaires pour le site (images, musique, video, gif...).}\\
 
-\rem{Pour afficher une image}{balise \<img src = "chemin">. Attention la balise ne se ferme pas comme les autres. On peut également utiliser le Binding d'Angular [img]=hero.image au lieu de src = "\{\{hero.image\}\}".}\\
+\rem{Pour afficher une image}{balise <img src = "chemin">. Attention la balise ne se ferme pas comme les autres. On peut également utiliser le Binding d'Angular [img]=hero.image au lieu de src = "\{\{hero.image\}\}".}\\
 
 \rem{Pour régler les problèmes de taille d'image}{Il faut faire un environnement <div class="container-image"> ou container-image qui est définit dans le .scss avec un enfant de type balise image (déclaré > img\{width = x\%, height = y\%\} dans le scss. Se lit pour tt balises image contenues dans un container-image alors on appliques ces règles).}\\
 
-\rem{sur [class.une_classe] = condition}{Signifie que l'on applique la classe css si la condition est vrai.}
+\rem{sur [class.une\_classe] = condition}{Signifie que l'on applique la classe css si la condition est vrai.}\\
 
+\rem{Sur le partage de classe entre component}{Même avec l'export il n'est pas possible de directement appeler une classe d'un component dans un autre component. Par contre il est possible de faire des classes communes à tt les components et donc utilisables par tous.}\\
 
+\rem{Sur la directive [hide]="condition"}{Permet de masquer la div dans lequel il est contenue si la condition à l'intérieur est réalisée.}\\
 
+\keyword{https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors}{Sur les selector}{Les sélecteurs permettent de définir les éléments sur lesquels appliquer un ensemble de règles css.}\\
 
+\rem{Sur le fichier app-touting.module.ts}{On donne à la variables Routes un objet json (d'ou les accolades). Pour chaques routes on doit définir le \incode{path :'chemin\_du\_path', component:nom\_du\_component}.}\\
 
+\rem{Sur la balise <router-outlet></router-outlet>}{Indique à partir de quel endroit on intègre un component par rapport à la route que l'on saisie dans l'url. C'est un dicateur qui indique que l'on veut afficher des components à partir d'une route. Avant l'appel à <router-outlet></router-outlet> on peut déclarer une balise header avec une balise <a class ="btn" routerLink ="/chemin\_du\_path">Nom\_du\_bouton</a> (qui déclare un lien sur la route routerLink qui doit être déclarer dans le ficheir app-routing.modules.ts). On aurait aussi pu faire [routerLink]="nom_d_une_variable".}\\
 
+\rem{<footer></footer>}{déclare un footer (footnote) sur une page.}
 
+\note{Dans un constructeur on peut mettre une visibilité aux arguments! Si l'argument n'existe pas encore comme attribut il sera crée à la volé par le constructeur.}\\
 
+\rem{console.log(une string)}{Permet de faire remonter des messages dans la console (dans le naviguateur) lors de l'éxécution de.}\\
+
+\rem{Sur la notion de filtre et de pipe}{le | permet de déclarer des \keyref{https://angular.io/guide/pipes}{pipes}, qui permettent d'appliquer des filtres particulier pour de la mise en forme.}\\
 
 
 

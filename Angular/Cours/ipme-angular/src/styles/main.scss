@@ -1,13 +1,18 @@
 
+/* si l'on ne met rien on stylise directement la balise */
 body {
   background-color: antiquewhite;
 }
 
-/* Cette classe ne sert a rien dans l'appli yahtzee */
+/* Cette classe ne sert a rien dans l'appli yahtzee mais dans
+le app.component.ts.
+Le . devant btn-primar déclare une classe */
 .btn-primary {
   background-color: darken(green, 15%);
   color: lighten($default-font-color, 5%);
-
+  /* le & déclare l'élement parent (ici btn-primary) 
+  hover est ici un évènement css (le :déclare un évènement
+  . C'est un sélecteur comme '.')*/
   &:hover {
     background-color: darken($primary, 15%);
     color: $default-font-color;
@@ -17,12 +22,13 @@ body {
 .container-image {
   width: 140px;
   height: 140px;
-
+  /* &. déclare une classe contenue dans une autre */
   &.logo {
     width: 24px;
     height: 24px;
   }
-
+  /* le > désigne un contexte. si on a une balise <img
+  dans une classe container image, alors ces règles s'appliquent */
   > img {
     width: 100%;
     height: 100%;
@@ -38,12 +44,14 @@ body {
   position: relative;
   border-radius: 0.3em;
 
-  /* pourquoi cette bar est elle au dessus de l'autre? */
+  /* pourquoi cette bar est elle au dessus de l'autre?
+  voir dans le html correspondant */
   .lifePoint-loss {
     height: 24px;
     border-radius: 0.3em;
 
     > p {
+      /* axe z : hauteur de la couche */
       z-index: 5;
       position: absolute;
       left: 34%;
@@ -51,6 +59,7 @@ body {
   }
 }
 
+/* Classes sccs */
 .lp-100 {
   background-color: $lp-100;
 }

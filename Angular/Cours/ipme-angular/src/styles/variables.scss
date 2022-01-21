@@ -1,5 +1,8 @@
 
-$primary: #FF0000;
+/* primary est une variable de bootstrap. 
+On l'override en appliquant variables.scss après 
+bottstrap dans styles.scss */
+$primary: #FF0000; 
 $default-font-color: #FFFFA1;
 
 $lp-100: green;

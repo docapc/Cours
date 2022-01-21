@@ -112,9 +112,12 @@ see = [Glossaire:]{gl-dip}
 \tableofcontents
 
 %%--------------------------------------------------------------------------------------------------------------------------------
+Lien de la doc Angular \url{https://angular.io/docs}. \\
+Lien de la doc Mozilla \url{https://developer.mozilla.org/en-US/} (html, css, javascript, typescript).\\
+
 \section{Bases}
 
-defi{Angular}{framework (cadre de travail) permettant de faire des applications bureau mais surtout web. Historiquement c'était Angularjs et maintenant Angular 13. Maintenue par google, il est réttocompatible et sécurisé. C'est un framework principalement front-end.}\\
+\defi{Angular}{framework (cadre de travail) permettant de faire des applications bureau mais surtout web. Historiquement c'était Angularjs et maintenant Angular 13. Maintenue par google, il est réttocompatible et sécurisé. C'est un framework principalement front-end.}\\
 
 \rem{Sur les commandes angular}{Ces commandes commencent par \incode{ng} (dans un terminal).}\\
 
@@ -156,9 +159,9 @@ defi{Angular}{framework (cadre de travail) permettant de faire des applications 
 
 \rem{Sur l'objet en Angular}{En Angular (et typescript) tt est objet. On en revient donc au un fichier, une classe. Au niveau de la syntax d'une variable nom: type = valeur.}\\
 
-\keyword{}{let}{permet de déclarer une varibale locale modifiable. Le typage n'est pas obligatoire mais est en théorie obligatoire.}\\
+\keyword{https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/let}{let}{permet de déclarer une varibale locale modifiable (javascript). Le typage n'est pas obligatoire mais est en théorie obligatoire.}\\
 
-\keyword{}{const}{permet de déclarer une varibale locale non-modifiable. Le typage n'est pas obligatoire mais est en théorie obligatoire.}\\
+\keyword{https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/const}{const}{permet de déclarer une varibale locale non-modifiable (javascript). Le typage n'est pas obligatoire mais est en théorie obligatoire.}\\
 
 \keyword{}{any}{à la place d'un type, permet de déclarer n'importe quel type. A oublier le plus vite possible (car l'intrêt du typescript est de typé au maximum le code.)}\\
 
@@ -206,15 +209,25 @@ defi{Angular}{framework (cadre de travail) permettant de faire des applications 
 
 \rem{sur [class.une\_classe] = condition}{Signifie que l'on applique la classe css si la condition est vrai.}\\
 
+\rem{Sur le partage de classe entre component}{Même avec l'export il n'est pas possible de directement appeler une classe d'un component dans un autre component. Par contre il est possible de faire des classes communes à tt les components et donc utilisables par tous.}\\
 
+\rem{Sur la directive [hide]="condition"}{Permet de masquer la div dans lequel il est contenue si la condition à l'intérieur est réalisée.}\\
 
+\keyword{https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors}{Sur les selector}{Les sélecteurs permettent de définir les éléments sur lesquels appliquer un ensemble de règles css.}\\
 
+\rem{Sur le fichier app-touting.module.ts}{On donne à la variables Routes un objet json (d'ou les accolades). Pour chaques routes on doit définir le \incode{path :'chemin\_du\_path', component:nom\_du\_component}.}\\
 
+\rem{Sur la balise <router-outlet></router-outlet>}{Indique à partir de quel endroit on intègre un component par rapport à la route que l'on saisie dans l'url. C'est un dicateur qui indique que l'on veut afficher des components à partir d'une route. Avant l'appel à <router-outlet></router-outlet> on peut déclarer une balise header avec une balise <a class ="btn" routerLink ="/chemin\_du\_path">Nom\_du\_bouton</a> (qui déclare un lien sur la route routerLink qui doit être déclarer dans le ficheir app-routing.modules.ts). On aurait aussi pu faire [routerLink]="nom_d_une_variable".}\\
 
+\rem{<footer></footer>}{déclare un footer (footnote) sur une page.}
 
+\note{Dans un constructeur on peut mettre une visibilité aux arguments! Si l'argument n'existe pas encore comme attribut il sera crée à la volé par le constructeur.}\\
 
+\rem{console.log(une string)}{Permet de faire remonter des messages dans la console (dans le naviguateur) lors de l'éxécution de.}\\
 
+\rem{Sur la notion de filtre et de pipe}{le | permet de déclarer des \keyref{https://angular.io/guide/pipes}{pipes}, qui permettent d'appliquer des filtres particulier pour de la mise en forme.}\\
 
+\note{En générale un componenet est lié à une route.}\\
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
