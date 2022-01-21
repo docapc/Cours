@@ -24,6 +24,10 @@ export class YahtzeeComponent {
     this.hero5,
   ];
 
+  /**
+   * 
+   * @param hero 
+   */
   lifeLoss(hero: Hero): void {
     hero.currentLifePoint -= 50;
   }

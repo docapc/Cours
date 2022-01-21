@@ -195,7 +195,7 @@ Lien de la doc Mozilla \url{https://developer.mozilla.org/en-US/} (html, css, ja
 
 \keyword{}{super}{permet de rappeler le constructeur de la classe mère. Dans le constructeur c'est la première instruction qu'il faut appeler. En dehors on peut l'appler à tt moment.}\\
 
-\rem{rem}{unité de mesure qui se base sur la police du body (environnement le plus extérieur dans une page). Pour plus de détail sur les tailles : \url{https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units}}\\
+\rem{rem}{unité de mesure relative qui se base sur la police du body (environnement le plus extérieur dans une page). Pour plus de détail sur les tailles : \url{https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units}}\\
 
 \rem{Sur le padding}{Il s'agit de l'écart entre entre le placement d'objet dans unvironnement et les bords de l'environnement. Il faut regarder sur une page (dans les outils de debug) pour visualiser sa.}\\
 
@@ -205,7 +205,7 @@ Lien de la doc Mozilla \url{https://developer.mozilla.org/en-US/} (html, css, ja
 
 \rem{Pour afficher une image}{balise <img src = "chemin">. Attention la balise ne se ferme pas comme les autres. On peut également utiliser le Binding d'Angular [img]=hero.image au lieu de src = "\{\{hero.image\}\}".}\\
 
-\rem{Pour régler les problèmes de taille d'image}{Il faut faire un environnement <div class="container-image"> ou container-image qui est définit dans le .scss avec un enfant de type balise image (déclaré > img\{width = x\%, height = y\%\} dans le scss. Se lit pour tt balises image contenues dans un container-image alors on appliques ces règles).}\\
+\rem{Pour régler les problèmes de taille d'image}{Il faut faire un environnement <div class="container-image"> ou container-image qui est définit dans le .scss avec un enfant de type balise image (déclaré > img\{width = x\%, height = y\%\} dans le scss. Se lit pour tt balises image contenues dans un container-image alors on appliques ces règles). Attention ce chevron (\textit{chevron selector}) ne fonctionne que pour un enfant direct (pas pour un enfant d'un enfant), au niveau du html.}\\
 
 \rem{sur [class.une\_classe] = condition}{Signifie que l'on applique la classe css si la condition est vrai.}\\
 
@@ -227,7 +227,59 @@ Lien de la doc Mozilla \url{https://developer.mozilla.org/en-US/} (html, css, ja
 
 \rem{Sur la notion de filtre et de pipe}{le | permet de déclarer des \keyref{https://angular.io/guide/pipes}{pipes}, qui permettent d'appliquer des filtres particulier pour de la mise en forme.}\\
 
+\note{En générale un componenet est lié à une route.}\\
 
+\rem{Sur l'appel d'un compoenent}{On peut appeler un component directement par sa route bien via son séelecteur. Exemple : \incde{<component\_name></component\_name>}.}\\
+
+\rem{Sur la balise title}{La balise \incode{<title>MonTitre</title>} de changer le nom afficher dans le naviguateur au niveau de la page. Il faut en définir une par component. Cela ne fonctionne pas. Il faut mieux passer par un service (ici setTitle) à injecter dans chaque component dans le OnInit.}\\
+
+\rem{Sur la notion de service}{Il s'agit d'une classe réutilisable au besoin. pour générer un service : \incode{ng g s} (pour \incode{ng generate service}). Un dossier service à la racine de \incode{src} est une bonne idée.}\\
+
+\note{/** puis entrez permet de générer de la doc par défaut au dessus d'une méthode (avec la liste des paramètres d'entrées et de sortie @param et @return).}\\
+
+\note{le décorateur \incode{@Injectable} permet de dire à Angular qu'il peut instancier lui même ce service au besoin.}\\
+
+\rem{Sur la différence entre $==$ et $===$}{On passe en générale par le triple égal pour vérifier lanotion de strict différence (peut jouer si l'on compare deux type différent comme un \incode{string} et un \incode{number}).}
+
+\section{Sur la connection à une API}
+
+\rem{Imports nécessaires}{dans le modules.cs : HttpClientModule.}\\
+
+\note{Il est préférable de service dédié à la gestion des requêtes http.}\\
+
+\rem{Sur le type Observable}{Un Observable est un type qui représente une donnée qui arrive mais on ne sait pas quand exactement. C'est une variable asynchrone.}\\
+
+\rem{Sur les interfaces en TypeScript}{Elle peuvent servir comme les interface classiques ou bien comme un support permettant de tapper directement du json! (dans un objet non instanciable). Pour faire de l'affichage on peut donc se contenter d'une interface au lieu de faire une classe pleine et entière (constructeur, getter, setter, ...).}\\
+
+\note{lorsque l'on récupère les données au format json depuis l'api, il faut que les noms renvoyées par l'api \textit{collent} avec ceux de nos objets/ou interfaces les récupérant.}
+
+\note{Dans le component qui appel le service on s'abonne ensuite à l'objet correspondant à la requete. C'est possible car http client renvoie forcément un observable. Il faut passer une fonction fléchée à subscribe (un peu comme un lambda)}\\
+
+\rem{Sur les fonction fléchées en TypeScript}{On peut utiliser des lambda à la c\# au format \incode{var => var = qqchose\{\})}.}\\
+
+\note{Comme on ne peut pas instancier une interface. Pour l'initialiser à une valeur valide (mm si vide ou null) on peut lui rajouter \incode{|undefinded} après le type.}\\
+
+\rem{Sur le raisonnement en colonne de bootstrap}{Bootstrap peut fonctionner en colonnes (col) allant de 1 à 12. col-4 correspond à 1 tier de la largeur totale (\frac{4}{12}), col-3 à un quart, col-6 à la moitié,... On peut aussi utiliser offset qui utilise le même système numéraire que col. Tt sa pour gérer des tailles ou espacements entre éléments. En plus : my-3 correspond à une marge dans le même système le long de l'axe y. mt marge en haut. Le total des colonnes sur une seul ligne doit au final faire 12.}\\
+
+\rem{Un peu plus de Bootstrap}{Boorstrap a des alias. Exemple col-3 peut etre remplacé par col-md-3, ou col-sm-2 (voir remarque au dessus). A ce moment la le chiffre est un maximum et l'alias md, sm (yen a d'autre) gère la partie responsive de la page (l'ajustement auto en fonction de la taille total de la fenêtre.) Voir : \url{https://getbootstrap.com/docs/4.0/layout/grid/} pour plus de détails. On doit par contre enchainer ces indicateurs pour gérer tt les types d'écran possibles.}\\
+
+\rem{sur le \incode{sort}}{sur une liste (déclaré comme \incode{variable[]}) on peut farei \incode{variable.sort(fonction\_decomparaison)}. Voir dans le code car vraiment contre intuitif.}\\
+
+\rem{Sur le passage de paramètres à des components}{Lorsque l'on écrit le path dans la approuting on peut faire \incode{path = mon_path+'/:name'} pour pouvoir ensuite injecter un nom déterminer à la place du paramètre name donné dans le path. Dans le component on peut injecter dans le constructeur un objet de type \incode{ActivatedRoute} qui est l'objet qui va permettre de récupérer le nom (via un subscribe sur la réception des paramètres). }\\
+
+\note{Pour faire des test via \incode{consol.log} il faut le faire dans les \incode{subscribe}. Cela vient du fait que en dehors du subscribe la donnée n'est pas récupérée tant qu'elle n'est pas explicitement demandé (le \incode{console.log} en lui même ne suffit pas pour être considéré comme une demande).}\\
+
+\note{Si il y a un tiret - dans le nom d'une variable dans l'api, il faut \textit{protéger} ce nom dans la déclaration de variable dans notre interface (au sens container json) avec des guillement simple ''.}\\
+
+\rem{Sur le routerLink}{On est pas obligé d'être dans un environnement <a/> pour utiliser cette propriété. (voi rla manière donc les pokemon sont atteint via leurs listes).}\\
+
+\rem{Sur \incode{subscribe}}{Le \incode{subscribe} sert un peu comme de gestionnaire de requête async. Sa à l'air différent du subscribe du pattern \textit{Observer}. $\to$ A creuser.}
+
+\rem{Sur le \incode{?}}{Permet de déclare un objet (une instance de classe) comme probablement indéfinie. C'est un tricks html.}
+
+\rem{Pour transférer un objet d'un compenent à un autre}{Il faut décorer l'attribut que l'on veut récupérer avec l'attribut  \incode{@input} (et ne pas oublier d'import le input dans la lsite de package au débeut du fichier .ts).}\\
+
+\rem{Sur les sélecteur et le transfert d'objet}{On peut avec sa appeler un objet OA provenant d'un component CB, dans le component CA pour ensuite appeler le component CA dans le component CB $\to$ voir le yahtzee/hero-detail.}\\
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
