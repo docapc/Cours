@@ -1,11 +1,14 @@
 
 <div class="container">
   <div class="row" >
+    <!-- appel de her-detail via son sélecteur -->
     <app-hero-detail
-      *ngFor="let iterateHero of heroes"
-      [hero]="iterateHero"
+      *ngFor="let iterateHero of heroes"      
+      [hero]="iterateHero" 
       class="col-4"
     >
+    <!-- [hero]="iterateHero" fait l'injection de itereateHero dans hero de hero-detailcomponent
+    Fonctionne car her est marqué comme @input dans hero-detail.ts -->
     </app-hero-detail>
   </div>
 </div>

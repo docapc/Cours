@@ -2,7 +2,7 @@
 body {
   background-color: antiquewhite;
 }
-
+/* la mixin est un genre de variabl à réutiliser */
 @mixin height-logo {
   height: 24px;
 }

@@ -30,6 +30,7 @@ export class YahtzeeComponent implements OnInit {
   constructor(private title: Title, public utilityService: UtilityService) { }
 
   ngOnInit(): void {
+    /* je comprend pas ce que sa fait sa */
     this.title.setTitle(NavbarComponent.pathHeroes);
   }
 

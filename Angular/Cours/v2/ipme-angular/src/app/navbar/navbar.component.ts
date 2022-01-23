@@ -19,6 +19,8 @@ export class NavbarComponent {
   // constructor(router: Router) {
   //   this.router = router;
   // }
+  /* avec le private dans la déclaration du constructeur c'est comme si on déclarait un 
+  attribut router de type Router */
   constructor(private router: Router) { }
 
   hideButton(url: string): boolean {
