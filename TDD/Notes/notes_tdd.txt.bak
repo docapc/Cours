@@ -1,0 +1,187 @@
+%\listfiles
+\documentclass[a4paper,12pt,twoside]{article}
+
+%% packages
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,mathrsfs} 
+%\usepackage{import}
+\usepackage{float, subfig, caption}
+\usepackage{libertine}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{xcolor} %/ pour \Definecolor
+\usepackage[pdftex,final=true]{hyperref}
+%\usepackage[]{hyperref}
+\hypersetup{
+colorlinks=true,
+linkcolor=blue,
+urlcolor=magenta, %/ file: adopte également cette couleur
+filecolor=cyan, % ne fonctionne qu'avec run:, 
+%citecolor=red
+}
+\urlstyle{same}
+\usepackage[french]{minitoc}
+\usepackage[acronym,toc,automake]{glossaries} % acronym pour les acronymes et toc pour inclusion des glossary dans la table des matières
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+%\usepackage{minted} % pour code avec coloration dans le texte
+\usepackage{url} % Pour avoir de belles url
+%% package ticks spécifiquement (pour les schémas) 
+%\usepackage{tikz}%
+%\usepackage[top=2cm,bottom=2cm]{geometry}
+%% paramètres tikz
+%\usetikzlibrary{patterns,decorations.pathreplacing,shapes.misc}
+%\usetikzlibrary{calc}
+%\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+%cross/.default={5pt}}
+% \definecolor{Gray}{gray}{0.9}
+% \definecolor{LightCyan}{rgb}{0.88,1,1}
+% \newcommand{\RN}[1]{\textup{\uppercase\expandafter{\romannumeral#1}}}    
+
+%% Macros comme variable
+%\newcommand{\editorpath}{C:/Program Files/Notepad++/notepad++.exe}
+\newcommand{\exemplepath}{../Exercices}
+\newcommand{\urlcolor}{magenta}  % couleur des liens https
+\newcommand{\filecolor}{cyan} % couleur des liens file: file
+\newcommand{\pdfcolor}{red} % couleur des liens file: .pdf
+\newcommand{\foldercolor}{orange} % couleur des liens file: Folder
+\newcommand{\cscolor}{green!60!black} % couleur des liens file: .cs
+\newcommand{\slncolor}{violet} % couleur des liens file: .sln
+\newcommand{\keycolor}{purple} % couleur des liens  de type mot clefs
+%% Macros commun
+\newcommand{\incode}[1]{{\footnotesize\ttfamily #1}} % pour du pseudo-code simple
+\newcommand{\rem}[2]{\noindent\underline{Remarque} : \textit{#1}.\\ \indent #2}
+\newcommand{\note}[1]{\noindent\underline{Note} : \\ \indent #1}
+\newcommand{\defi}[2]{\noindent\underline{Définition} : \textbf{#1}.\\ \indent #2}
+\newcommand{\slide}[2]{\textbullet ~ Slide n°#1 : \indent #2}
+%% Macro spécifiques à ce fichier (pas forcément) : pour fonctionner il faut que le fichier ai été ouvert diretcement dans le dossier du .tex ...
+\newcommand{\fileref}[2]{\hypersetup{urlcolor=\filecolor}\href{file: #1}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\pdfref}[2]{\hypersetup{urlcolor=\pdfcolor}\href{file: #1.pdf}{#2.pdf}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\csref}[2]{\hypersetup{urlcolor=\cscolor}\href{file:\exemplepath /#1.cs}{#2.cs}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\slnref}[2]{\hypersetup{urlcolor=\slncolor}\href{file:\exemplepath /#1.sln}{#2.sln}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\folderref}[2]{\hypersetup{urlcolor=\foldercolor}\href{file:\exemplepath /#1/.}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyref}[2]{\hypersetup{urlcolor=\keycolor} \href{#1}{\textbf{#2}}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyword}[3]{\noindent\underline{Mot clef} : \keyref{#1}{#2}. \\ \indent #3}
+%% Macro spécifiques à ce fichier (pas forcément)
+\newcommand{\dpat}[7]{
+\noindent \underline{Pattern} : \textbf{#1}, \indent (type : \textit{#2}) \\
+\underline{Description} : \indent #3 \\
+\underline{Exemple} : \indent #4 \\
+\noindent \underline{Avantages} : 
+\begin{itemize}
+ #5
+\end{itemize}
+\noindent \underline{Inconvénients} : 
+\begin{itemize}
+ #6 
+\end{itemize}
+\underline{Liens} : #7 
+}
+
+%% Infos document
+% Titre
+\title{Notes sur le module : \textit{Test Driven Developpement.}}
+% auteur
+\author{Armel Pitelet}
+% date de création du document
+\date{\today}
+
+%% Glossaire, acronymes et index
+\makeglossaries
+
+%% Glossaire et acronyme (déclarations)
+
+% DIP : exemple de formalisme
+\newglossaryentry{gl-dip}{
+name = {DSP},
+description = {la description détaillé}
+}
+\newglossaryentry{ac-dip}{
+type = \acronymtype, name = {DSP}, 
+description = {Nom simple}, 
+first = {Première occurence\glsadd{gl-dip}}, 
+see = [Glossaire:]{gl-dip}
+}
+
+
+\begin{document}
+%% Organisation globale 
+\maketitle
+\tableofcontents
+
+%%--------------------------------------------------------------------------------------------------------------------------------
+Sur les types de test, voir \url{https://blog.octo.com/la-pyramide-des-tests-par-la-pratique-1-5/} $\to$ la pyramide des test d'intégration. Faire un test est un compromis entre cout et précision /fiabilité
+\begin{itemize}
+\item Test unitaire : test d'un block de code le plus petit possible.
+\item Test de composant : on test une partie d'une application.
+\item Test d'intégration : on test l'ensemble de l'application après l'ajout d'une nouvelle fonctionnalité.
+\test IHM (de bout en bout) : On démarre l'application et on regarde directement si tt fonctionne correctement.
+\item Test de monté en charge (de performance) : pour ne pas dégrader les performances au cours du temps.
+\item Test utilisateur : analyse de donnée faite en conception (une fois que tt est développé).\\
+\end{itemize}
+
+\note{Pour ce cours on repart de la V3 DemoBinding dans WPF.}\\
+
+\rem{Sur les template de test dans Visual Studio}{On a NUnit, MSTest ou bien XUnit (Il faut privilégier les deux derniers).}\\
+
+\rem{Sur MSTest}{Dans ce template on a une classe annoté \incode{TestClass} et une méthode \incode{TestMethod}.}\\
+
+\rem{Sur les packages interessant}{Via NUget : FluentAssertions : Apporte plus de test par rapport à ce qui est disponible de base}\\
+
+\rem{Sur les conventions de nommage des tests}{Il y a plusieurs méthodes : \url{https://dzone.com/articles/7-popular-unit-test-naming}.}\\
+
+\note{Attention : parfois pour débusquer un bug il est nécessaire d'écrire des programme de test \textit{manuelle} (dans le sens test logique et pas unitaire).}\\
+
+\rem{Sur la visibilité dans les tests unitaires}{On peut passer tt les propr en private mais ce n'est pas forcément une nécissité.}\\
+
+\rem{Sur l'annotation ClassInitialize}{Permet de lancer la méthode annotée une seule fois pour la classe de test en cours. Attention cette méthode doit être static. On pourrait également passer par le constructeur (sans lui donner l'annotation). La version avec annotation fait qq petites optimisations et est donc à préférer. Cependant si il faut initialiser des choses non static il faut passer par le constructeur.}\\
+
+\rem{Sur l'annotation TestInitialize}{Permet de lancer la méthode annotée à chaque tests dans la classe de test.}\\
+
+\note{Pour excécuter les test un par un Il faut passer par le gestionnaire de test de Visual Studio.}\\
+
+\rem{Sur la philosophie des test unitaires}{Pour chaque classe, il faut tester chaque méthode, dans un cas nominal, et dans les cas un peu plus \textit{borderline} qui sont sensé introduire des erreurs.}\\
+
+\rem{Sur l'annotation ExpectedException()}{Permet d'attendre une exception du type typeof(UneException, potentiellement un message).}\\
+
+\rem{Sur les log}{En générale on log les erreurs, les paramètres passées en méthodes (avec \incode{logger.LofInformation}). A utiliser un peu partout (en console+fichier en debug. Uniquement en ficheir en Release). Voir \keyref{https://serilog.net/}{Serilog} et/ou \keyref{https://nlog-project.org/}{Nlog}. Il vaut mieux passer par injection ded épendance pour utiliser les logs.}\\
+
+\rem{Sur la couverture de code}{A partir du moiment ou l'on fait des tests unitaire, on peut regarder la couverture du code (par les tests).}\\
+
+\rem{Si l'on a du mal à tester}{C'est qu'en générale les principes solides n'ont pas été respectés et qu'il faut refactorer le code.}
+
+\rem{Sur la répartition des test}{Un projet de test par projet testé, une classe de test par class testée.}\\
+
+\rem{Sur les annotation allant avec la IActionResult}{Elle peuvent servir pour la doc (cad swagger) mais ne change pas le fonctionnement du code.}
+
+\rem{Sur les ActionResult et IActionResult}{IActionResult est l'interface implémenté par ActionResult et ActionResult<>. On a pas besoin de spécifier un type de retour autre. IActionResult est plus général et donc à favoriser.}\\
+
+\rem{Sur la notion de code Synchrone}{Le code s'excécute de manière séquentielle.}\\
+
+\rem{Sur la notion de code Parallèle}{Le code s'excécute de manière séquentielle sur plusieurs thread différents (on éxécute deux codes identique ou non en parallèle).}\\
+
+\rem{Sur la notion de code Asynchrone}{Dans le code asynchrone les partie du code marquées \incode{await} peuvent attendre (appel api, bdd) et dans ce cas le reste du code continue à s'excécuter. Async et await laisse le framework décider ou non de créer un nouveau thread pour attendre puis exécuter le code dès que possible.}\\
+
+\note{Au niveau de l'API on voudra des controlleurs asynchrones pour augmenter les performances car on va pouvoir faire plus de requêtes si ces dernières peuvent être mise en attentes.}\\
+
+\rem{Pour les test avec bdd}{Si l'on fait une connection direct il faut bien penser à nettoyer la bdd par la suite. Pour être plus propre on peut passer par le Driver InMemory ou bien SqlLite (en package nugget). Attention au InMemory qui peut avoir des comportement différents d'une base de donnée relationnelle. Voir plutot avec SqlLite (package de EFCore) : \url{https://docs.microsoft.com/fr-fr/ef/core/testing/sqlite}.}\\
+
+\note{Attention à utiliser le moins possible les méthodes déjà existente pour initialiser les test unitaire (pour ne pas risquer d'ajouter un bug dès le début du test).}\\
+
+\rem{Sur les test bdd}{Pour tester certain composant on peut se passer des drivers précédent et isoler les composant à tester via certain frameworks : comme \keyref{https://github.com/moq/moq4}{Moq} qui permet de créer des objets fictifs qui répondent à la même interface que les objets que l'on veut simuler. Voir DemoBindong dans TDD pour implémentation donnée par Nico. On peut donner aux objets Mocks un comportement à avoir. L'intéret est de pouvoir isoler un objet de toutes ses dépendances (ici on test un controller en l'isolant du repository qu'il utilise en créant un mock pour le repository et en lui donnant un comportement attendue pour les fonctions qu'il est sensé avoir via \incode{Setup(repo => repo.func()).Return(result_attendue)}.).}\\
+
+\rem{Du détail sur les Mocks}{On peut également vérifier que certaines méthodes on bien été appelée (une et une seule fois, plusieurs fois,... Pour passer des paramètres lors dun \incode{Setup} on peut soit passer un véritable objet soit utiliser le mot clef \incode{It} avec par exemple It.IsAny<Type que l'on veut>()) via \incode{Mock.Verify}.}\\
+
+\rem{Sur la bonne utilisation des mocks}{Ils sont trés utiles pour les test unitaire et de composant mais ne doivent pas être utilisé lors de test d'intégration.}\\
+
+\rem{Pour générer le code coverage}{Il existe \keyref{https://github.com/OpenCover/opencover}{OpenCover}, un outils github pour vérifier le coverage des tests.}\\
+
+
+%%--------------------------------------------------------------------------------------------------------------------------------1
+%% Glossaires
+
+
+\end{document}
+\end{document}
