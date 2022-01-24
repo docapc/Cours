@@ -12,7 +12,7 @@
         <div  *ngFor="let type of iPokemon.types"
               class="container-image small-avatar mx-auto"
         >
-          <img [src]="pokemonService.getUrlImageByType(type.type.name)">
+          <img [src]="pokemonService.getUrlImageByType(type.type.name)"><!-- Pk [src] ici??? -->
         </div>
       </div>
       <div class="row">
