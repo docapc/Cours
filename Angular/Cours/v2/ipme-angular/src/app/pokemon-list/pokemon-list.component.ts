@@ -29,12 +29,18 @@ export class PokemonListComponent implements OnInit {
     this.iPokemonArray = [];
     this.pokemonService.getPokemonsByOffsetLimit(this.offset)
       // Fonction anonyme en JS / TS
+      /* on abonne la iPokemonList à l'observable renvoyé par la requete Get */
       .subscribe((iPokemonList: IPokemonList) => {
         this.iPokemonList = iPokemonList;
+        /* puis on rempli la iPokemonArray en abonnant chaque pokemon 
+        a l'url contenue dans result du iPokemonList  */
         for(let result of iPokemonList.results) {
           this.pokemonService.getUrlResult(result.url).subscribe((pokemon: IPokemon) => {
             this.iPokemonArray.push(pokemon);
-            // sort attend un number pour trier : si négatif alors plus petit, sinon plus grand
+            // sort attend un number pour trier : si négatif alors plus petit devant 
+            // , sinon plus grand devant -> a creuser sa c'est vraiment contre intuitif
+            /* enfin on trie la liste par ordre croissant au niveau de id dans
+            l'interface iPokemon */
             this.iPokemonArray.sort((p1, p2) => p1.id - p2.id);
           });
         }

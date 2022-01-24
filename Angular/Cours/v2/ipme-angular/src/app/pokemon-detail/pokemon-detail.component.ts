@@ -16,6 +16,9 @@ export class PokemonDetailComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, public pokemonService: PokemonService) { }
 
   ngOnInit(): void {
+    /* activatedRoute.param est le paramètre donné dans approuting après le : (:namePkmon).
+    On s'en sert pour faire une requête par nom sur le pokemon correspondant et on abonne notre iPokemon
+    à celui renvoyé par cette requête.*/
     this.activatedRoute.params.subscribe((param) => {
       // ici param n'autocomplete pas le nom des paramètres de votre route !!!!!
       // Il faut "simplement" reprendre le nom que l'on a définit dans le app-routing.module
