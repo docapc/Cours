@@ -20,7 +20,8 @@ export class NavbarComponent {
   //   this.router = router;
   // }
   /* avec le private dans la déclaration du constructeur c'est comme si on déclarait un 
-  attribut router de type Router */
+  attribut router de type Router. Injection de dépendance d'un objet de type router
+  dans l'objet courant que l'on affecte à l'attribut router avec la visibilité private*/
   constructor(private router: Router) { }
 
   hideButton(url: string): boolean {

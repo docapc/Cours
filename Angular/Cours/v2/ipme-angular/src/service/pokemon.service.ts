@@ -17,7 +17,7 @@ export class PokemonService {
    * Interface en Typescript :
    * - ce n'est pas qu'un contract à respecter lorsqu'une classe implémente une interface
    * - cela peut simplement servir de schéma de données Json
-   *
+   * Les appels à httpClient retournent des observables auxquelles on peut s'abonner
    */
 
   baseUrl: string = 'https://pokeapi.co/api/v2/';
@@ -27,7 +27,8 @@ export class PokemonService {
   getPokemonsByOffsetLimit(offset: number, limit: number = 20): Observable<IPokemonList> {
     return this.httpClient.get<IPokemonList>(this.baseUrl + 'pokemon/?offset='+offset+'&limit='+limit);
   }
-
+/* le fait de typer l'observable permet d'avoir l'autocomplémention
+là ou on appel ces service */
   getUrlResult(url: string): Observable<IPokemon> {
     return this.httpClient.get<IPokemon>(url);
   }

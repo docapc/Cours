@@ -114,6 +114,8 @@ see = [Glossaire:]{gl-dip}
 %%--------------------------------------------------------------------------------------------------------------------------------
 Lien de la doc Angular \url{https://angular.io/docs}. \\
 Lien de la doc Mozilla \url{https://developer.mozilla.org/en-US/} (html, css, javascript, typescript).\\
+Lien de la doc TypeScript : \url{https://www.typescriptlang.org/docs/}.\\
+Pour un tuto complet sur angular : \url{https://angular.io/tutorial}.\\
 
 \section{Bases}
 
@@ -123,7 +125,7 @@ Lien de la doc Mozilla \url{https://developer.mozilla.org/en-US/} (html, css, ja
 
 \rem{Any desk}{Un genre de team viewer (mais en ligne).}\\
 
-\rem{Pour créer un projet}{\incode{neg new NOM\_PROJET}. puis (\incode{n} : pas dans la dernière version), \incode{y} (routing) et sélectionner un language de style.}\\
+\rem{Pour créer un projet}{\incode{ng new NOM\_PROJET}. puis (\incode{n} : pas dans la dernière version), \incode{y} (routing) et sélectionner un language de style. Va créer un projet dans le dossier nommer par NOM\_PROJET.}\\
 
 \rem{Sur html et css}{html sert à faire du formatage de page et css (fiche de style en cascade) à faire du formatage de style. Angular utilise les deux pour faire des pages web.}\\
 
@@ -141,13 +143,15 @@ Lien de la doc Mozilla \url{https://developer.mozilla.org/en-US/} (html, css, ja
 \begin{itemize}
 \item \incode{tsconfig.json} : config pour la compilation du Typescript vers du javascript (javascript est par contre un Typescript valide). Ce fichier est nécessairepour faire du typescript (et ce n'est pas propre à Angular).
 \item \incode{package.json} : fichier de dépendance du projet. Si l'on utilise ce fichier la première chose à faire est un \incode{npm install} : pour installer les dépendances d'un projet (va charger le package json dans le nodemodule).
-\item Dans le dossier \incode{app} : \incode{app.component.xxx} permet de partitionner l'application en component. Un compenent à un rôle précis $\to$ il gère un seule et unique action. Chaque componenet doit être l eplus indépendant possible. Exemple : le html gère le rendu d'affichage, le css les style, spec.ts sert aux test et le ts est le \textit{controlleur} en lui même. Chaque nouveau component aura 4 fichier mon\_component\_component associés.
+\item Dans le dossier \incode{app} : \incode{app.component.xxx} permet de partitionner l'application en component. Un compenent à un rôle précis $\to$ il gère un seule et unique action. Chaque componenet doit être l eplus indépendant possible. Exemple : le html gère le rendu d'affichage (la vue), le css les style, spec.ts sert aux test et le ts est le \textit{controlleur} en lui même qui gère la logique. Chaque nouveau component aura 4 fichier mon\_component\_component associés.
 \item Dans le dossier \incode{app} : \incode{app.module.ts} permet d'indiquer les librairies nécessaires à l'application (unqiuement ceux inclues dans l'application et pas tt les modules du node module).
 \item Dans le dossier \incode{app} : \incode{app-routing.modules.ts} : pour gérer les routes associées aux différents components. Ce fichier lie chaque component à un nom.
 \item Dans le dossier \incode{index.html} : est la page principale du projet (dans laquel sera importer le projet après compilation).
 \item Dans le dossier \incode{styles.scss} : fichier scss mère qui sera utilisé partout ailleurs dans le projet. Par contre le scss des components est généré en premier (ce qui est important car l'ordre de redéfinition des classe est important.).\\
 \end{itemize}
 }
+
+\rem{Sur la diff JavaScript Typescript}{TypeScript est typé alors que JavaScript non.}\\
 
 \rem{En css}{L'ordre des importation est très important. On peut modifier un import précédent avec un import suivant.}\\
 
@@ -187,13 +191,13 @@ Lien de la doc Mozilla \url{https://developer.mozilla.org/en-US/} (html, css, ja
 
 \rem{pour installer une dépendance/librairie}{\incode{npm install un\_truc} ou \incode{npm i un\_truc} si l'on passe par les alias. Met à jour le package.json.}\\
 
-\rem{Sur le SCSS}{On peut définir des variables en SCSS en préfixant le nom d'un d'un dollar : \$variable . \& rappel l'élément courant (parent plutôt, un peu l'équivalent du this). voir \url{https://www.code-boost.com/beginners-guide-to-scss/\#nested-selectors}. Le symbol '.' déclare une classe. \&. est donc une classe dans l'élément parent. Le symbol ':' déclare un sélecteur}\\
+\rem{Sur le SCSS}{On peut définir des variables en SCSS en préfixant le nom d'un d'un dollar : \$variable . \& rappel l'élément courant (parent plutôt, un peu l'équivalent du this). voir \url{https://www.code-boost.com/beginners-guide-to-scss/\#nested-selectors}. Le symbol '.' déclare une classe. \&. est donc une classe dans l'élément parent. Le symbol ':' déclare un évènement. Ces deux symboles sont des sélecteurs.}\\
 
 \rem{console.log(string)}{permet d'afficher une string dans la console log. Si on lui passe un objet la console affichera tt les attributs de la console}\\
 
 \rem{[ngStyle]="\{'x' ; source\}"}{ est une directive Angular qui permet de chercher une propriété dans une classe source pour l'affecter ici un Style html. Permet de binder à la propriété Style la valeur x extraite de source. Pour plus de détails voir : \url{https://angular.io/api/common/NgStyle}.}\\
 
-\keyword{}{super}{permet de rappeler le constructeur de la classe mère. Dans le constructeur c'est la première instruction qu'il faut appeler. En dehors on peut l'appler à tt moment.}\\
+\keyword{https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/super}{super}{permet de rappeler le constructeur de la classe mère. Dans le constructeur c'est la première instruction qu'il faut appeler. En dehors on peut l'appler à tt moment.}\\
 
 \rem{rem}{unité de mesure relative qui se base sur la police du body (environnement le plus extérieur dans une page). Pour plus de détail sur les tailles : \url{https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units}}\\
 
@@ -213,11 +217,11 @@ Lien de la doc Mozilla \url{https://developer.mozilla.org/en-US/} (html, css, ja
 
 \rem{Sur la directive [hide]="condition"}{Permet de masquer la div dans lequel il est contenue si la condition à l'intérieur est réalisée.}\\
 
-\keyword{https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors}{Sur les selector}{Les sélecteurs permettent de définir les éléments sur lesquels appliquer un ensemble de règles css.}\\
+\keyword{https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors}{Sur les selector}{Les sélecteurs permettent de définir les éléments sur lesquels appliquer un ensemble de règles css. Il s'agit du nom de balise html associé au component. On le déclare dans dans la balise @Component au dessus d'une classe dans le .ts. A creuser : notion de QuerySelector.}\\
 
 \rem{Sur le fichier app-touting.module.ts}{On donne à la variables \keyref{https://angular.io/api/router/Route}{Route} un objet json (d'ou les accolades). Pour chaques routes on doit définir le \incode{path :'chemin\_du\_path', component:nom\_du\_component}.}\\
 
-\rem{Sur la balise \keyref{https://angular.io/api/router/RouterOutlet}{<router-outlet></router-outlet>}}{Indique à partir de quel endroit on intègre un component par rapport à la route que l'on saisie dans l'url. C'est un dicateur qui indique que l'on veut afficher des components à partir d'une route. Avant l'appel à <router-outlet></router-outlet> on peut déclarer une balise header avec une balise <a class $=$"btn" routerLink ="/chemin\_du\_path">Nom\_du\_bouton</a> (qui déclare un lien sur la route routerLink qui doit être déclarer dans le ficheir app-routing.modules.ts). Voir : balise \keyref{https://developer.mozilla.org/fr/docs/Web/HTML/Element/a}{a} (\textit{anchor}). On aurait aussi pu faire [routerLink]="nom\_d\_une\_variable".}\\
+\rem{Sur la balise \keyref{https://angular.io/api/router/RouterOutlet}{<router-outlet></router-outlet>}}{Indique à partir de quel endroit on intègre un component par rapport à la \incode{Route} que l'on saisie dans l'url. C'est un indicateur qui indique que l'on veut afficher des components à partir d'une route. Il est nécessaire pour utiliser les \incode{Route}. Avant l'appel à <router-outlet></router-outlet> on peut déclarer une balise header avec une balise <a class $=$"btn" routerLink ="/chemin\_du\_path">Nom\_du\_bouton</a> (qui déclare un lien sur la route routerLink qui doit être déclarer dans le ficheir app-routing.modules.ts). Voir : balise \keyref{https://developer.mozilla.org/fr/docs/Web/HTML/Element/a}{a} (\textit{anchor}). On aurait aussi pu faire [routerLink]="nom\_d\_une\_variable".}\\
 
 \rem{<footer></footer>}{déclare un footer (footnote) sur une page.}
 
@@ -273,13 +277,61 @@ Lien de la doc Mozilla \url{https://developer.mozilla.org/en-US/} (html, css, ja
 
 \rem{Sur le \keyref{https://angular.io/api/router/RouterLink}{routerLink}}{On est pas obligé d'être dans un environnement <a/> pour utiliser cette propriété. (voir la manière dont les pokemons sont atteint via leurs listes).}\\
 
-\rem{Sur \keyref{https://angular.io/guide/observables\#subscribing}{subscribe}}{Le \incode{subscribe} sert un peu comme un gestionnaire de requête async. Sa à l'air différent du subscribe du pattern \textit{Observer}. $\to$ \textbf{A creuser}.}\\
+\rem{Sur \keyref{https://angular.io/guide/observables\#subscribing}{subscribe}}{Le \incode{subscribe} sert un peu comme un gestionnaire de requête async. Sa à l'air différent du subscribe du pattern \textit{Observer}. $\to$ \textbf{A creuser}. Le subscribe à un observable permet de traiter cette donnée par la suite (en l'affectant à une variable typescript définie en attribut par exemple.)}\\
 
-\rem{Sur le \incode{?}}{Permet de déclare un objet (une instance de classe) comme probablement indéfinie. C'est un tricks html.}\\
+\rem{Sur le \incode{?}}{Permet de déclare un objet (une instance de classe) comme probablement indéfinie. C'est un tricks JavaScript/TypeScript.}\\
 
 \rem{Pour transférer un objet d'un component à un autre}{Il faut décorer l'attribut que l'on veut récupérer avec l'attribut \keyref{https://angular.io/guide/inputs-outputs}{@input} (et ne pas oublier d'\incode{import} le input dans la liste de package au début du fichier .ts).}\\
 
 \rem{Sur les sélecteurs et le transfert d'objet}{On peut avec sa appeler un objet OA provenant d'un component CB, dans le component CA pour ensuite appeler le component CA dans le component CB $\to$ voir le yahtzee/hero-detail. C'est un exemple alambiqué mais en gros on peut transférer les objet et appeler les components dans d'autres components.}\\
+
+\rem{Sur les routes}{Cela permet de naviguer entre component. Attention quand on déclare un \incode{Route} dans le approuting.ts il ne faut pas mettre de / devant la déclaration du \incode{path}.}\\
+
+\note{Attention lorsque l'on utilise \incode{routerLink} il ne faut pas oublier le premier / de la route.}\\
+
+\rem{Sur keyref{}{Undefined}}{ TYpe à associer à une variable qui représente une variable nulle.}\\
+
+\note{Quand on fait ma\_variable : IPokemon|Undefined on déclare une variable de type IPokemon ou Undefined (nulle). Sa à l'air légèrement différent des pipes qui permettent les filtre mais pas tt à fait non plus $\to Subtilité à creuser.}\\
+
+\section{Les formulaires}
+
+\note{Les formulaires se déclare dans une balise <form><form/>.}\\
+
+\rem{2 types de formulaires}{Par template et par code (template-driven et code-driven).}\\
+
+\rem{Sur le template driven}{Il faut commencer par importer le module \incode{FormsModule} et créer un objet vide correspondant au formulaire. Puis on va remplir des balises <input />.}\\
+
+\rem{Sur la syntaxe [(ngModel)]="user.attribut"}{Indique un binding dans les deux sens! Les modifications de l'un s'applique à l'autre. NgModel est nécessaire pour se baser sur un objet existant.}\\
+
+\note{Pour valider le formulaire il est nécessaire d'avoir un buttun de type ="submit".}\\
+
+\rem{Pour que ce type de formulaire fonctionne}{Il faut que les champs [name]="un truc" (de la prop html du NgModel) et les attributs [(ngModel)]="user.attribut" (de l'objet user) aient le même nom.}\\
+
+\note{Les validations sont commune aux deux types de formulaire.}\\
+
+\rem{Sur la \keyref{https://developer.mozilla.org/fr/docs/Learn/Forms/Form_validation}{validation}}{on passe par les attributs de validation html. Le fait de nommer une balise <input \#nom="ngModel"/> permet ensuite de gérer par la suite des comportements différents selon les actions utilisateurs. Pour cela on passe par des propriétés Angular (nom\_donné\_à\_la\_balise.propriété\_Angular). On affecte à la balise <input/> différentes classes css en fonction de conditions à donner déterminé via ces propriétés angular.}\\
+ 
+\note{la classe [class.is-invalid] est une classe de bootstrap.}\\
+
+\note{\keyref{https://developer.mozilla.org/fr/docs/Web/HTML/Attributes/pattern}{pattern} = "regex" permet de donner un regex. Pour gérer facielemtn les regex et leur interprétation voir : \url{https://regex101.com/}.}\\
+
+\rem{Pour afficher un message informatif sur une validation non passée}{On utilise *ngIf="nom\_de\_linput.error?.nom\_de\_lattribut\_de\_validation\_html" pour faire apparaitre une div dédiée à sa.}\\
+
+\rem{Pour faire un champ à choix multiple}{Il faut passer par une balise <select class="form-select">X<select/> à la place du <input /> avec une balise <option> <options/> (au niveau du X) à l'intérieur pour déclarer les différentes options possibles. Dans les options on peut faire un [ngValue]="valeur" ou valeur permet de faire un bind avec un objet. Voir : \url{https://angular.io/api/forms/SelectControlValueAccessor} pour un peu plus de détails.}\\
+
+\rem{Sur les formulaires par le Code}{Il faut import ReactiveFormModule (un formulaire par le code est dit \textit{reactive form}). On doit ensuite créer dans un component un objet de type FormGroup. Avec ce type de formulaire les modifications ne sont pas faite en direct, c'est la différence fondamentale. A partir de cette objet FormGroup on va ensuite créer les champs et les liaisons associées à partir d'un FormControl par champ du formulaire.}\\
+
+\note{Tant que la validation n'est pas faite : l'objet associé au formulaire (ici User) ne sera pas modifié.}\\
+
+\rem{Sur les getters}{Ils sont l'équivalent du \#name $+$ vérification du coté des formulaires par template.}\\
+
+\rem{Dans le html}{[formControlName] est l'équivalent du [(ngModel)] des formulaire par template.}\\
+
+\rem{Sur \incode{attribut != qq_chose}}{le ! permet de déclarer une variable comme n'étant jamais null même si pas encore initialisé (assertion). voir : \url{https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html} et \url{https://www.typescriptlang.org/docs/handbook/2/everyday-types.html}.}\\
+
+\note{Si la classe est le formulaire correspondent on peut pour l'assignation faire directement this.User = this.FormGroup.value au lieux de retapper la correspondance attribut par attribut (ou prop par prop).}\\
+
+
 
 
 

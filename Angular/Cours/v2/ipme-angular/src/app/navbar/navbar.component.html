@@ -1,7 +1,10 @@
-<!-- je ne comprend pas comment la route est display correctement dans l'url... -->
+<!-- je ne comprend pas comment la route est display correctement dans l'url...
+c'est grace au path donné dans le approuting -->
 <nav class="navbar navbar-light bg-dark text-white">
   <div class="container-fluid">
     <div>
+      <!-- hidden est une balise html (un attribut) [hidden]="condition" signifie : j'applique la balise hidden 
+      si la condition est remplie -->
       <a class="btn btn-primary" routerLink="/" [hidden]="hideButton('/')">
         Accueil
       </a>

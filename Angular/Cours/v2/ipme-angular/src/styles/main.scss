@@ -2,7 +2,7 @@
 body {
   background-color: antiquewhite;
 }
-/* la mixin est un genre de variabl à réutiliser */
+/* la mixin est un genre de variable à réutiliser */
 @mixin height-logo {
   height: 24px;
 }
@@ -27,8 +27,7 @@ body {
     width: 24px;
     @include height-logo;
   }
-  /* le > désigne un contexte. si on a une balise <img
-  dans une classe container image, alors ces règles s'appliquent */
+  
   &.detail-avatar {
     width: 100%;
     height: 80vh;
@@ -47,7 +46,8 @@ body {
   &.small-avatar {
     @include height-logo;
   }
-
+/* le > désigne un contexte. si on a une balise <img
+  dans une classe container image, alors ces règles s'appliquent */
   > img {
     width: 100%;
     height: 100%;
@@ -88,6 +88,7 @@ body {
   background-color: $lp-25;
 }
 
+/* cursor pointer transform la sourie au survole */
 .card-pokemon {
   cursor: pointer;
   .avatar:hover {
