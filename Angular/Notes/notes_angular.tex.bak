@@ -125,7 +125,7 @@ Pour un tuto complet sur angular : \url{https://angular.io/tutorial}.\\
 
 \rem{Any desk}{Un genre de team viewer (mais en ligne).}\\
 
-\rem{Pour créer un projet}{\incode{ng new NOM\_PROJET}. puis (\incode{n} : pas dans la dernière version), \incode{y} (routing) et sélectionner un language de style. Va créer un projet dans le dossier nommer par NOM\_PROJET}\\
+\rem{Pour créer un projet}{\incode{ng new NOM\_PROJET}. puis (\incode{n} : pas dans la dernière version), \incode{y} (routing) et sélectionner un language de style. Va créer un projet dans le dossier nommer par NOM\_PROJET.}\\
 
 \rem{Sur html et css}{html sert à faire du formatage de page et css (fiche de style en cascade) à faire du formatage de style. Angular utilise les deux pour faire des pages web.}\\
 
@@ -331,9 +331,10 @@ Pour un tuto complet sur angular : \url{https://angular.io/tutorial}.\\
 
 \note{Si la classe est le formulaire correspondent on peut pour l'assignation faire directement this.User = this.FormGroup.value au lieux de retapper la correspondance attribut par attribut (ou prop par prop).}\\
 
+\section{Sur l'intégration de ANfular en .NET}
 
-
-
+Dans visual studio on peut créer un projet en standalone ou bien en intégré (serveur commun au front Angular et au back .Net).\\
+Dans un prjet complet on a ensuite un program.cs qui s'occupe du npm install et de lancer le serveur.
 
 
 %%--------------------------------------------------------------------------------------------------------------------------------1

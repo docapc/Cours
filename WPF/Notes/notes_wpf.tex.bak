@@ -114,7 +114,7 @@ see = [Glossaire:]{gl-dip}
 %%--------------------------------------------------------------------------------------------------------------------------------
 \section{Bases}
 
-\keyword{WPF}{https://fr.wikipedia.org/wiki/Windows_Presentation_Foundation}{Permet de créer des application en mode fenêtre.Pour utiliser WPF, soit on passe par du .Net Framework (ancienne version) soit on passe sur du .Net Core (nouvelle).}\\
+\keyword{WPF}{https://fr.wikipedia.org/wiki/Windows\_Presentation\_Foundation}{Permet de créer des application en mode fenêtre.Pour utiliser WPF, soit on passe par du .Net Framework (ancienne version) soit on passe sur du .Net Core (nouvelle).}\\
 
 \rem{XAML}{Language balise associé au WPF. C'est via XAML que l'on définit le design. Voir les différents layout ci dessous}\\
 
@@ -169,21 +169,21 @@ see = [Glossaire:]{gl-dip}
 
 \rem{Sur les Entity}{Les Entities peuvent contenir des méthodes.}\\
 
-\rem{Element Name}{après un binding = qqchose (comme SelectedItem), ElementName=UnAutre élément () permet de binder à autre chose que le context courant (sur un autre élément graphique). On peut également changer le \incode{mode} de binding (voir one way, two way, ...). \incode{UpdateSourceTrigger} permet de changer l'élément déclencheur (PropertyChanged,...)}\\
+\rem{Element Name}{après un binding = qqchose (comme SelectedItem), ElementName$=$UnAutre élément () permet de binder à autre chose que le context courant (sur un autre élément graphique). On peut également changer le \incode{mode} de binding (voir one way, two way, ...). \incode{UpdateSourceTrigger} permet de changer l'élément déclencheur (PropertyChanged,...)}\\
 
 \rem{Pour les changement sur les property soient appliqué sans passer par un SelectedItem}{On peut utiliser INotifyPropertyChanged dans nos modèles. Cela impose de définir un évènement handler PropertyChangedEventHandler. L'implémentation de la méthode associée impose de changer les propriétés classiques en attribut + propriété set qui track le changement (voir le UserModel dans le code de nico.). En fait SelectedItem a en interne ces propriété qui font que les changement dessus sont suivis.}\\
 
 \rem{L'annotation [CallerMemberName]}{devant un argument dans une méthode permet de récupérer le nom de la propriété qui appel cette méthode.}\\
 
-\rem{ILSPie}{permet de récupérer du code décompiler à partir d'un ..dll. Le fichier pdb permet de faire le lien entre le .dll et le code .cs}\\
+\rem{ILSPie}{permet de récupérer du code décompiler à partir d'un .dll. Le fichier pdb permet de faire le lien entre le .dll et le code .cs}\\
 
 \rem{Lors d'un Binding : Trois questions à se poser}{\begin{itemize}
 \item 1 - Quel est le DataContext? Si il n'y en a pas on remonte à l'élément du dessus. (dans le xaml, jusqu'au niveau de la fenêtre.). Ici on a set le DataContext au niveau de la main window.
 \item 2 - Quelle est la propriété source (itemsource ou à droite du binding), propriété cible (selecteditem ou à gauche du binding),
-\item 3 - Quel mode de binding utilisé (dans un sens, dans l'autre, dans les deux sens, property Mode=... dans un binding).\\
+\item 3 - Quel mode de binding utilisé (dans un sens, dans l'autre, dans les deux sens, property Mode$=$... dans un binding).\\
 \end{itemize}}
 
-\rem{Exemple implicite du binding}{Le textBlock Text = "{Binding Name}" est un binding implicite dans le context définies par itemsource}.\\
+\rem{Exemple implicite du binding}{Le textBlock Text $=$ "\{Binding Name\}" est un binding implicite dans le context définies par itemsource}.\\
 
 \rem{Pour un équivalent du apt get-install}{Voir ChocolaTey (présent dans node.js) pour un équivalent sous windows.}\\
 
@@ -193,17 +193,18 @@ see = [Glossaire:]{gl-dip}
 
 \rem{Sur la vue}{On appel vue la partie xaml du wpf. Les donnéès provenant de la vue proviennent de la fenêtre. Voir la v2 du code de nico.}\\
 
+
 \section{Sur lien wpf et api}
 
 \rem{Si l'on oublie les chaines deconnection}{Il existe un site connection string qui répertorie tt les synatxes possiblent en fonction du type de bdd : \url{https://www.connectionstrings.com/}.}\\
 
-\rem{Sur les migrations avec CLI}{\incode{dotnet ef migrations add InitialCreate --projet chemin\_vers\_le.csproj} pour initialiser la première migration (il faut lui indiquer le chemin du projet ou est le DbContext). On doit aussi pouvoir faire -- output projetcible.csproj pour déplacer la migration ailleur. Pour faire la migration il est nécessaire d'avoir un constructeur qui prend un DbContextOptions. }\\
+\rem{Sur les migrations avec CLI}{\incode{dotnet ef migrations add InitialCreate $--$projet chemin\_vers\_le.csproj} pour initialiser la première migration (il faut lui indiquer le chemin du projet ou est le DbContext). On doit aussi pouvoir faire $--$ output projetcible.csproj pour déplacer la migration ailleur. Pour faire la migration il est nécessaire d'avoir un constructeur qui prend un DbContextOptions. }\\
 
 \rem{Pour utiliser la chaine de connexion du appsettings.json pour la migration}{Parait compliqué. On peut au mieux lui passer la chaine via le programme de l'API).}\\
 
 \rem{Sur l'update de la bdd}{Soit on passe par les ligne de commande (via update) ou bien le configurer dans le program.cs de l'api. (voir la partie \incode{app.Services.CreateScope()})}\\
 
-\rem{Sur le \incode{using} en inline}{Inline \incode{using (IDisposable) {des truc} permet de créer un scope locale dans lequel les \incode{trucs} seront détruit à la fin du scope. IDisposable est une interface qui implémente la méthode Dispose (qui permet de \textit{refermer} des ressources (les rendre inaccessible jusqua ce que le Garbage collector les désaloues)). Ex : un DbContext est un disposable et pourrait être utilisé de cette manière.}\\
+\rem{Sur le \incode{using} en inline}{Inline \incode{using} (IDisposable) {des truc} permet de créer un scope locale dans lequel les \incode{trucs} seront détruit à la fin du scope. IDisposable est une interface qui implémente la méthode Dispose (qui permet de \textit{refermer} des ressources (les rendre inaccessible jusqua ce que le Garbage collector les désaloues)). Ex : un DbContext est un disposable et pourrait être utilisé de cette manière.}\\
 
 \rem{Sur le Set du DbContext}{Lorsque l'on fait un Context.Set<Type> on crée une représentation de la bdd. Si l'on fait un Where dessus on récupère juste un IQueryable sur la représentation. La requête vers la bdd n'est faite qu'à partir du moment ou l'on fait un ToList() ou un AsEnumerable() dessus.}\\
 
@@ -211,16 +212,22 @@ see = [Glossaire:]{gl-dip}
 
 \rem{Dans le cli}{on peut faire dans un terminal \incode{dotnet watch run} pour faire de la compilaytion automatique à chaque sauvegarde. Il faut être dans le dossier contenant le proejt (ou la solution $\to$ à tester.)}\\
 
-\rem{Pour styliser un peu les applications}{Il faut passer par des framework externe : \keyref{}{matérial-design}, ou bien \keyref{}{maps-metro}.}\\
+\section{Sur les thèmes en wpf}
 
+\rem{Pour styliser un peu les applications}{Il faut passer par des framework externe : \keyref{https://material.io/design}{matérial-design}, ou bien \keyref{https://mahapps.com/}{mahapps-metro}.}\\
+
+\rem{Sur material design}{Il faut commencer par installer le themes via les Nugets (avec les dépendances indiquées sur le site). Puis dans l'app.xaml il faut compléter la partie ressource Dictionnary (dans application.Resources). Voir le site de material design (notemment la \keyref{https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit}{démo}) et l'exemple de nico.}\\
+
+\rem{Une fois le style importé et configuré}{On a accès à des propriétés propres aux thèmes (notemment via le champ Style).}\\
+
+\rem{Sur le changement de fenêtre de démarage}{En changeant startupUri dans le xaml de l'app, on peut changer la fenêtre de démrage.}\\
+
+\rem{Sur l'élement visual state}{L'élement VisualState manager permet de déclarer des éléments changeant dans le temps. (en taille, couleurs, positions...).}\\
+
+\note{Voir rating bar pour une nottation avec des étoiles animées!!!}
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
-\newpage
-\printglossary[type=\acronymtype]%\addcontentsline{toc}{chapter}{Acronymes}
-%\glsaddall% force l'apparition de tt les entrées du glossaire
-\glsaddallunused % meme chose que addall mais ne force pas la numéroattion dans la liste d'acronyme
-%\printunsrtglossary[type=main]
-\printglossary[type = main,nonumberlist]%\addcontentsline{toc}{chapter}{Glossaire}
+
 
 \end{document}
 \end{document}

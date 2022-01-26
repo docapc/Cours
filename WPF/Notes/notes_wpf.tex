@@ -193,6 +193,7 @@ see = [Glossaire:]{gl-dip}
 
 \rem{Sur la vue}{On appel vue la partie xaml du wpf. Les donnéès provenant de la vue proviennent de la fenêtre. Voir la v2 du code de nico.}\\
 
+
 \section{Sur lien wpf et api}
 
 \rem{Si l'on oublie les chaines deconnection}{Il existe un site connection string qui répertorie tt les synatxes possiblent en fonction du type de bdd : \url{https://www.connectionstrings.com/}.}\\
@@ -211,8 +212,19 @@ see = [Glossaire:]{gl-dip}
 
 \rem{Dans le cli}{on peut faire dans un terminal \incode{dotnet watch run} pour faire de la compilaytion automatique à chaque sauvegarde. Il faut être dans le dossier contenant le proejt (ou la solution $\to$ à tester.)}\\
 
+\section{Sur les thèmes en wpf}
+
 \rem{Pour styliser un peu les applications}{Il faut passer par des framework externe : \keyref{https://material.io/design}{matérial-design}, ou bien \keyref{https://mahapps.com/}{mahapps-metro}.}\\
 
+\rem{Sur material design}{Il faut commencer par installer le themes via les Nugets (avec les dépendances indiquées sur le site). Puis dans l'app.xaml il faut compléter la partie ressource Dictionnary (dans application.Resources). Voir le site de material design (notemment la \keyref{https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit}{démo}) et l'exemple de nico.}\\
+
+\rem{Une fois le style importé et configuré}{On a accès à des propriétés propres aux thèmes (notemment via le champ Style).}\\
+
+\rem{Sur le changement de fenêtre de démarage}{En changeant startupUri dans le xaml de l'app, on peut changer la fenêtre de démrage.}\\
+
+\rem{Sur l'élement visual state}{L'élement VisualState manager permet de déclarer des éléments changeant dans le temps. (en taille, couleurs, positions...).}\\
+
+\note{Voir rating bar pour une nottation avec des étoiles animées!!!.}\\
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
 
