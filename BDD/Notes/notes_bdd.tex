@@ -202,15 +202,17 @@ liens utiles \url{https://www.w3schools.com/sql/sql_top.asp}, \url{https://sql.s
 
 \note{Les fichier.sql sont un bon endroit pour faire des calculs (au lieu de récupérer la donnée pour la traiter en externe). On utilise les fonction d'aggrégats}\\
 
-\rem{Quelques fonction d'aggrégat}{MAX, SUM, MIN, COUNT, AVG, TOP (n) column\_name1, column\_name2 [remonte les n lignes des columns]...}
+\rem{Quelques fonctions d'aggrégat}{MAX, SUM, MIN, COUNT, AVG, TOP (n) column\_name1, column\_name2 [remonte les n lignes des columns]...}
 
-\note{Les mot clef ne sont pas case sensitive. MAX est équivalent à Max ou max}\\
+\note{Les mots clefs ne sont pas case sensitives. MAX est équivalent à Max ou max}\\
 
 \keyword{https://sql.sh/cours/order-by}{ORDER BY}{Order by column\_name opt: ordonne la remontée des données par la colonne column\_name dans l'ordre opt (ASC OU DSC). En principe on en met partout pour maitriser la remontée des données.}\\
 
 \keyword{https://sql.sh/cours/group-by}{GROUP BY}{Group by column .Regroupe par valeur unique dans column. Nécessite un SELECT fun\_aggregation() [et pas un simple SELECT column]}
 
 \keyword{https://sql.sh/cours/jointures}{JOIN}{JOIN schema.table ON schema.table.column\_interessante = schema.Autretable.column\_interessante. schema.table.column\_interessante est une colonne de FK qui font référence à schema.Autretable.column\_interessante. Le nom des colonnes n'est pas forcément le même dans les deux tables mais le types doit rester cohérent. Le JOIN permet de mapper une table à une autre. Le join va joindre les primary keys de la table cible aux foreign keys de la table mère (celle qui demande la jointure).} \\
+
+\keyword{https://sql.sh/cours/having}{HAVING}{Permet de faire des filtres sur des aggrégats.}
 
 \note{On peut (et on doit) mettre des alias sur les noms quand tt devient trop verbeux.}\\
 
@@ -221,6 +223,27 @@ liens utiles \url{https://www.w3schools.com/sql/sql_top.asp}, \url{https://sql.s
 \note{Une fois la table créée on peut générer automatiquement les scripts de CrUDe et plus. }\\
 
 \note{Dans les scripts sql on peut (et on devrait) faire [schema].[table] au lieu de schema.table ou juste table.}\\
+
+\rem{Pour un peu de web}{Regarder la lib \keyref{https://tailwindcss.com/}{Tailwindcss}.}\\
+
+\rem{Sur la différence entre Entity et Dto}{L'entity est la représentation de notre modèle en base de donnée. Les Dto sont des data tranfert object (les entités sont malgrès tt des dto).}\\
+
+\rem{Sur les dto}{On est sensé mettre les dto à plat $\to$ ils ne sont pas sensé être nested. On est sensé faire des trucs du genre : People : Adress, PeopleDto : Adrees_line1, Adress_line2. Cela implique de remonter soit même le Dto par la suite. Sa c'est la théorie mais dans la réalités on à quand même un ou deux niveau d'indentation (de nest). Voir la spécification \keyref{https://en.wikipedia.org/wiki/HATEOAS}{Hatoes}.}\\
+
+\rem{Rappel sur le schéma}{Conteneur logique (namespace) associé à des règles (ex: seul tel ou tel user peut accéder à ce schéma). Pour sa on passe dans le dossier Security $\to$ Schémas pour régler les différentes règles associées au schémas. Quand on parle de user ici, on parle de user direct de la bdd.}\\
+
+\note{Ctrl$+$L permet de voir le plan d'éxcecution de la requête (sinon voir dans le menu Query $\to$ Display Estimated Excecution Plan). On peut alors voir la répartition du temp pour chaque actions nécessaire dans la requête. L'outil donne également des astuces d'optimisation (comme il manque un index sur tel ou tel champ. Attention tt de même aux optimisations prématurée. Pour le lire il faudrait partir d'en bas à droite et remonter en haut à gauche.)}\\
+
+\note{Il faut être le plus claire possible quand au nommage des Tables. Il faut être le plus claire et le plus simple possible.}\\
+
+\rem{Sur les type de Jointure}{Pour plus de détails : \url{https://cartman34.fr/informatique/sgbd/differences-entre-inner-left-right-et-outer-join-en-sql.html}
+\begin{itemize}
+\item Inner (le join de base): Les deux lignes à accoler doivent exister dans les deux tables concernées.
+\item left / right: Garder tt dans la table de gauche (celle du FROM) ou à droite (celle du FROM) et accoler l'autre quitte à laisser les champs vides. Permet de garder des lignes qui ne seraient pas pris en compte dans un inner. Attention il faut quand même donner un ON tableA.champA = tableB.champB.
+\item Outer : Prend tt ce qui existe dans les deux tables. Associée avec un WHERE table.champ IS NULL permet d'exclure ce qui est commun aux deux tables.  
+\end{itemize}. Bien choisir permet d'optimiser au mieux ses requêtes. \\}
+
+
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires

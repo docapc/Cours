@@ -201,6 +201,17 @@ Dans poec.sql.repository (SqlDbContext). On a besoin des package Microsoft.Entit
 
 \note{Il faut probablement utiliser entity framework et par core pour que tt fonctionne avec wcf.}\\
 
+\note{On peut passer et on doit passer les entité en private/internal mais pas en public. Il faut de plus utiliser des Guards pour faire de la validation (maxlength et compagnie).}\\
+
+\rem{Sur le delete}{On a pas besoin de Get sur l'id. On peut plutôt construire une entité avec juste un id et passer sa au delete. Cela évite les aller retours pour rien.}\\
+
+\note{On peut analyser ce que fait EFCore avec les outils de visual studio.}\\
+
+
+
+
+
+
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
 \newpage

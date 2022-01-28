@@ -338,6 +338,9 @@ Dans un prjet complet on a ensuite un program.cs qui s'occupe du npm install et 
 
 \rem{Pour debugger}{ On peut passer par le naviguateur $\to$ inspecter $\to$ debogger $\to$ Webpack $\to$ le fichier de notre code qui nous interesse. Voir également le lien suivant \url{https://dvoituron.com/fr/2018/08/22/debugger-angular-via-vscode/} pour faire du debug directement dans VS Code.}\\
 
+\rem{Le truc à comprendre}{Le lazy loading des modules! Lorsque l'on déclare une route, angular lit les fichiers js et cherche les liaisons. En remonatnt d'une liaison à l'autre il construit ensuite un énorme fichier js. Au lieu de faire sa on peut faire du lazy loading, c'est à dire importer un module spécifique pour un path donné si ce module est utilisé. Au lieu de mettre path component on peut passer par children : [\{ loadChildren : () => import... \},...] (dans le app-routing.module.ts). Dans ce cas on aura un fichier js spécifique par children loadé au lieu d'un énorme fichier commun à tt l'appli. $\to$ très important à gérer.}\\
+
+
 
 
 %%--------------------------------------------------------------------------------------------------------------------------------1

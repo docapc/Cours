@@ -275,12 +275,13 @@ Il faut commencer par définir une interface pour le navigateur.\\
 
 C'est un type de projet que l'on peut créer lors de l'ouverture d'un nouveau projet WPF.\\
 Permet de faire des composant partageable entre différentes applications.\\
+Cela permet cette fois ci de partager une logique commune entre différent projet (ou bien component).\\
 
 \note{Dans le folder theme on a une dicitonnaire de ressource qui permet de définir les styles associées aux composants.}\\
 
-\rem{Sur l'importation}{Il faut ensuite importer ce dictionnaire de ressource dans celui de l'	pplication qui veut utiliser la ressource.}\\
+\rem{Sur l'importation}{Il faut ensuite importer ce dictionnaire de ressource dans celui de l'application qui veut utiliser la ressource.}\\
 
-
+\note{Ne surtout pas fiare de binding sur une \incode{PassWordBox} (ne pas monter d'infos sensibles dans la mémoire).}\\
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires

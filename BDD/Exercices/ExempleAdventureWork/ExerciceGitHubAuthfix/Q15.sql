@@ -1,6 +1,6 @@
 /*Retrouvez les trois villes les plus importantes. Affichez la répartition de la 
 catégorie de produits de premier niveau par rapport à chaque ville. */
--- Ville importante = ville avec le plus de Chiffres d'affaire fait (on pourrait rpendre avec le plus de client)
+-- Ville importante = ville avec le plus de Chiffres d'affaire fait (on pourrait prendre avec le plus de client)
 -- Produit de premiers niveaux : produit ayant un ParentProductCategory le plus bas mais non nulle ( = 1)
 --		ProductCategoryId/Name : 5/Mountain Bikes, 6/Road Bikes, 7/Touring Bikes
 -- Répartition de catégorie de premier niveau : nb de produit dans chaque catégorie de niveau1
@@ -8,11 +8,11 @@ catégorie de produits de premier niveau par rapport à chaque ville. */
 
 --Il nous faut des variables pour ce genre de choses!!! ou une autre table
 
-SELECT *
-FROM SalesLT.Address
+--SELECT *
+--FROM SalesLT.Address
 
-SELECT *
-FROM SalesLT.ProductCategory
+--SELECT *
+--FROM SalesLT.ProductCategory
 
 --Retrouve les trois villes les plus importantes
 --SELECT p.ProductID, p.Name, a.City, SUM(sod.UnitPrice*sod.OrderQty) as MoneyByProduct
@@ -71,7 +71,7 @@ JOIN SalesLT.SalesOrderHeader as soh ON ca.CustomerID = soh.CustomerID
 JOIN SalesLT.SalesOrderDetail as sod ON soh.SalesOrderID = sod.SalesOrderID
 JOIN SalesLT.Product as p ON sod.ProductID = p.ProductID
 JOIN SalesLT.ProductCategory as pc ON p.ProductCategoryID = pc.ProductCategoryID 
-WHERE pc.Name = 'Mountain Bikes' or a.City in ('London', 'Woolston', 'Union City')
+WHERE pc.Name = 'Mountain Bikes' and a.City in ('London', 'Woolston', 'Union City')
 GROUP BY a.City
 --HAVING a.City in ('London', 'Woolston', 'Union City')
 

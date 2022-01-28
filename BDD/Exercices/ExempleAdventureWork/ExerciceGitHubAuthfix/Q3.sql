@@ -4,3 +4,10 @@
 SELECT COUNT(DISTINCT ProductID) -- toutes les références de produit qui ont été en ventes
 FROM SalesLT.SalesOrderDetail
 WHERE UnitPrice > 1000 
+
+/*Correction */
+SELECT SUM(sod.OrderQty) as Quantity
+FROM [SalesLT].[SalesOrderDetail] as sod
+WHERE sod.UnitPrice > 1000
+
+
