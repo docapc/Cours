@@ -212,6 +212,8 @@ liens utiles \url{https://www.w3schools.com/sql/sql_top.asp}, \url{https://sql.s
 
 \keyword{https://sql.sh/cours/jointures}{JOIN}{JOIN schema.table ON schema.table.column\_interessante = schema.Autretable.column\_interessante. schema.table.column\_interessante est une colonne de FK qui font référence à schema.Autretable.column\_interessante. Le nom des colonnes n'est pas forcément le même dans les deux tables mais le types doit rester cohérent. Le JOIN permet de mapper une table à une autre. Le join va joindre les primary keys de la table cible aux foreign keys de la table mère (celle qui demande la jointure).} \\
 
+\keyword{https://sql.sh/cours/having}{HAVING}{Permet de faire des filtres sur des aggrégats.}\\
+
 \note{On peut (et on doit) mettre des alias sur les noms quand tt devient trop verbeux.}\\
 
 \rem{Pour créer une base de donnée}{Click droit sur \textit{database} $\to$ {new database}. Va créer deux fichier, la ddb et le log. Option permet ensuite de changer des choses appliqués à toutes la ddb, ex : \textit{collation} qui permet d'avoir du case sensitive ou non (à bien choisir au début car dure à changer et appliquer à toute la base!) : CI $\to$ case insensitive ou CS pour sensitive. AS ou AI pour Accent sensitive ou insensitive.}\\
@@ -239,7 +241,9 @@ liens utiles \url{https://www.w3schools.com/sql/sql_top.asp}, \url{https://sql.s
 \item Inner (le join de base): Les deux lignes à accoler doivent exister dans les deux tables concernées.
 \item left / right: Garder tt dans la table de gauche (celle du FROM) ou à droite (celle du FROM) et accoler l'autre quitte à laisser les champs vides. Permet de garder des lignes qui ne seraient pas pris en compte dans un inner. Attention il faut quand même donner un ON tableA.champA = tableB.champB.
 \item Outer : Prend tt ce qui existe dans les deux tables. Associée avec un WHERE table.champ IS NULL permet d'exclure ce qui est commun aux deux tables.  
-\end{itemize}. Bien choisir permet d'optimiser au mieux ses requêtes. \\}
+\end{itemize}. Bien choisir permet d'optimiser au mieux ses requêtes.}\\
+
+\rem{Sur les vues}{Ce sont des objets qui contiennent des requêtes SQL qui permettent de faire un SELECT FROM NomDeMaVue et la vue va appler la requête qu'on lui à donné. C'est un alias pour une requête. On peut également s'en servir pour faire du cache de résultats à partir de requête très longue. On peut par exemple demandée à la base de recalculer la vue régulièrement à un interval de temps donné. Cela donne un résultat hyper rapide à la demande (mais pas fiable assurément car résultat d'un calculk précédent pas forcément encore à jour). Il existe d'autre type de vue ($\to$ à cresuer) comme les tables in Memory (qui reste dans la mémoire interne du serveur). On peut également donner un accès en lecture à la vue tt en interdisant un accès direct aux tables. Cela permet de cacher des données/restreindre un accès.}\\
 
 
 
