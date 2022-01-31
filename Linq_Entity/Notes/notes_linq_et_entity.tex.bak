@@ -207,8 +207,98 @@ Dans poec.sql.repository (SqlDbContext). On a besoin des package Microsoft.Entit
 
 \note{On peut analyser ce que fait EFCore avec les outils de visual studio.}\\
 
+\section{Passe de Thomas}
 
+\note{Attention au InMemory $\to$ car il n'est ne fait appel au packahe \textit{Relationnal}. Il vaut mieux passer par du SqLite.}\\
 
+\rem{Sur le DbContext}{Le DbContext permet de maintenir le lien entre les objets dans une appli et leur état dans la base de donnée. C'est un point d'entrée à la base de donnée (il a une connection) mais il n'est pas que sa. Le DbContext est un UOW (\textit{Unit of Work}) qui fait le proxy entre la base et les objets.}\\
+
+\rem{Sur le principe d'Unit of Work}{Tant que l'on ne donne pas un ordre d'excécution (SaveChanges pour DbContext) rien ne se passe (Coté base).}\\
+
+\rem{Sur l'override du OnConfiguring}{Cela permet de faire la configuration statique (Fixe). Si l'on veut être un peut plus dynamique il faut passer par les options.}\\
+
+\note{On peut mettre les DbSet en private set. EF initilisera quand même le DbSet. De plus on ne passe jamais par un $=$ donc le setter n'a pas à être publique. Le stter doit tt de même exister sinon EF ne peut pas initiliser le DbSet. On peut mettre le setter en $\textit{init}$ sinon.}\\
+
+\rem{Sur les DbSet}{Un DbSet est une classe générique qui hérite de IQueryable, qui lui même hérite de IEnumerable. DbSet est donc un type de liste. Il implménete du \textit{Late Exécution} : tant que l'on ne forme pas un aggrégat rien n'est matérialisé. }\\
+
+\rem{Sur l'utilisation du DbSet}{On peut faire des action directement sur le DbContext ou bien sur le DbSet.}\\
+
+\rem{Sur les méthodes des Set (ou Context)}{Seules, Add, Delete, ... ne mettent pas à jour le DbContext. Il faut forcément passer par le SaveChanges(). Cela permet d'appliquer un principe transactionnelle : on assure l'intégrité des données.}\\
+
+\rem{Sur les constructeurs}{Les constructeurs par défaut ne absoluement pas obligatoires!}\\
+
+\rem{Sur le Set}{Le Set<T>. Cela permet de renvoyer le DbSet<T> déjà déclaré dans le DbContext. Context.MesClass est équivalent à Context.Set<MaClass> si MesClass est déclaré comme DbSet<MaClass> MesClass \{get; set;\}.}\\
+
+\rem{Sur le IDisposable}{C'est une bonne pratique d'utiliser un using var MonContext = new MonDbContext() (pour pouvoir dispose() dessus.).}\\
+
+\rem{Sur la connection à la bdd}{Ce n'est pas vraiement le DbContext qui se connecte mais le provider (SqlLite, SqlServer...) qui gère la connection. Après la première connection le provider gère un pool de connection qu'il répartit à sa guise par la suite.}\\
+
+\rem{Sur les aller retour en base}{Exemple du Delete. Pour delete on peut d'abord récupérer un objet pour ensuite le delete. Cela fonctionne mais cause deux appel à la base!. On peut faire mieux. En utilisant un constructeur avec un paramètre d'identifiant pour créer une entité avec l'identifiant qui va permettre la suppression. Attention cela peut ne pas fonctionner car la ref des deux objet est différent, et le db context en cours ne pourra pas faire la distinction entre les deux si on utilise le même DbContext pour l'ajout et la suppression. Il lèvera une erreur en disant que l'on essaie d'ajouter un objet qui existe déjà. Pour pouvoir faire sa il faut passer par un DbCOntext qui ne connait pas déjà l'entité à supprimer!}\\
+
+\note{Sur le comportement par défaut de EF}{Si l'on appel une property Id ou bien MAClassId, EF considère que cette attribut sera une clef primaire.}\\
+
+\rem{Sur la publication d'un build}{Click droit sur un projet -> publish permet d'ouvrir un utilitaire de publication.}\\
+
+\rem{Sur le ClickOnce}{Permet d'installer un application depuis une page Web (automatiquement).}\\
+
+\rem{Sur le publication dans un folder}{Le Fodler location est l'emplacement ou sera généré le programme. Une fois le profil définie on le verra apparaitre dans l'application. Enfin il n'y a plus qu'à clicker sur publish. Avant sa, dans les settings $\to$ show all settings, on peut modifier des options qui ne sont pas proposé au début.}\\
+
+\rem{Sur le mode de déploiement}{\begin{itemize}
+\item Self-contain : on embarque le framework.Net avec l'application. L'utilisateur n'aura pas à réinstaller le framwork pour utiliser l'appli. Permet par exemple de gérer les versions ou de faire du déploiement là ou l'installation d'un framework n'est pas possible.
+\item Framework-dependant : suppose que l'utilisateur aura un framework d'installer. Permet de cibler AnyCpu (n'importe quel architechture) \\
+\end{itemize}}
+
+\rem{Sur le target runtime}{En Self-Contained il faut le spécifier, le code sera alors dépendant le l'architecture.}\\
+
+\rem{Produce single file}{Permet d'embarquer les dll dans le fichiers .exe. Au final on a plus qu'un seul fichier.}\\
+
+\rem{TRIM}{Permet de réduire la taille du fichier final (en ne choisissant que les partie du framework nécessaires).}\\
+
+\note{Dans les github Action : Il faut désactiver la télémétrie du dotnet via le paramètre DOTNET_CLI_TELEMETRY qu'il faut passer à 1.}\\
+
+\rem{Sur la notion d'artefact}{C'est la sortie d'un pipeline (une suite d'instruction d'éxcecution). Aboutit à un .exe, .msi, ...}\\
+
+\rem{Sur les .msi}{Un fichier .msi peut être déployé automatiquement (par rapport à un .exe). Il permet d'utiliser des Group Policy Object (GPO) pour gérer le déploiement.}\\
+
+\rem{Sur \keyref{https://wixtoolset.org/}{wix toolset}}{C'est un outils qui permet de faire les builds via les GitActions.}\\
+
+\rem{Sur la commande dotnet publish}{Permet de publier une application. Attention par défaut la commande prend le profil en cours (souvent Debug donc). Il faut lui passer un fichier de profil en argument pour faire appliquer autre chose que le comportement par défaut. Note : cette commande inclue également la commande dotnet restore. C'est en fait un restore+build+publish}\\
+
+\rem{Sur la commande dotnet restore}{Permet de générer les dépendances (les packages Nugget).}\\
+
+\note{C'est une bonne pratique de séparer restore, build et publish (via --no-restore dans build puis --no-build dans publish) pour pouvoir savoir plus précisément où sont les problèmes lorsqu'ils surviennent.}\\
+
+\rem{Sur la commande dotnet test}{Permet delancer un jeux de test. Attention les tests sont dépendant de la plateforme. Il faut lui préciser la matrice de runtime.}\\
+
+\rem{Sur les fichier .pdb}{Programm Debug Database : fichiers facultatifs mais qui permettent de faire du debug.}\\
+
+\rem{Sur le using}{Il ne sert que l'orsque l'on a besoin d'utiliser un objet de type IDsposable de manière explicite. En ASP Net ce n'est pas nécessaire. Tt les service passées en Scoped Ou transcient appel également la méthode Dispose. Par contre lorsque l'on utilise un IDisposable en dehors de ce genre de context, la bonne pratique est de toujours utilisé un using pour que la méthode dispose soit appelée en temps voulu (cad après la dernière apparition de l'objet dans le programme).}\\
+
+\rem{Sur les IDisposable}{Lorsque l'on utilise un objet IDsiposable (DbContext, Stream, FileWritter) il faut toujours se demander uqi va gérer le dispose et si personne n'est trouvé il faut le faire soit même en utilisant le using.}\\
+
+\rem{Sur la méthode Dispose}{Elle sert à nettoyer les ressources allouées à un objet. L'objet n'est pas détruit (car les destructeur n'existent pas en C\#) mais est pratiquement inutilisable après l'appel à Dispose().}\\
+
+\rem{Sur le destructeur en C\#}{Il est possible de le définir comme en C$++$ mais on ne peut pas l'appeler explicitement, c'est le garbage collector qui l'appel. voir \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/classes-and-structs/finalizers}.}\\
+
+\rem{Sur le modelBuilder.Entity.HasData}{Permet de seeder une bdd c'est à dire la remplir avec des données initiales.}\\
+
+\rem{Sur DbContext.Database.EnsureCreated()}{Instencie le provider (SQlserveur, ...) puis passe dans la méthodes OnModelCreating.}\\
+
+\rem{Sur le Include et LazyLoading}{De base Entity Framework fait du Lazy loading, il ne remonte aucune des propriétés associées à un objet via une naviguation (enfin si mais il les affecte null). Pour récupérer l'objet associé on peut faire Contenant.Contenue et à ce moment là une requête sera faite!}\\
+
+\note{Par défaut sur EF6 le lazy loading est désactivé et on est directement en eager loading.}\\
+
+\rem{Sur le Eager Loading}{Ce qui est remonté après une premièr erequête est définit. L'objet courant est remonté par défaut sans les propriétés de naviguation. Un appel a Contenant.Contenue restera nulle et ne déclenchera pas de requête.}\\
+
+\rem{Sur la profondeur des Dto}{Dans la mesure du possible il vaut mieux avoir des Dtos à plat (1 seul niveau d'indendation) mais dans le cas d'une liste on peut se permettre d'avoir un niveau de plus. On a des truc du genre COntenant prop1, Contenant prop2, contenue prop1, contenue prop2.}\\
+
+\note{Il est possible de faire remonter le builder.Service (IServiceCollection) de la persistance vers l'API pour ne pas avoir à exposer les enity ou les profils d'Automapper.}\\
+
+\note{Il faut faire attention à ne pas créer des boucles de tables (cad différent chemin pour atteindre une même donnée).}
+
+\rem{Sur ICollection}{Laisse une main un peu plus grande sur les propriétés de naviguations que IEnumerable. Pas vraiement de règles la dessus (choix entre abstraction et utilisation pratique.)}\\
+
+\note{Il est interessant d'avoir des erreur normalisées par types (dto, entity, ...). Puis avec les Exception Detail on peut filtrer plus en détail.}\\
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
