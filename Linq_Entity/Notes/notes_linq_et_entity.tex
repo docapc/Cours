@@ -254,9 +254,9 @@ Dans poec.sql.repository (SqlDbContext). On a besoin des package Microsoft.Entit
 
 \rem{TRIM}{Permet de réduire la taille du fichier final (en ne choisissant que les partie du framework nécessaires).}\\
 
-\note{Dans les github Action : Il faut désactiver la télémétrie du dotnet via le paramètre DOTNET_CLI_TELEMETRY qu'il faut passer à 1.}\\
+\note{Dans les github Action : Il faut désactiver la télémétrie du dotnet via le paramètre DOTNET\_CLI\_TELEMETRY qu'il faut passer à 1.}\\
 
-\rem{Sur la notion d'artefact}{C'est la sortie d'un pipeline (une suite d'instruction d'éxcecution). Aboutit à un .exe, .msi, ...}\\
+\rem{Sur la notion d'artefact}{C'est la sortie d'un pipeline (une suite d'instruction d'exécution). Aboutit à un .exe, .msi, ...}\\
 
 \rem{Sur les .msi}{Un fichier .msi peut être déployé automatiquement (par rapport à un .exe). Il permet d'utiliser des Group Policy Object (GPO) pour gérer le déploiement.}\\
 
@@ -299,6 +299,39 @@ Dans poec.sql.repository (SqlDbContext). On a besoin des package Microsoft.Entit
 \rem{Sur ICollection}{Laisse une main un peu plus grande sur les propriétés de naviguations que IEnumerable. Pas vraiement de règles la dessus (choix entre abstraction et utilisation pratique.)}\\
 
 \note{Il est interessant d'avoir des erreur normalisées par types (dto, entity, ...). Puis avec les Exception Detail on peut filtrer plus en détail. L'idée est de faire un type d'erreur par \textit{couche} du programme.}\\
+
+\rem{Sur le ChangeTracker}{Il vaut mieux finalement ne pas le désactiver. Il permet un meilleur debug (via le DebugView). Cela permet également lors d'un update de faire un update uniquement sur les colonnes qui ont changé et pas sur toutes les colonnes. De plus si on a des indexes ou des \textit{vue} liées à certaine tables, la base va également devoir tt remettre à jour si l'on change toutes les colonnes d'une entités. Le seul intérêt de le désactiver serait pour faire du patch impliquant beaucoup de changement à la fois.}\\
+
+\rem{Sur la migration}{La migration est spécifique à un provider (SqlServeur, SqLite, ...), il faut une migration par provider.}\\
+
+\rem{Sur les chaines de connection}{Voir : \url{https://www.connectionstrings.com/} pour les différentes chaines de connection nécessaires en fonction des provider}\\
+
+\rem{Pour utiliser dotnet dans le gestionnaire de package}{On commence par faire un \incode{new tool-manifest} qui permet de générer un fichier dans lequel on va venir lister les commandes dont on a besoin. Par la suite \incode{dotnet tool install dotnet-ef} viendra rajouter dotnet ef au fichier \textit{manifest}. Cela permet ensuite de lancer \incode{dotnet ef} dans le gestionnaire de package.}\\
+
+\rem{Sur le OnDelete(CascadingRule)}{Permet de cascader ou non la supresion de données.}\\
+
+\rem{Sur la montées et descentes de version dans les migrations}
+{\incode{dotnet ef migrations remove} pour enlever une migration (avant de l'avoir appliqué!). \incode{dotnet ef database update UneMigration} permet d'update à une certaine migration. Cela permet également des retours en arrière au niveau de l'historique des migrations.
+Attention lors de ces allez retour on peut perdre des données. Lorsque l'on ajoute une colonne, cette dernière prendra une valeur par défaut que l'on peut déterminer dans la migration (si elle n'est pas autorisée à être nulle).}\\
+
+\rem{Sur le rajout de données après migration}{On peut passer du Sql pure (dans le fichier de Migration) avec l'argument defaultValueSql: "MonScriptSql".}\\
+
+\rem{Sur migration scripts}{Permet de générer des scripts SQL correspondant à la création de la migration.}\\
+
+\rem{Sur migration bundle}{\incode{dotnet ef migration bundle} permet de créer une éxécutable qui permet d'éxécuter la migration. Cela évite d'avoir à déployer une appli avec un user en Admin. Cela évite également de faire l'update directement dans nos programmes. Voir cette article \url{https://devblogs.microsoft.com/dotnet/introducing-devops-friendly-ef-core-migration-bundles/} pour un peu plus de détail et \url{https://docs.microsoft.com/fr-fr/ef/core/managing-schemas/migrations/applying?tabs=dotnet-core-cli} (section offres groupées). Lorsque l'on a l'exe il suffit d'excécuter le bundle en lui lui passant la chaine de connection : \incode{.\textbackslash efbundle.exe --connection 'MaChaineDeConnexion'}. Il est aussi possible de passer le nom de la migration que l'on souhaite appliquées.}\\\\
+
+
+\rem{Si l'on veut lancer une migration dans un program}{On peut passer par \incode{DbContext.DataBase.Migrate()}
+. Attention cette commande est mutuellement exclusive avec la commande de création (\incode{EnsureCreated()}).}\\
+
+\note{En EF Core 6, la commande \incode{DbContext.DataBase.Migrate()}
+crée la base de donnée si elle n'existe pas.}\\
+
+\rem{Sur l'ajout de données pendant la migrations}{Il est possible de faire sa en passant par les \incode{migrationBuilder.Operations.Add()}.}\\
+
+\rem{Sur la migration}{On devrait mettre les dossiers de migrations dans un projet séparés. Cela permet par exemple de pouvoir target plusieurs type de bases de données.}\\
+
+\rem{Si jamais la création de bundle ne fonctionne pas}{voir un workaround \url{dotnet ef migrations bundle --configuration Bundle --project ./src/Myproject/Myproject.csproj --verbose}.}\\
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires

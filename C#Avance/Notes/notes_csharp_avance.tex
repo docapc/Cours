@@ -1,0 +1,180 @@
+%\listfiles
+\documentclass[a4paper,12pt,twoside]{article}
+
+%% packages
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,mathrsfs} 
+%\usepackage{import}
+\usepackage{float, subfig, caption}
+\usepackage{libertine}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{xcolor} %/ pour \Definecolor
+\usepackage[pdftex,final=true]{hyperref}
+%\usepackage[]{hyperref}
+\hypersetup{
+colorlinks=true,
+linkcolor=blue,
+urlcolor=magenta, %/ file: adopte également cette couleur
+filecolor=cyan, % ne fonctionne qu'avec run:, 
+%citecolor=red
+}
+\urlstyle{same}
+\usepackage[french]{minitoc}
+\usepackage[acronym,toc,automake]{glossaries} % acronym pour les acronymes et toc pour inclusion des glossary dans la table des matières
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+%\usepackage{minted} % pour code avec coloration dans le texte
+\usepackage{url} % Pour avoir de belles url
+%% package ticks spécifiquement (pour les schémas) 
+%\usepackage{tikz}%
+%\usepackage[top=2cm,bottom=2cm]{geometry}
+%% paramètres tikz
+%\usetikzlibrary{patterns,decorations.pathreplacing,shapes.misc}
+%\usetikzlibrary{calc}
+%\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+%cross/.default={5pt}}
+% \definecolor{Gray}{gray}{0.9}
+% \definecolor{LightCyan}{rgb}{0.88,1,1}
+% \newcommand{\RN}[1]{\textup{\uppercase\expandafter{\romannumeral#1}}}    
+
+%% Macros comme variable
+%\newcommand{\editorpath}{C:/Program Files/Notepad++/notepad++.exe}
+\newcommand{\exemplepath}{../Exercices}
+\newcommand{\urlcolor}{magenta}  % couleur des liens https
+\newcommand{\filecolor}{cyan} % couleur des liens file: file
+\newcommand{\pdfcolor}{red} % couleur des liens file: .pdf
+\newcommand{\foldercolor}{orange} % couleur des liens file: Folder
+\newcommand{\cscolor}{green!60!black} % couleur des liens file: .cs
+\newcommand{\slncolor}{violet} % couleur des liens file: .sln
+\newcommand{\keycolor}{purple} % couleur des liens  de type mot clefs
+%% Macros commun
+\newcommand{\incode}[1]{{\footnotesize\ttfamily #1}} % pour du pseudo-code simple
+\newcommand{\rem}[2]{\noindent\underline{Remarque} : \textit{#1}.\\ \indent #2}
+\newcommand{\note}[1]{\noindent\underline{Note} : \\ \indent #1}
+\newcommand{\defi}[2]{\noindent\underline{Définition} : \textbf{#1}.\\ \indent #2}
+\newcommand{\slide}[2]{\textbullet ~ Slide n°#1 : \indent #2}
+%% Macro spécifiques à ce fichier (pas forcément) : pour fonctionner il faut que le fichier ai été ouvert diretcement dans le dossier du .tex ...
+\newcommand{\fileref}[2]{\hypersetup{urlcolor=\filecolor}\href{file: #1}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\pdfref}[2]{\hypersetup{urlcolor=\pdfcolor}\href{file: #1.pdf}{#2.pdf}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\csref}[2]{\hypersetup{urlcolor=\cscolor}\href{file:\exemplepath /#1.cs}{#2.cs}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\slnref}[2]{\hypersetup{urlcolor=\slncolor}\href{file:\exemplepath /#1.sln}{#2.sln}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\folderref}[2]{\hypersetup{urlcolor=\foldercolor}\href{file:\exemplepath /#1/.}{#2}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyref}[2]{\hypersetup{urlcolor=\keycolor} \href{#1}{\textbf{#2}}\hypersetup{urlcolor=\urlcolor}}
+\newcommand{\keyword}[3]{\noindent\underline{Mot clef} : \keyref{#1}{#2}. \\ \indent #3}
+%% Macro spécifiques à ce fichier (pas forcément)
+\newcommand{\dpat}[7]{
+\noindent \underline{Pattern} : \textbf{#1}, \indent (type : \textit{#2}) \\
+\underline{Description} : \indent #3 \\
+\underline{Exemple} : \indent #4 \\
+\noindent \underline{Avantages} : 
+\begin{itemize}
+ #5
+\end{itemize}
+\noindent \underline{Inconvénients} : 
+\begin{itemize}
+ #6 
+\end{itemize}
+\underline{Liens} : #7 
+}
+
+%% Infos document
+% Titre
+\title{Notes sur le module : \textit{C\# Avancé}.}
+% auteur
+\author{Armel Pitelet}
+% date de création du document
+\date{\today}
+
+%% Glossaire, acronymes et index
+\makeglossaries
+
+%% Glossaire et acronyme (déclarations)
+
+% DIP : exemple de formalisme
+\newglossaryentry{gl-dip}{
+name = {DSP},
+description = {la description détaillé}
+}
+\newglossaryentry{ac-dip}{
+type = \acronymtype, name = {DSP}, 
+description = {Nom simple}, 
+first = {Première occurence\glsadd{gl-dip}}, 
+see = [Glossaire:]{gl-dip}
+}
+
+
+\begin{document}
+%% Organisation globale 
+\maketitle
+\tableofcontents
+
+%%--------------------------------------------------------------------------------------------------------------------------------
+\section{Code Synchrone et Asynchrone}
+
+\rem{Sur les fenêtre wpf}{Il y a un processus qui tourne sur le Thread UI qui s'occupe de gérer la partie visible d'une fenêtre.}\\
+
+\rem{Pour faire de l'asynchrone}{On peut passer par la classe Thread (depreciated) qui est la pour des raisons historique pour déclarer une action à faire dans un nouveaux Thread.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/keywords/async}{async}{Authorise l'utilisation du \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/operators/await}{await}. Voir \url{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/concepts/async/}.}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/api/system.threading.tasks.task?view=net-6.0}{Task}{Une task représente une action à effectuer de manière asynchrone (en générale mais pas obligatoirement). On ne peut pas mettre à jour un autre Thread que celui en cours dans une Task. (voir remarque sur le \incode{Dispacher}).}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/operators/await}{await}{Tant que la ligne marquée await n'a pas finie son éxcécution, on attent avant de passer à la suite de la fonction.}\\
+
+\note{On peut afficher les Threads en cours dans visual studio.}\\
+
+\rem{Sur la classe \incode{Dispacher}}{Elle permet de faire discuter les Threads entre eux via \incode{Dispacher.Invoke(une lambda qui fait un truc)}.}\\
+
+\note{Si on a le choix, c'est plus performant d'utiliser de l'asynchrone que du synchrone.}\\
+
+\rem{Pour faire des fonctions asynchrone}{Il faut utiliser le mot clef \incode{async} et renvoyer void ou bien renvoyer une \incode{Task<UnType>}. Il vaut mieux renvoyer une Task car elle à des propriétés que l'on peut vouloir récupérer (comme la Task est elle toujours en cours d'exécution ou pas). Le \incode{return} de la fonction n'a cependant pas à renvoyer lui même une \incode{Task} (à partir du moment ou on a un \incode{await} quelque part dans la fonction).}\\
+
+\rem{Sur \incode{Task.FromResult()}}{Permet de créer une \incode{Task} à partir de ce que l'on met dans le \incode{Result(un\_truc)}. Lorsque l'évènement est levé, la méthode abonner est appelée. On se désabonne ensuite via un $Event -= UnTruc$.}\\
+
+\rem{Sur la notion d'Asynchrone}{Faire de l'asynchrone avec \incode{async await} revient à écrire du code de manière synchrone (le code après un await est excécuté aprés la fin de la Task marqué en await) mais ce qui est éxcécuté en asynchrone est exécutée sur un Thread à part qui ne bloque pas l'exécution des autres Threads en cours.}\\
+
+\note{On peut rendre une tache synchrone en utilisant \incode{Task.GetAwaiter().GetResult()}. C'est complètement inutile sauf si on ne peut absolument pas renvoyer une \incode{Task} (comme sur du code Legacy par exemple)}\\
+
+\rem{Sur la gestion de plusieurs Task en même temps}{Task.WhenAll(task1,task2), WaitAll(task1,task2) permettent d'attendre que les Task données soient terminées. \incode{WhenAny} permet d'éxcécuter ce qui suit une fois qu'au moins une des Task est terminée}\\
+
+\rem{Divers trucs sur les Tasks en générale}{\incode{Task.FromResult(résultat)} permet de renvoyer un résultat (synchrone ou non). Est équivalent à passer par le constructeur de Task (\incode{new Task()}). \incode{Task.FromException(new Exception())} permet de créer une Task à partir d'une exception.}\\
+
+\rem{Sur la gestion des exceptions dans les Task}{Les exceptions (pasque c'est bien fait) peuvent remonter dans le Thread principale. A partir du moment ou la Task est asynchrone et lève une exception tt se passe (pour nous) comme si on était en synchrone, il n'y a pas de précautions particulières à prendre.}\\
+
+\rem{Sur le type d'exception qui remonte des Task}{Ces Exceptions sont typé de la même manière que les classiques.}\\
+
+\rem{Sur l'\incode{AggregateException}}{Type particulier d'exception qui peut popper dans certain contexts (ex : Parallel) à la place de l'excpetion que l'on attend. C'est une exception qui aggrège (wrap) un ensemble d'exceptions et qui contient d'autres exceptions. Ce type d'Exception arrive quand on est dans d'autres Thread que le principale. N'arrive pas si l'on fait bien les async await mais peut arriver facilement dans les systèmes multi-threadés et/ou parallélisés.}\\
+
+\section{Les Events}
+
+\rem{Sur les Events}{Dans visual Studio un symbol d'éclaire à coté d'un nom de variable imndique un évènement. Un évènement se déclare avec le mot clef \incode{event} puis un type délégué Nom de l'event. Lorsque l'on fait un \incode{Evenement += UnTruc}. On abonne la méthode \incode{UnTruc} à l'évènement \incode{Evenement}. La desinscription est obligatoire à un moment lors du programme. Attention, si l'on passe des fonction anonymes, il n'existe aucun moyen de se désabonner!}\\
+
+\rem{Sur les \incode{Loaded} et \incode{Unloaded} dans WPF}{Il n'est pas nécessaire de se désabonner à ces évènement la puisqu'ilms sont détruits en même temps que la fenêtre.}\\
+
+\note{En Angular, le système d'abonnement est identique. Cas particulier, les requêtes Http ne nécessite pas de désabonnement.}\\
+
+\note{En générale on passe plus par du \incode{async await} que du \incode{EventHandler} pour faire de l'asynchrone. Mais c'est encore très présent en Wpf.}\\
+
+\rem{Sur le passage d'argument aux Events}{Il est nécessaire de créer des classes qui hérite de \incode{EventArgs} pour passer des arguments aux évènements.}\\
+
+\rem{Sur le \incode{InitializeComponent} en WPF}{Cette commande vient en fait transformer le xaml en une vrai classe .cs (d'ou le \incode{partial} devant les deux types de classes)}\\
+
+\note{Les EventQQChose sont en faite des classes de \keyref{https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/}{délégué}}
+
+\note{Les \incode{Event} sont des propriétés sans Getter Setter!}\\
+
+\rem{Sur les méthodes qui s'abonne aux event}{Il vaut mieux toujours vérifier que l'event existe (c'est à dire qu'il ait au moins un abonnement $\to$ d'où les \incode{if(MonEvent!= null)}).}
+
+\section{Divers}
+
+
+
+%%--------------------------------------------------------------------------------------------------------------------------------1
+%% Glossaires
+
+
+\end{document}
+\end{document}
