@@ -117,10 +117,11 @@ Sur les types de test, voir \url{https://blog.octo.com/la-pyramide-des-tests-par
 \item Test unitaire : test d'un block de code le plus petit possible.
 \item Test de composant : on test une partie d'une application.
 \item Test d'intégration : on test l'ensemble de l'application après l'ajout d'une nouvelle fonctionnalité.
-\test IHM (de bout en bout) : On démarre l'application et on regarde directement si tt fonctionne correctement.
+\item IHM (de bout en bout) : On démarre l'application et on regarde directement si tt fonctionne correctement.
 \item Test de monté en charge (de performance) : pour ne pas dégrader les performances au cours du temps.
 \item Test utilisateur : analyse de donnée faite en conception (une fois que tt est développé).\\
 \end{itemize}
+
 
 \note{Pour ce cours on repart de la V3 DemoBinding dans WPF.}\\
 
@@ -129,6 +130,10 @@ Sur les types de test, voir \url{https://blog.octo.com/la-pyramide-des-tests-par
 \rem{Sur MSTest}{Dans ce template on a une classe annoté \incode{TestClass} et une méthode \incode{TestMethod}.}\\
 
 \rem{Sur les packages interessant}{Via NUget : FluentAssertions : Apporte plus de test par rapport à ce qui est disponible de base}\\
+
+\rem{Sur le test des méthodes Async}{Il faut également que le test associés soit asynchrone.}\\
+
+\section{Unitaire et intégration}
 
 \rem{Sur les conventions de nommage des tests}{Il y a plusieurs méthodes : \url{https://dzone.com/articles/7-popular-unit-test-naming}.}\\
 
@@ -150,11 +155,11 @@ Sur les types de test, voir \url{https://blog.octo.com/la-pyramide-des-tests-par
 
 \rem{Sur la couverture de code}{A partir du moiment ou l'on fait des tests unitaire, on peut regarder la couverture du code (par les tests).}\\
 
-\rem{Si l'on a du mal à tester}{C'est qu'en générale les principes solides n'ont pas été respectés et qu'il faut refactorer le code.}
+\rem{Si l'on a du mal à tester}{C'est qu'en générale les principes solides n'ont pas été respectés et qu'il faut refactorer le code.}\\
 
 \rem{Sur la répartition des test}{Un projet de test par projet testé, une classe de test par class testée.}\\
 
-\rem{Sur les annotation allant avec la IActionResult}{Elle peuvent servir pour la doc (cad swagger) mais ne change pas le fonctionnement du code.}
+\rem{Sur les annotation allant avec la IActionResult}{Elle peuvent servir pour la doc (cad swagger) mais ne change pas le fonctionnement du code.}\\
 
 \rem{Sur les ActionResult et IActionResult}{IActionResult est l'interface implémenté par ActionResult et ActionResult<>. On a pas besoin de spécifier un type de retour autre. IActionResult est plus général et donc à favoriser.}\\
 
@@ -168,9 +173,9 @@ Sur les types de test, voir \url{https://blog.octo.com/la-pyramide-des-tests-par
 
 \rem{Pour les test avec bdd}{Si l'on fait une connection direct il faut bien penser à nettoyer la bdd par la suite. Pour être plus propre on peut passer par le Driver InMemory ou bien SqlLite (en package nugget). Attention au InMemory qui peut avoir des comportement différents d'une base de donnée relationnelle. Voir plutot avec SqlLite (package de EFCore) : \url{https://docs.microsoft.com/fr-fr/ef/core/testing/sqlite}.}\\
 
-\note{Attention à utiliser le moins possible les méthodes déjà existente pour initialiser les test unitaire (pour ne pas risquer d'ajouter un bug dès le début du test).}\\
+\note{Attention à utiliser le moins possible les méthodes déjà existante pour initialiser les test unitaire (pour ne pas risquer d'ajouter un bug dès le début du test).}\\
 
-\rem{Sur les test bdd}{Pour tester certain composant on peut se passer des drivers précédent et isoler les composant à tester via certain frameworks : comme \keyref{https://github.com/moq/moq4}{Moq} qui permet de créer des objets fictifs qui répondent à la même interface que les objets que l'on veut simuler. Voir DemoBindong dans TDD pour implémentation donnée par Nico. On peut donner aux objets Mocks un comportement à avoir. L'intéret est de pouvoir isoler un objet de toutes ses dépendances (ici on test un controller en l'isolant du repository qu'il utilise en créant un mock pour le repository et en lui donnant un comportement attendue pour les fonctions qu'il est sensé avoir via \incode{Setup(repo => repo.func()).Return(result_attendue)}.).}\\
+\rem{Sur les test bdd}{Pour tester certain composant on peut se passer des drivers précédent et isoler les composant à tester via certain frameworks : comme \keyref{https://github.com/moq/moq4}{Moq} qui permet de créer des objets fictifs qui répondent à la même interface que les objets que l'on veut simuler. Voir DemoBindong dans TDD pour implémentation donnée par Nico. On peut donner aux objets Mocks un comportement à avoir. L'intéret est de pouvoir isoler un objet de toutes ses dépendances (ici on test un controller en l'isolant du repository qu'il utilise en créant un mock pour le repository et en lui donnant un comportement attendue pour les fonctions qu'il est sensé avoir via \incode{Setup(repo $=>$ repo.func()).Return(result\_attendue)}.).}\\
 
 \rem{Du détail sur les Mocks}{On peut également vérifier que certaines méthodes on bien été appelée (une et une seule fois, plusieurs fois,... Pour passer des paramètres lors dun \incode{Setup} on peut soit passer un véritable objet soit utiliser le mot clef \incode{It} avec par exemple It.IsAny<Type que l'on veut>()) via \incode{Mock.Verify}.}\\
 
@@ -178,8 +183,43 @@ Sur les types de test, voir \url{https://blog.octo.com/la-pyramide-des-tests-par
 
 \rem{Pour générer le code coverage}{Il existe \keyref{https://github.com/OpenCover/opencover}{OpenCover}, un outils github pour vérifier le coverage des tests.}\\
 
+\section{Test de performance}
 
+\rem{Pour des tests de performances cross version}{On peut utiliser la bibliothèque \keyref{https://benchmarkdotnet.org/}{benchmarkdotnet}. Voir \url{https://benchmarkdotnet.org/articles/guides/getting-started.html} pour un guide de démarrage. Il semble qu'il faille utiliser une console App pour ce genre de test.}\\
 
+\note{Il vaut mieux être dans les même conditions que dans la production pour faire des tests de performances. Par contre il ne faut pas être dans la prod en elle même mais sur un environnement iso-prod (en terme de code mais aussi en terme d'architecture logiciel et infrastructure).}\\
+
+\rem{Sur l'attribut \keyref{https://benchmarkdotnet.org/articles/features/setup-and-cleanup.html}{GlobalSetup}}{Permet de donner un environnement global aux tests de performance. La méthode marqué par cette attribut sera appelée une seule , avant l'excécution de tt les tests marqués \keyref{https://benchmarkdotnet.org/articles/features/baselines.html}{Benchmark} qui marque une méthode comme à 'benchmarker'.}\\
+
+\note{Il faut penser à passer la génération en mode release pour les tests de performances.}\\
+
+\rem{Sur l'attribut \keyref{https://benchmarkdotnet.org/articles/configs/jobs.html}{SimpleJob}}{Permet via RuntimeMonikor de tester différent type de runtime (comme .net 5 vs .net 6).}\\
+
+\note{Après un test on peut exporter les résultats d'un test sous forme de graphique. Peut être utile pour garder une trace et comparer en fonction des versions des projets.}\\
+
+\rem{Pour faire du Parallel}{On doit passer par la bibliothèque parallel.}\\
+
+\rem{Pour tester les performance de l'API}{On peut passer par la bibliothèque \keyref{https://gatling.io/}{Gatling}. C'est plutôt un outil Java, même si on peut l'utiliser dans dotnet en passant par du Scala (encore un nouveau language). On passera plutôt par \keyref{https://nbomber.com/}{NBomber}. NBomber fournit un .html à la fin des tests qui résume les tests.}\\
+
+\rem{Sur le ScenarioBuilder}{Cela permet de configurer les conditions de tests.}\\
+
+\rem{Sur la notion de WarmUp}{Le WarmUp est une étape de \textit{chauffe} de l'API. Vu qu'en C\# le compilateur fait du JIT (Just in Time), il y a qq optimisations qui ne sont appliqués qu'après qq utilisation du code. La période pendant laquelle ces optimisations ne sont pas encore effective est appelée le WarmUp.}\\
+
+\note{NBomber permet également de monitoré l'utilisation matériel pendant les tests.}\\
+
+\note{Ce genre de tests de performance sur l'API est qq chose de très fréquent. L'idée est de suivre dans le temps l'évolution des performance du programme. C'est aussi intéressant pou r\textit{sizer} une application c'est à dire avoir une idée du matériel nécessaire pour utiliser une application (en fonction de la charge demandée).}\\
+
+\rem{Sur les outils natif pour des test de performance}{voir \url{https://docs.microsoft.com/fr-fr/dotnet/core/diagnostics/dotnet-trace}.}\\
+
+\rem{Pour tracer les fuites mémoire}{Il faut passer par les commandes \keyref{https://docs.microsoft.com/fr-fr/dotnet/core/diagnostics/dotnet-dump}{dotnet dump} qui permettent de récupérer ce qu'il y a dans la mémoire.}\\
+
+\rem{Sur une alternative au pattern factory}{Voir le pattern \keyref{https://refactoring.guru/design-patterns/builder}{builder}}\\
+
+\rem{Sur le test d'un site internet (Notre site Angular)}{On peut utiliser \keyref{https://github.com/cypress-io/cypress}{cypress}. Il est possible de le mettre dans la chaine d'intégration continue. Il peut prendre des screenshot des events qui ne se déroulent pas comme attendue. Pour un guide démarage voir : \url{https://docs.cypress.io/guides/getting-started/writing-your-first-test\#Add-a-test-file}.}\\
+
+\rem{Liens utiles}{awesome X dans une recherche permet d'avoir des pages qui regroupent l'ensemble des technos les plus appréciés et utilisés par la communauté. Voir par exemple \url{https://github.com/quozd/awesome-dotnet}.}\\
+
+\rem{Sur les tests en WPF}{On passe par ce drivers : \keyref{https://github.com/microsoft/WinAppDriver}{WinAppDriver} (Exe à récupérer, à installer puis lancer au click ou en ligne de commande [penser à l'ajouter au path]). Une fois mis dans le path on peut le lancer en ligne de commande via WinAppDriver Nport ou Nport est le port à donner. Il faut ensuite dans les package nugget passer par Appium.Webdriver (dans visual studio) et utiliser une classe de configuration (voir exemple de nico) dans lequel on indique le Nport également (il faut être cohérent avec celui donné lors du lancement du driver). A partir de la on crée des classes de test.}\\
 
 
 %%--------------------------------------------------------------------------------------------------------------------------------1

@@ -29,7 +29,7 @@
 
         <DataTemplate DataType="{x:Type models:AdminModel}">
             <WrapPanel>
-                <TextBlock Text="Modifier le nom d'un Admin:" />
+                <TextBlock Text="Modifier le nom d'un Zob:" />
                 <TextBlock Width="500" Text="{Binding Name}"  />
                 <TextBlock Width="500" Text="{Binding IsAdmin}"  />
             </WrapPanel>
@@ -48,7 +48,7 @@
 
         <WrapPanel>
             <StackPanel>
-                <Button Content="Back" Click="ButtonBase_OnClick"></Button>
+                <Button Content="Back" Click="ButtonBase_OnClick" Cursor="Hand"></Button>
                 <customControls:ButtonCounter Content="#qdsqdsq"  Width="100"></customControls:ButtonCounter>
             </StackPanel>
             <TextBlock Text="Saisir un nom :"/>
@@ -75,13 +75,13 @@
         </ListBox>
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" >
 
-            <!--<Button Content="Change View" Click="Button_Click_1" Margin="5"/>-->
-            <!--<Button Content="DisplayDetail" Click="DisplayDetailClick" Margin="5"/>-->
-            <!--<Button Content="GoBack" Click="GoBackClick" Margin="5"/>-->
+            <!--<Button Content="Change View" Click="Button_Click_1" Margin="5"/>
+            <Button Content="DisplayDetail" Click="DisplayDetailClick" Margin="5"/>
+            <Button Content="GoBack" Click="GoBackClick" Margin="5"/>-->
 
             <Button  Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
                      ToolTip="Ajouter un utilisateur" Margin="5"
-                     HorizontalAlignment="Left" Click="Button_Click">
+                     HorizontalAlignment="Left" Click="Button_Click" Cursor="Hand">
                 <materialDesign:PackIcon 
                     Kind="PlusCircle" />
             </Button>

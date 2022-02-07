@@ -126,7 +126,7 @@ see = [Glossaire:]{gl-dip}
 
 \note{On peut afficher les Threads en cours dans visual studio.}\\
 
-\rem{Sur la classe \incode{Dispacher}}{Elle permet de faire discuter les Threads entre eux via \incode{Dispacher.Invoke(une lambda qui fait un truc)}.}\\
+\rem{Sur la classe \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.windows.threading.dispatcher?view=windowsdesktop-6.0}{Dispacher}}{Elle permet de faire discuter les Threads entre eux via \incode{Dispacher.Invoke(une lambda qui fait un truc)}.}\\
 
 \note{Si on a le choix, c'est plus performant d'utiliser de l'asynchrone que du synchrone.}\\
 
@@ -162,11 +162,65 @@ see = [Glossaire:]{gl-dip}
 
 \rem{Sur le \incode{InitializeComponent} en WPF}{Cette commande vient en fait transformer le xaml en une vrai classe .cs (d'ou le \incode{partial} devant les deux types de classes)}\\
 
-\note{Les EventQQChose sont en faite des classes de \keyref{https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/}{délégué}}
+\note{Les EventQQChose sont en faite des classes de \keyref{https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/}{délégué}}\\
 
 \note{Les \incode{Event} sont des propriétés sans Getter Setter!}\\
 
 \rem{Sur les méthodes qui s'abonne aux event}{Il vaut mieux toujours vérifier que l'event existe (c'est à dire qu'il ait au moins un abonnement $\to$ d'où les \incode{if(MonEvent!= null)}).}
+
+\section{Le chemin critique : notion de threads partagés}
+
+\rem{Sur la notion de thread-safe}{Une méthode que l'on ne peut pas partager entre plusieurs thread, ou plus simplement une ressource, est dites non thread-safe}\\
+
+\rem{Sur les sémaphores}{C'est un type d'outil qui permet de rendre thread safe une ressource. Une autre des manière de faire (qui n'est pas un sémaphore) est d'utiliser des lockers (de type \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.object?view=net-6.0}{object}). Une autre est de passer par la class \keyref{https://docs.microsoft.com/en-us/dotnet/api/system.threading.semaphoreslim?view=net-6.0}{SemaphoreSlim}.}\\
+
+\keyword{https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/statements/lock}{lock}{Tant que l'objet contenue dans le lock(monObjet) est maintenue, on ne peut plus accéder au block couvert par le lock. Cela crée ce que l'on appel un \textbf{chemin critique}. Le lock met en attente automatiquement les thread qui essaie d'accéder à la ressource si un thread occupe déjà ce block. Attention le lock ne fait que du verrou séquentielle (les threads le passeront un par par un uniquement).}\\
+
+\rem{Sur les environnements multi-threadés}{Il est très conseiller d'utiliser une classe dédié à la gestion des threads lorsque l'on est dans un environnement gérant plusieurs threads. Il est bien d'isoler le code qui doit tourner dans un thread dans cette classe.}\\
+
+\rem{Sur la notion de watch-dog}{C'est un système de surveillance qui track et détecte les changement. Le \incode{dotnet watch} est un exemple d'un tel système.}\\
+
+\rem{Sur le \keyref{https://docs.microsoft.com/en-us/dotnet/api/system.threading.semaphoreslim?view=net-6.0}{SemaphoreSlime}}{Permet de filtrer l'accès à un trhead mais par paquet de $X$ (SémaphoreSlim($X$)) que l'on peut définir (on est plus limité à de l'envoie un par un  mais on peut quand même limiter le nombre de thread qui travail simultanément au même endroit). Attention il faut Wait puis Release le sémaphore. Cela peut être critique si il y a une erreur entre le Wait et le Release! (Si l'on veut cacth l'erreur il faut absoluement que le release du sémaphore soit dans un finaly).}\\
+
+\rem{Sur le \keyref{https://docs.microsoft.com/en-us/dotnet/api/system.collections.concurrent?view=net-6.0}{System.Collection.Concurrent}}{Fournit une alternative aux classes de base non thread safe (comme la List) pour pouvoir les utiliser dans un environnement multithreadé (ce n'est pas vraiment). Si l'on utilise pas ce namespace, les Threads peuvent s'exécuter un peu dans n'importe quelle ordre, et un Thread peut prendre plus de tache que d'autre. Concurrent règle ce problème de \textit{cannibalisme} entre Threads.}\\
+
+\rem{Le HttpClient et les accès base de données sont ThreadSafe.}\\
+
+\section{Collection avancée}
+
+\rem{Sur le \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.collections.stack?view=net-6.0}{Stack}}{Liste de type LIFO (Last In, First Out).}\\
+
+\rem{Sur le \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.collections.queue?view=net-6.0}{Queue}}{Liste de type FIFO (First in Fisrt Out).}\\
+
+\rem{Sur le \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.lazy-1?view=net-6.0}{Lazy}}{Permet de faire du thread safe de manière un peu magique. $\to$ A creuser. Ne crée une instance d'un objet qu'au tt dernier moment (à la première initialisation).}\\
+
+\section{La ``containerisation'' des applis}
+
+Ou comment déployer dans un environnement spécifique. \\
+
+\note{On passe par \keyref{https://www.docker.com/get-started}{Docker}.}\\
+
+\rem{Sur la notion de container}{Docker permet de lancer des \textit{containers}. Le principe du container est d'avoir un environnement maitrisé (maitrisé ce qu'il y a dans l'environnement très exactement). Docker permet d'héberger des environnement différents de celui de la mchine \textit{host}.}\\
+
+\note{Lorsqu'on lance un projet Visual Studio on peut lui indiquer d'utiliser un container docker. Cela ajoute un fichier \incode{Dockerfile}. A partir de ce fichier on peut installer via Docker des images d'environnement déjà préparé (On peut faire tourner du Dotnet En Docker sans avoir à installer dotnet directement sur la machine). Voix \keyref{https://docs.docker.com/docker-hub/}{DockerHub} pour une liste de ce qui existe déjà}\\
+
+\note{Le gros intérêt de docker est de ne plus avoir aucune dépendance sur la machine locale et de tt déporter dans le conteneur docker lui même qui simule autant d'environnement différents que l'on veut. On peut voir les container comme de petites machines virtuelles light (mais ce ne sont pas des machines virtuelles!). C'est plus proche des navigateur qui alloue à chaque onglet un processus distinct séparé des autres.}\\
+
+\note{On peut lancer plusieurs containers docker depuis la même machine.}\\
+
+\rem{Sur les images}{Les images crées par docker sont conservées en local (après le téléchargement initial). On peut après sa réutiliser la même image dans plusieurs container différents.}\\
+
+\rem{Sur la communication inter-container}{On peut indiquer à docker un port pour la communication à l'extérieur. Cela permet par exemple d'avoir une base de données sur un conteneur, et une ou plusieurs API dans d'autres conteneur qui se connecte à cette base. Pour faire ce gerne de chose on passe par un fichier Dockercompose (un .yml) qui configure ces connexions.}\\
+
+\rem{Pour créer un network}{On passe par \keyref{https://docs.docker.com/compose/}{docker-compose} up.}\\
+
+\note{La bonne pratique est d'avoir un conteneur par composants (dans le même sens que les diagrammes de composants).}\\
+
+\rem{Sur l'alias latest}{Attention à ne pas utiliser cette alias car il a le sens de ``dernière version'' dans docker (c'est un alias qui représente la dernière version disponible, qui peut changer d'une machine à l'autre!).}\\
+
+\rem{Sur les alternatives à Docker}{Il y a \keyref{https://kubernetes.io/fr/}{kubernetes} ou bien \keyref{https://tanzu.vmware.com/tanzu}{tanzu}.}\\
+
+\rem{Pour ce mettre à docker}{Go to \url{https://docs.docker.com/get-started/}.}\\
 
 \section{Divers}
 

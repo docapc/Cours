@@ -8,6 +8,6 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <WrapPanel DataContext="{Binding ., ElementName=root}">
         <TextBlock Text="Modifier le nom :" />
-        <TextBlock Width="500" Text="{Binding CurrentUser.Name}"  />
+        <TextBox Width="500" Text="{Binding CurrentUser.Name, UpdateSourceTrigger=PropertyChanged}" />
     </WrapPanel>
 </UserControl>

@@ -55,7 +55,7 @@
 <!--,  UpdateSourceTrigger=PropertyChanged/LostFocus n'est pas nécessaire car 
 on utilise SelectedItem. Il le serait si l'on passe par un objet intermédiaire
 comme dans l'exemple-->
-                    <TextBox Text="{Binding Name, Mode=OneTime}" x:Name ="DetailedTbName"/>
+                    <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name ="DetailedTbName"/>
                 </StackPanel >
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Degree : " />
