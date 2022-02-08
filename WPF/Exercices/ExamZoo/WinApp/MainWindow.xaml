@@ -1,0 +1,51 @@
+﻿<Window x:Class="WinApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WinApp.UserControls"
+        xmlns:animals="clr-namespace:Models.Animals;assembly=Models"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        x:Name="root"
+        Loaded="OnWindowLoaded">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type animals:Owl}">
+           <StackPanel>
+               <TextBlock Text="Chouette nommée :"/>
+               <TextBlock Width="300" Text="{Binding Name}"/>
+           </StackPanel>             
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type animals:Tiger}">
+            <StackPanel>
+                <TextBlock Text="Tigre nommé :"/>
+                <TextBlock Width="300" Text="{Binding Name}"/>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="0" Grid.Row="0">Animaux</Label>
+        
+        <ListBox Grid.Column="0" Grid.Row="1" ItemsSource ="{Binding Animals}" 
+                 x:Name="AnimalsList" IsSynchronizedWithCurrentItem="True"
+                 SelectedItem="{Binding CurrentAnimal}">
+        </ListBox>
+
+        <Label Grid.Column="1" Grid.Row="0">Détails</Label>
+
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <local:AnimalDetail CurrentAnimal="{Binding SelectedItem, ElementName=AnimalsList}"></local:AnimalDetail>
+            <!--<local:AnimalDetail x:Name="AnimalUC" CurrentAnimal="{Binding CurrentAnimal}"></local:AnimalDetail>-->
+        </StackPanel>
+                
+    </Grid>
+</Window>
