@@ -286,9 +286,7 @@ PLus de liens : \url{https://docs.microsoft.com/fr-fr/dotnet/api/system.componen
 
 \note{Lorsque l'on crée un Projet VS on peut lui indiquer de prendre en compte Docker. Cela va en fait créer un Dockerfile adapté. Sur un pojet en cours il \textit{suffit} de rajouter un Dockerfile adapté. Il faut alors faire attention aux noms.}\\
 
-\note{Sur la construction d'un Dockerfile : \url{https://devopssec.fr/article/creer-ses-propres-images-docker-dockerfile} (blog) ou bien la doc officiel : \url{https://docs.docker.com/engine/reference/builder/\#usage}.}\\
-
-
+\note{Sur la construction d'un Dockerfile : \url{https://devopssec.fr/article/creer-ses-propres-images-docker-dockerfile} (blog) ou bien la doc officiel : \url{https://docs.docker.com/engine/reference/builder/\#usage}.}
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
