@@ -12,16 +12,18 @@
         <converters:FeedConverter x:Key="FeedConverter"/>
     </UserControl.Resources>
     <Grid DataContext="{Binding ., ElementName=animal}">
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Id = " />
-            <TextBox Text="{Binding CurrentAnimal.Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Nom = " />
-            <TextBox Text="{Binding CurrentAnimal.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-         </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding CurrentAnimal.IsFeeded, Converter={StaticResource FeedConverter}, Mode=OneWayToSource}"/>           
+        <StackPanel Orientation=" vertical">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Id = " />
+                <TextBox Text="{Binding CurrentAnimal.Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Nom = " />
+                <TextBox Text="{Binding CurrentAnimal.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding CurrentAnimal.IsFeeded, Converter={StaticResource FeedConverter}, Mode=OneWay}"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>

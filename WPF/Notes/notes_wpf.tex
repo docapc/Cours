@@ -177,7 +177,7 @@ see = [Glossaire:]{gl-dip}
 
 \rem{ILSPie}{permet de récupérer du code décompiler à partir d'un .dll. Le fichier pdb permet de faire le lien entre le .dll et le code .cs}\\
 
-\rem{Lors d'un Binding : Trois questions à se poser}{\begin{itemize}
+\rem{Lors d'un \keyref{https://docs.microsoft.com/en-us/dotnet/desktop/wpf/data/?view=netdesktop-5.0}{Binding} : Trois questions à se poser}{\begin{itemize}
 \item 1 - Quel est le DataContext? Si il n'y en a pas on remonte à l'élément du dessus. (dans le xaml, jusqu'au niveau de la fenêtre.). Ici on a set le DataContext au niveau de la main window.
 \item 2 - Quelle est la propriété source (itemsource ou à droite du binding), propriété cible (selecteditem ou à gauche du binding),
 \item 3 - Quel mode de binding utilisé (dans un sens, dans l'autre, dans les deux sens, property Mode$=$... dans un binding).\\
@@ -238,7 +238,7 @@ see = [Glossaire:]{gl-dip}
 
 \rem{Pour passer un objet d'une fenêtre à l'autre}{Il faut déja nommé le user control dans son appel (dans la fenêtre parent)}\\
 
-\rem{Sur les dependancy property}{DependancyProperty permet d'enregistrer (via Register(nom de la prop, type de la propriété, type du propriétaire)) une propriété qui sait se notifier soit même.}\\
+\rem{Sur les \keyref{https://docs.microsoft.com/en-us/dotnet/desktop/wpf/properties/dependency-properties-overview?view=netdesktop-6.0}{dependancy property}}{DependancyProperty permet d'enregistrer (via Register(nom de la prop, type de la propriété, type du propriétaire)) une propriété qui sait se notifier soit même. C'est une propriété que l'on peut attacher à un élément graphique.}\\
 
 \note{TT les propriétés attaché de base à la vue sont des DependancyProperty (celle à gauche d'un binding).}\\
 
@@ -254,7 +254,23 @@ see = [Glossaire:]{gl-dip}
 
 \note{Utiliser un DataTemplate permet de ne pas avoir à utiliser la logique, on ne partage que du xaml.}\\
 
+\note{On peut utiliser un DataTemplate dans n'importe quel type d'élément (de Control).}\\
+
 \note{Pour qq exemple : \url{https://www.softfluent.fr/blog/les-datatemplate-wpf-partie-1/}.}\\
+
+\rem{Sur les \keyref{https://docs.microsoft.com/en-us/dotnet/desktop/wpf/data/how-to-convert-bound-data?view=netframeworkdesktop-4.8}{converters}}{Ils servent pour la vérirfication ou la transormation de donnée lors d'un binding donc pour la vue.}\\
+
+\rem{Sur le \keyref{https://docs.microsoft.com/en-us/dotnet/desktop/wpf/data/how-to-implement-property-change-notification?view=netframeworkdesktop-4.8}{OnPropertyChanged}}{Il est possible de l'appeler plusieurs fois avec PropertyChanged(\keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/language-reference/operators/nameof}{nameof(MaProp)}) pour différentes propriétées afin de mettre à jour plusieurs propriétés dans un seul set (exemple : lorsque l'on utilise une propriété calculée).}\\
+
+\rem{Un peu plus sur les \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.collections.objectmodel.observablecollection-1?view=net-6.0}{ObservableCollection}}{Lorsque l'on veut mettre à jour l'entièretée d'une collection il est plus efficace de faire un .Clear() que de réinstancier une nouvelle collection.}\\
+
+\rem{Sur la \keyref{https://docs.microsoft.com/en-us/dotnet/desktop/wpf/advanced/optimizing-performance-controls?view=netframeworkdesktop-4.8}{Virtualisation}}{Cela permet d'optimiser les performances. On peut en fait ne charger qu'une partie des éléments (virtualisation). Exemple : on à une liste immense et au lieu de charger tt les stack panels associés dans une list view, activer l'option \keyref{https://docs.microsoft.com/en-us/dotnet/api/system.windows.controls.virtualizingstackpanel.isvirtualizing?view=netframework-4.0}{IsVirtualizing} fera en sorte que seul un nombre limité d'élements d'UI correspondant sera chargé/déchargé de manière dynamique.}\\
+
+\rem{Un peu plus sur les évènements}{En Wpf les évènements ne sont pas des évènements \keyref{https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/event}{classique} mais des évènements \keyref{https://docs.microsoft.com/en-us/dotnet/desktop/wpf/advanced/routed-events-overview?view=netframeworkdesktop-4.8}{routés} (ce qui permet de l'utiliser dans la vue).}\\
+
+\rem{Sur les \keyref{https://docs.microsoft.com/en-us/dotnet/api/system.windows.visualstate?view=windowsdesktop-6.0}{Visual State}}{Cela sert essentiellement pour des transitions sur différents paramètres graphiques.}\\
+
+
 
 \section{La navigation}
 
@@ -276,12 +292,55 @@ Il faut commencer par définir une interface pour le navigateur.\\
 C'est un type de projet que l'on peut créer lors de l'ouverture d'un nouveau projet WPF.\\
 Permet de faire des composant partageable entre différentes applications.\\
 Cela permet cette fois ci de partager une logique commune entre différent projet (ou bien component).\\
+Pour un peu plus voir ce liens sur les custom controls : \url{https://docs.microsoft.com/en-us/dotnet/desktop/wpf/controls/control-authoring-overview?view=netframeworkdesktop-4.8}.\\
 
 \note{Dans le folder theme on a une dicitonnaire de ressource qui permet de définir les styles associées aux composants.}\\
 
 \rem{Sur l'importation}{Il faut ensuite importer ce dictionnaire de ressource dans celui de l'application qui veut utiliser la ressource.}\\
 
 \note{Ne surtout pas fiare de binding sur une \incode{PassWordBox} (ne pas monter d'infos sensibles dans la mémoire).}\\
+
+\rem{Pour faire un custom control}{Il faut hériter d'un \keyref{https://docs.microsoft.com/en-us/dotnet/api/system.windows.controls.control?view=windowsdesktop-6.0}{control} déjà existant (voir un UI Element)}\\
+
+\section{Divers}
+
+\rem{Sur la connexion}{Thomas développera mais en générale on passe par un UserProvider pourvue d'un getUser(mdp) (qui envoie un hash en base et ne stock jamais le mpd et renvoie le user correspondant) et d'un setUser().}\\
+
+\rem{Au lieu de fourrer tt les services dans l'app de démarage}{On peut créer une classe dédié (un service) à l'injection des dépendances dans l'App wpf qui va maintenir un dictionnaire de classe. Voir ServiceProvider dans l'exemple de Nico. L'idée est de pouvoir register un service et le get au besoin.}\\
+
+\note{Un \keyref{https://this-person-does-not-exist.com/en}{site} qui génère des visages n'existant pas (et donc libre de droit)}\\
+
+\rem{Sur les mimages}{Pour inclure des images dans un dossier autre que le \incode{bin/debug/dotnet-6.0}. On peut les mettre en Ressource (en passant par les propriété de l'image), c'est à dire les inclure dans le dll lors de la compilation (le binaire sera plus gros). Cela permet de ne pas montrer les images à l'utilisateur. On peut également les mettres en \textit{Contenue} avec l'option copié si plus récent. Au lieu d'incorporer les images à la ddl, elles seront placées dans un dossier au niveau de l'exe. Cela permet également de rajouter des images sans avoir à recompiler.}\\
+
+\rem{Sur la sérialization binaire des images}{Une autre possibilitées est de stocker les images en binaires et donc de les sérialiser en binaire (\incode{byte[]}) puis désérialiser en base64 pour affichage. Voir les après. Puis File.ReadAllByte(nomDeFichier)}\\
+
+\keyword{https://docs.microsoft.com/fr-fr/dotnet/api/system.windows.forms.filedialog?view=windowsdesktop-6.0}{FileDialog}{Permet de récupérer des images. Voir également \keyref{https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.openfiledialog?view=windowsdesktop-6.0}{OpenFileDialog}.}
+
+\rem{Sue les exceptions en wpf}{Il est possible de récupérer tt les exceptions qui arrivent de manière globale pour ne pas faire cracher l'appli à chaque exceptions.}\\
+
+\note{Sur la conversion de byte[] en string avec newton soft : https://stackoverflow.com/questions/9337255/serialize-deserialize-a-byte-array-in-json-net.}\\
+
+\section{Validation de donnée}
+
+3 manières de faire.\\
+
+\rem{\keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.windows.controls.validation.errortemplate?view=windowsdesktop-6.0}{Validation.ErrorTemplate}}{Permet de templater les réponses d'erreur.}\\
+
+\rem{Sur l'interface \keyref{https://docs.microsoft.com/fr-fr/aspnet/mvc/overview/older-versions-1/models-data/validating-with-the-idataerrorinfo-interface-cs}{IDataErrorInfo} (Première méthode)}{Voir également : \url{https://docs.microsoft.com/fr-fr/dotnet/desktop/wpf/data/how-to-implement-validation-logic-on-custom-objects?view=netframeworkdesktop-4.8}.}\\
+
+\rem{Sur les \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.windows.controls.validationrule?view=windowsdesktop-6.0}{validation Rules} (Deuxième méthode)}{On utilise les balises Binding.ValidationRules. Il faut déclarer les binding explicitement pour pouvoir faire cela (via les balises <binding, Path,...). Voir : \url{https://docs.microsoft.com/fr-fr/dotnet/desktop/wpf/data/how-to-implement-binding-validation?view=netframeworkdesktop-4.8} pour plus de détail. Par rapport à la méthode précédente la validation est extérieure à la classe qui transporte les données. De plus cette méthode fait de la validation dans les vues. C'est donc réservé au wpf.}\\
+
+\rem{Troisième méthode : on utilise la réflexion et les attribut}{On passe par les attributs (type \incode{[required]}) et les métadonnées pour ensuite faire de la validation (mais toujours dans la classe qui porte les données à valider). Voir la note sur les indexeurs. Avec cette méthode on couple un peu les validations avec les classes à valider. Gros point fort on peut le faire dans n'importe quel type d'appli.}\\
+
+\note{Voir également la classe \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.componentmodel.dataannotations.validationcontext?view=net-6.0}{ValidationContext} ainsi que l'attribut \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.componentmodel.dataannotations.validationattribute?view=net-6.0}{ValidationAttribut}.}\\
+
+\rem{Sur les \keyref{https://docs.microsoft.com/fr-fr/dotnet/csharp/programming-guide/indexers/}{indexeurs}}{C'est une manière de rendre générique les validation mais pas que. Cela permet de rendre indexable une classe!}\\
+
+Pour tt ces trucs : voir les codes de Nico passés dans le discorde.\\
+
+\section{Sur la Localisation}
+
+Pour faire de la localisation il faut implémenter les fichiers de ressources \incode{.resx} (On doit faire un fichier par langue et le nommer fichier.langue.resx). Ce sont des fichiers de tableaux qui prennent des clefs et valeurs. Ces fichiers sont accompagné d'un cs générée via ces clefs valeurs et qui permet de récupérer les valeur par clef via la méthode créée (via des classes static). Dans le wpf on peut ensuite inclure des appels via  x:Static NomDeLaClasseStatic. Pour choisir quel fichier utiliser on passe par \incode{Resource.Culture("nom du .resxs")} au niveau de l'App (CultureInfo.DefaultTreadCurrentCutlture ou CurrentUICulture).
 
 
 

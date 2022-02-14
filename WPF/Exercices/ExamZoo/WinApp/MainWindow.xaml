@@ -35,16 +35,20 @@
 
         <Label Grid.Column="0" Grid.Row="0">Animaux</Label>
         
+        <TextBox x:Name="FilterBox"Grid.Column="0" Grid.Row="0"/>
+        
         <ListBox Grid.Column="0" Grid.Row="1" ItemsSource ="{Binding Animals}" 
-                 x:Name="AnimalsList" IsSynchronizedWithCurrentItem="True"
-                 SelectedItem="{Binding CurrentAnimal}">
+                 x:Name="AnimalsList"   
+                 SelectedItem="{Binding CurrentAnimal}"                 
+                 >
         </ListBox>
+        <!--IsSynchronizedWithCurrentItem="True"-->
 
         <Label Grid.Column="1" Grid.Row="0">Détails</Label>
-
+        <ItemsControl Template=""></ItemsControl>
         <StackPanel Grid.Column="1" Grid.Row="1">
             <local:AnimalDetail CurrentAnimal="{Binding SelectedItem, ElementName=AnimalsList}"></local:AnimalDetail>
-            <!--<local:AnimalDetail x:Name="AnimalUC" CurrentAnimal="{Binding CurrentAnimal}"></local:AnimalDetail>-->
+            <local:AnimalDetail x:Name="AnimalUC" CurrentAnimal="{Binding CurrentAnimal}"></local:AnimalDetail>
         </StackPanel>
                 
     </Grid>
