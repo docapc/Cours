@@ -302,6 +302,10 @@ Pour un peu plus voir ce liens sur les custom controls : \url{https://docs.micro
 
 \rem{Pour faire un custom control}{Il faut hériter d'un \keyref{https://docs.microsoft.com/en-us/dotnet/api/system.windows.controls.control?view=windowsdesktop-6.0}{control} déjà existant (voir un UI Element)}\\
 
+\section{Sur la Localisation}
+
+Pour faire de la localisation il faut implémenter les fichiers de ressources \incode{.resx} (On doit faire un fichier par langue et le nommer fichier.langue.resx). Ce sont des fichiers de tableaux qui prennent des clefs et valeurs. Ces fichiers sont accompagné d'un cs générée via ces clefs valeurs et qui permet de récupérer les valeur par clef via la méthode créée (via des classes static). Dans le wpf on peut ensuite inclure des appels via  x:Static NomDeLaClasseStatic. Pour choisir quel fichier utiliser on passe par \incode{Resource.Culture("nom du .resxs")} au niveau de l'App (CultureInfo.DefaultTreadCurrentCutlture ou CurrentUICulture).
+
 \section{Divers}
 
 \rem{Sur la connexion}{Thomas développera mais en générale on passe par un UserProvider pourvue d'un getUser(mdp) (qui envoie un hash en base et ne stock jamais le mpd et renvoie le user correspondant) et d'un setUser().}\\
@@ -326,7 +330,7 @@ Pour un peu plus voir ce liens sur les custom controls : \url{https://docs.micro
 
 \rem{\keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.windows.controls.validation.errortemplate?view=windowsdesktop-6.0}{Validation.ErrorTemplate}}{Permet de templater les réponses d'erreur.}\\
 
-\rem{Sur l'interface \keyref{https://docs.microsoft.com/fr-fr/aspnet/mvc/overview/older-versions-1/models-data/validating-with-the-idataerrorinfo-interface-cs}{IDataErrorInfo} (Première méthode)}{Voir également : \url{https://docs.microsoft.com/fr-fr/dotnet/desktop/wpf/data/how-to-implement-validation-logic-on-custom-objects?view=netframeworkdesktop-4.8}.}\\
+\rem{Sur l'interface \keyref{https://docs.microsoft.com/fr-fr/aspnet/mvc/overview/older-versions-1/models-data/validating-with-the-idataerrorinfo-interface-cs}{IDataErrorInfo} (Première méthode), ou bien \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.componentmodel.dataannotations.ivalidatableobject?view=net-6.0}{IValidableObject}}{Voir également : \url{https://docs.microsoft.com/fr-fr/dotnet/desktop/wpf/data/how-to-implement-validation-logic-on-custom-objects?view=netframeworkdesktop-4.8}. Fonctionne de pair avec le ValidateOnDataError (propriété des bindings). On peut l'utiliser de pair avec les attributs vérifiées via le Validator.}\\
 
 \rem{Sur les \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.windows.controls.validationrule?view=windowsdesktop-6.0}{validation Rules} (Deuxième méthode)}{On utilise les balises Binding.ValidationRules. Il faut déclarer les binding explicitement pour pouvoir faire cela (via les balises <binding, Path,...). Voir : \url{https://docs.microsoft.com/fr-fr/dotnet/desktop/wpf/data/how-to-implement-binding-validation?view=netframeworkdesktop-4.8} pour plus de détail. Par rapport à la méthode précédente la validation est extérieure à la classe qui transporte les données. De plus cette méthode fait de la validation dans les vues. C'est donc réservé au wpf.}\\
 
@@ -338,9 +342,39 @@ Pour un peu plus voir ce liens sur les custom controls : \url{https://docs.micro
 
 Pour tt ces trucs : voir les codes de Nico passés dans le discorde.\\
 
-\section{Sur la Localisation}
+\rem{Sur le \keyref{https://docs.microsoft.com/en-us/windows/communitytoolkit/mvvm/introduction}{MVVM}}{On peut (et on devrait) passer par des frameworks pour implémenter du MVVM au lieu de tt faire à la main (implem des dependancy & cie...).}\\
 
-Pour faire de la localisation il faut implémenter les fichiers de ressources \incode{.resx} (On doit faire un fichier par langue). Ce sont des fichiers de tableaux qui prennent des clefs et valeurs. Ces fichiers sont accompagné d'un cs générée via ces clefs valeurs et qui permet de récupérer les valeur par clef via la méthode créée (via des classes static). Dans le wpf on peut ensuite inclure des appels via  x:Static NomDeLaClasseStatic. Pour choisir quel fichier utiliser on passe par \incode{Resource.Culture("nom du .resxs")} au niveau de l'App (CultureInfo.DefaultTreadCurrentCutlture ou CurrentUICulture).
+\note{Se renseigner sur le Virtual Scroll pour faire de l'affichage de liste performant (\url{https://social.msdn.microsoft.com/Forums/vstudio/en-US/6ba2b4b3-f0ff-4eaf-831c-e57c9b21f702/virtual-scrollbar?forum=wpf}). Voir également sur comment désactiver le OnNotifyPropertyChange pour des questions de performances.}\\
+
+\rem{Sur la manière de créer les Bindings}{Dans le xaml, au niveau des propriétés de la page on peut voir un apercue des binding possibles sur la page en cours. On a pas d'autocompletion dans le xaml car le Datacontext est un \incode{object}. Pour pallier à sa on peut passer par une redéfinition du DataContext en le castant sous la forme voulue pour récupérer l'autocomplétion!}\\
+
+\rem{Sur le \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.windows.controls.treeview.selecteditem?view=windowsdesktop-6.0}{SelectedItem}}{Est fait pour synchroniser une liste avec sélection avec une autre partie de l'écran. Attention une fois utilisée, le selected item ne changera pas si l'on reclick dessus. Il ne faut donc pas l'utiliser pour de la navigation ou bien des choses comme sa. Voir : \url{https://docs.microsoft.com/fr-fr/dotnet/desktop/wpf/controls/how-to-use-selectedvalue-selectedvaluepath-and-selecteditem?view=netframeworkdesktop-4.8}.}
+
+\rem{Sur la conception avec des UserControl}{Il faut les utiliser pour faire du découpage pensé de manière responsive. Il faut éviter de faire des user control $+$ avec un petit élément à coté (en dehors du user control). Il vaut mieux garder un user control avec le bouton associé directement dedans (liste $+$ bouton edit directement dans le même user control dans notre cas). Il faut essayer d'être le plus simple possible lorsque l'on réfléchie en terme de vue. Il faut garder en tête que la composition d'une vue est drivé par le code behind, et pas l'inverse.}\\
+
+\rem{Sur l'interet de l'element name}{Il permet de remonter dans la hierarchie de vue. Cela permet de concentrer tt la logique d'interraction dans une seule classe (l'écran) qui va gérer la logique métier. Un item d'une liste n'a pas à choisir quel logique appliquer en cas de clique.}\\
+
+\note{Sur le schéma master-detail $\to$ Le binding se fait au niveau de l'écran : Command $=$ \{Binding DataContext ClassDansLeDataContext, ElementName = NomDeLelement \},  $=$ CommandParameter $=$ \{Binding .\} \}.  ClasstDansLeDataContext est la classe qui va gérer la logique et qui est affectée dans le code Behind (cette classe n'est q'un .cs sans .xaml).}
+
+\note{Un peu plus sur la notion de \keyref{https://docs.microsoft.com/fr-fr/dotnet/desktop/wpf/advanced/commanding-overview?view=netframeworkdesktop-4.8}{Command} : \url{https://wpf-tutorial.com/commands/using-commands/}.}\\
+
+\note{L'élément \incode{mc:ignorable} permet d'ignorer la validation sur ces composants lors de la validation (pendant la compilation du xaml).}\\
+
+\rem{sur le préfix \incode{d} dans le xaml}{le \incode{d:} fait référence aux éléments de design (aka les propriétés d'une vue). Affecter un d:DataContext = "\{d:DesignInstance Type = monType\}" permet de récupérer l'IntelliSense sur les Binding du coté du .xaml.}\\
+
+\rem{Sur les \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.windows.controls.itemscontrol.itemspanel?view=windowsdesktop-6.0}{ItemPanel}}{Permet de gérer l'agencement des items dans un template.}\\
+
+\rem{Sur la validation}{Il ets possible d'utiliser des bibliothèques comme \keyref{https://github.com/DamianEdwards/MiniValidation}{MiniValidation}}
+
+\rem{Sur la classe \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.componentmodel.dataannotations.validator?view=net-6.0}{Validator}}{Permet de demander la validation d'une classe (en allant lire ses attributs.). Ces attributs peuvent permettre de communiquer des error messages ainsi que des ErrorMessageResourceName/Type}\\
+
+\rem{Sur les \keyref{https://docs.microsoft.com/fr-fr/dotnet/desktop/wpf/controls/styles-templates-overview?view=netdesktop-6.0}{Style} et \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.windows.style.triggers?view=windowsdesktop-6.0}{Trigger}}{Les styles permettent d'associer une identité visuel à un certain objet. Les Trigger Property="Validation.error" permettent de modifier des property (de Setter) en fonction de l'erreur que l'on peut recevoir (d'un Validator). Voir également \url{https://wpf-tutorial.com/fr/92/les-styles/utiliser-les-styles-en-wpf/} et \url{https://wpf-tutorial.com/styles/trigger-datatrigger-event-trigger/}}\\
+
+\rem{Sur le \keyref{https://docs.microsoft.com/en-us/dotnet/api/system.windows.data.binding.notifyonvalidationerror?redirectedfrom=MSDN&view=windowsdesktop-6.0#System_Windows_Data_Binding_NotifyOnValidationError}{NotifyOnValidationError}}{Permet d'intercepeter et de valider les erreurs levées dans les setter.}\\
+
+\note{Pour simplifier la gestion des erreurs il est plutôt conseillé d'utiliser des frameworks (comme Material Design).}\\
+
+\rem{Dans attribut de Validation Cutsom}{L'object value correspond à la valeur de la propriétés à valider. Le validationContext permet d'accéder à l'instance de l'objet correspondant à la propriété en cours de validation. Pour faire un attribut qui accepte des paramètres il suffit de faire un constructeur à l'attribut}\\
 
 
 

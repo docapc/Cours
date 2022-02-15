@@ -227,7 +227,7 @@ Sur les types de test, voir \url{https://blog.octo.com/la-pyramide-des-tests-par
 
 \rem{Sur l'interet de l'element name}{Il permet de remonter dans la hierarchie de vue. Cela permet de concentrer tt la logique d'interraction dans une seule classe (l'écran) qui va gérer la logique métier. Un item d'une liste n'a pas à choisir quel logique appliquer en cas de clique.}\\
 
-\note{Sur le schéma master-detail $\to$ Le binding se fait au niveau de l'écran : Command $=$ \{Binding DataContext ClassDansLeDataContext, ElementName = NomDeLelement \},  $=$ CommandParameter $=$ \{Binding .\} \}.  ClasstDansLeDataContext est la classe qui va gérer la logique et qui est affectée dans le code Behind (cette classe n'est q'un .cs sans .xaml).}
+\note{Sur le schéma master-detail $\to$ Le binding se fait au niveau de l'écran : Command $=$ \{Binding DataContext ClassDansLeDataContext, ElementName = NomDeLelement \},  $=$ CommandParameter $=$ \}.  ClasstDansLeDataContext est la classe qui va gérer la logique et qui est affectée dans le code Behind (cette classe n'est q'un .cs sans .xaml).}
 
 \note{Un peu plus sur la notion de \keyref{https://docs.microsoft.com/fr-fr/dotnet/desktop/wpf/advanced/commanding-overview?view=netframeworkdesktop-4.8}{Command} : \url{https://wpf-tutorial.com/commands/using-commands/}.}\\
 
