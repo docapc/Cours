@@ -364,7 +364,7 @@ Pour tt ces trucs : voir les codes de Nico passés dans le discorde.\\
 
 \rem{Sur les \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.windows.controls.itemscontrol.itemspanel?view=windowsdesktop-6.0}{ItemPanel}}{Permet de gérer l'agencement des items dans un template.}\\
 
-\rem{Sur la validation}{Il ets possible d'utiliser des bibliothèques comme \keyref{https://github.com/DamianEdwards/MiniValidation}{MiniValidation}}
+\rem{Sur la validation}{Il ets possible d'utiliser des bibliothèques comme \keyref{https://github.com/DamianEdwards/MiniValidation}{MiniValidation}}\\
 
 \rem{Sur la classe \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.componentmodel.dataannotations.validator?view=net-6.0}{Validator}}{Permet de demander la validation d'une classe (en allant lire ses attributs.). Ces attributs peuvent permettre de communiquer des error messages ainsi que des ErrorMessageResourceName/Type}\\
 
