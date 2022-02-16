@@ -332,6 +332,8 @@ Pour faire de la localisation il faut implémenter les fichiers de ressources \i
 
 \rem{Sur l'interface \keyref{https://docs.microsoft.com/fr-fr/aspnet/mvc/overview/older-versions-1/models-data/validating-with-the-idataerrorinfo-interface-cs}{IDataErrorInfo} (Première méthode), ou bien \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.componentmodel.dataannotations.ivalidatableobject?view=net-6.0}{IValidableObject}}{Voir également : \url{https://docs.microsoft.com/fr-fr/dotnet/desktop/wpf/data/how-to-implement-validation-logic-on-custom-objects?view=netframeworkdesktop-4.8}. Fonctionne de pair avec le ValidateOnDataError (propriété des bindings). On peut l'utiliser de pair avec les attributs vérifiées via le Validator.}\\
 
+\note{Sur les attributs de validation : \url{https://docs.microsoft.com/en-us/previous-versions/aspnet/cc668224(v=vs.100)?redirectedfrom=MSDN}.}\\
+
 \rem{Sur les \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.windows.controls.validationrule?view=windowsdesktop-6.0}{validation Rules} (Deuxième méthode)}{On utilise les balises Binding.ValidationRules. Il faut déclarer les binding explicitement pour pouvoir faire cela (via les balises <binding, Path,...). Voir : \url{https://docs.microsoft.com/fr-fr/dotnet/desktop/wpf/data/how-to-implement-binding-validation?view=netframeworkdesktop-4.8} pour plus de détail. Par rapport à la méthode précédente la validation est extérieure à la classe qui transporte les données. De plus cette méthode fait de la validation dans les vues. C'est donc réservé au wpf.}\\
 
 \rem{Troisième méthode : on utilise la réflexion et les attribut}{On passe par les attributs (type \incode{[required]}) et les métadonnées pour ensuite faire de la validation (mais toujours dans la classe qui porte les données à valider). Voir la note sur les indexeurs. Avec cette méthode on couple un peu les validations avec les classes à valider. Gros point fort on peut le faire dans n'importe quel type d'appli.}\\
@@ -376,7 +378,9 @@ Pour tt ces trucs : voir les codes de Nico passés dans le discorde.\\
 
 \rem{Dans attribut de Validation Cutsom}{L'object value correspond à la valeur de la propriétés à valider. Le validationContext permet d'accéder à l'instance de l'objet correspondant à la propriété en cours de validation. Pour faire un attribut qui accepte des paramètres il suffit de faire un constructeur à l'attribut}\\
 
+\rem{Sur le modele \keyref{https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel}{MVVM}}{L'intêret principale est la séparation des responsabilité. De plus étant donné que la vue est découpllé du vue modele et du modele, on peut tester plus facilement les parties logiques. De plus la séparations avec les vues permet de réadapter les vue à une autre technologies.}\\
 
+\rem{Sur les Command}{Elles permettent de la réutilisation de code.}\\
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires

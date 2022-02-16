@@ -223,13 +223,7 @@ Sur les types de test, voir \url{https://blog.octo.com/la-pyramide-des-tests-par
 
 \rem{Sur la différence entre un test unitaire et un test d'intégration}{Un test unitaire ne peut pas planter (jamais, sauf problème de code) car il n'est relié à aucun système tier. On ne test qu'une logique de code (d'ou les mocks!). Un test d'intégration lui test avec les système tiers branché. Il peut donc planter.}\\
 
-\rem{Sur la conception avec des UserControl}{Il faut les utiliser pour faire du découpage pensé de manière responsive. Il faut éviter de faire des user control $+$ avec un petit élément à coté (en dehors du user control). Il vaut mieux garder un user control avec le bouton associé directement dedans (liste $+$ bouton edit directement dans le même user control dans notre cas). Il faut essayer d'être le plus simple possible lorsque l'on réfléchie en terme de vue. Il faut garder en tête que la composition d'une vue est drivé par le code behind, et pas l'inverse.}\\
-
-\rem{Sur l'interet de l'element name}{Il permet de remonter dans la hierarchie de vue. Cela permet de concentrer tt la logique d'interraction dans une seule classe (l'écran) qui va gérer la logique métier. Un item d'une liste n'a pas à choisir quel logique appliquer en cas de clique.}\\
-
-\note{Sur le schéma master-detail $\to$ Le binding se fait au niveau de l'écran : Command $=$ \{Binding DataContext ClassDansLeDataContext, ElementName = NomDeLelement \},  $=$ CommandParameter $=$ \}.  ClasstDansLeDataContext est la classe qui va gérer la logique et qui est affectée dans le code Behind (cette classe n'est q'un .cs sans .xaml).}
-
-\note{Un peu plus sur la notion de \keyref{https://docs.microsoft.com/fr-fr/dotnet/desktop/wpf/advanced/commanding-overview?view=netframeworkdesktop-4.8}{Command} : \url{https://wpf-tutorial.com/commands/using-commands/}.}\\
+\rem{Sur la différence entre test de Composant et test d'intégration}{Le test de composant ne test qu'une seule fonctionnalité alors qu'un test d'intégration test l'ensemble des composants (c'est à dire des fonctionnalités).}
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
