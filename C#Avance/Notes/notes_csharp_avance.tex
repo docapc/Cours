@@ -288,7 +288,16 @@ PLus de liens : \url{https://docs.microsoft.com/fr-fr/dotnet/api/system.componen
 
 \note{Sur la construction d'un Dockerfile : \url{https://devopssec.fr/article/creer-ses-propres-images-docker-dockerfile} (blog) ou bien la doc officiel : \url{https://docs.docker.com/engine/reference/builder/\#usage}.}\\
 
+\section{Sur la création d'installer}
 
+Il faut passer par une xextension de Visual studio : \url{https://marketplace.visualstudio.com/items?itemName=VisualStudioClient.MicrosoftVisualStudio2022InstallerProjects}. Cela va installer de nouveaux template. Il faut ensuite crer un nouveau projet de type Setup. On peut à partir d'ici définir des raccourcis à créer ainsi que les sorties principales de l'installer (dll, pdb et exe). Au leiu de sortie de projet il faut lui demander d'embaquer les éléments de publication. Pour créer l'installer il suffit ensuite de générer le projet.
+Cela va créer un installer qui va embarquer tt ce que l'on peut trouver dans le folder \incode{bin/...}.
+
+\rem{Sur la désinstallation}{Il suffit de click droit sur le projet setup dans Visual Studio et de demander la désinstallation.}\\
+
+\rem{Sur les dépendance}{Il est possible de spécifier les dépendances (comme dotnet framework ou dotnet core). Sinon on peut packager les dépendances dans un seul fichier.}\\
+
+\note{Pour faire des applis standalone il ne faut pas passer par l'installer mais simplement publier un build release en utilisant l'option ``produire un seul fichier''.}\\
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires

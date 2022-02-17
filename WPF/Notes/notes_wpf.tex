@@ -382,6 +382,21 @@ Pour tt ces trucs : voir les codes de Nico passés dans le discorde.\\
 
 \rem{Sur les \keyref{https://docs.microsoft.com/fr-fr/dotnet/desktop/wpf/advanced/commanding-overview?view=netframeworkdesktop-4.8}{Command}}{Elles permettent de la réutilisation de code. Voir : \url{https://wpf-tutorial.com/commands/using-commands/}.}\\
 
+\section{Sur les filtre et le trie dans une collection}
+
+Il y a plusieurs manières de faire. \\
+
+On peut passer par link directement dans les getter de nos listes (via des propriétés calculé en plus du getter standart ou bien via une méthode.) On pourrait égelement mettre les filtre directement dans les ApiDataManager.\\
+
+Sinon on peut le faire directement coté xaml. On doit définir une CollectionViewSource (dans les ressources) que l'on peut binder sur la liste que l'on veux filtrer. On passe une méthode de filtre à la property Filter. On récupère la liste via le FilterEventArgs de l'évènement (e.Item as MonModelDansMaListe) et l'on set la e.Accepted à true pour afficher, false pour cacher. Sur la liste box que l'on veut filtrer on donne en ItemsSource une StaticRessource correspondant au filtre que l'on veut appliquer. \\
+
+Pour faire sa avec une TextBox, il faut passer par une propriété intermédiaire qui implémente INotifyPropertyChanged. Cette propriété sert de filtre et permet de rappeler le rafraichissement de la collection view lors d'un set. On bind cette propriété sur notre Textbox, puis dans la méthode de filtre il suffit de se baser sur cette propriété.\\
+
+Voir \url{https://wpf.2000things.com/tag/collectionviewsource/} pour un peu plus de détails.
+
+
+
+
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
 
