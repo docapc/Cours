@@ -115,9 +115,9 @@ see = [Glossaire:]{gl-dip}
 Sur les types de test, voir \url{https://blog.octo.com/la-pyramide-des-tests-par-la-pratique-1-5/} $\to$ la pyramide des test d'intégration. Faire un test est un compromis entre cout et précision /fiabilité
 \begin{itemize}
 \item Test unitaire : test d'un block de code le plus petit possible.
-\item Test de composant : on test une partie d'une application.
+\item Test de composant : on test une partie d'une application (une fonctionnalité donnée).
 \item Test d'intégration : on test l'ensemble de l'application après l'ajout d'une nouvelle fonctionnalité.
-\item IHM (de bout en bout) : On démarre l'application et on regarde directement si tt fonctionne correctement.
+\item IHM (Interface Homme-Machine), aussi appelée de bout en bout (\textit{end to end}) : On démarre l'application et on regarde directement si tt fonctionne correctement.
 \item Test de monté en charge (de performance) : pour ne pas dégrader les performances au cours du temps.
 \item Test utilisateur : analyse de donnée faite en conception (une fois que tt est développé).\\
 \end{itemize}
@@ -149,7 +149,7 @@ Sur les types de test, voir \url{https://blog.octo.com/la-pyramide-des-tests-par
 
 \rem{Sur la philosophie des test unitaires}{Pour chaque classe, il faut tester chaque méthode, dans un cas nominal, et dans les cas un peu plus \textit{borderline} qui sont sensé introduire des erreurs.}\\
 
-\rem{Sur l'annotation ExpectedException()}{Permet d'attendre une exception du type typeof(UneException, potentiellement un message).}\\
+\rem{Sur l'annotation \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/microsoft.visualstudio.testtools.unittesting.expectedexceptionattribute?view=visualstudiosdk-2022}{ExpectedException}}{Permet d'attendre une exception du type typeof(UneException, potentiellement un message). C'est équivalent un un Assert pour savoir si l'exception à bien été levé.}\\
 
 \rem{Sur les log}{En générale on log les erreurs, les paramètres passées en méthodes (avec \incode{logger.LofInformation}). A utiliser un peu partout (en console+fichier en debug. Uniquement en ficheir en Release). Voir \keyref{https://serilog.net/}{Serilog} et/ou \keyref{https://nlog-project.org/}{Nlog}. Il vaut mieux passer par injection ded épendance pour utiliser les logs.}\\
 
@@ -183,13 +183,23 @@ Sur les types de test, voir \url{https://blog.octo.com/la-pyramide-des-tests-par
 
 \rem{Pour générer le code coverage}{Il existe \keyref{https://github.com/OpenCover/opencover}{OpenCover}, un outils github pour vérifier le coverage des tests.}\\
 
+\rem{Sur les prérequis pour faire un Mock}{Il faut pouvoir injecter le Mock. C'est primordial, sinon il faut passer par la réflexion, des moyens détournées.}\\
+
+\rem{Sur le lien entre test de composants et test unitaire}{Il est tt à fait possible d'hériter d'un test de composant pour créer un test unitaire. Il suffit ensuite d'injecter les Mocks. Cela ne fonctionne que si les test sont court et simple. Sinon c'est en générale une mauvaise idée.}\\
+
+\rem{Sur la différence entre un test unitaire et un test d'intégration}{Un test unitaire ne peut pas planter (jamais, sauf problème de code) car il n'est relié à aucun système tier mais uniquement à de la logique. On ne test qu'une logique de code (d'ou les mocks!). Un test d'intégration lui test avec les systèmes tiers branchés. Il peut donc planter.}\\
+
+\rem{Sur la différence entre test de Composant et test d'intégration}{Le test de composant ne test qu'une seule fonctionnalité alors qu'un test d'intégration test l'ensemble des composants (c'est à dire des fonctionnalités).}\\
+
+\rem{Sur l'annotation \keyref{https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualstudio.testtools.unittesting.testcategoryattribute?view=visualstudiosdk-2022}{TestCategory}}{Permet de définir une catégorie de test au niveau des métadonnée. Cela crée une arborescence en fonction des catégroei dans l'explorateur de test. Un peu plus de doc sur l'éxécution des test \url{https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests?pivots=mstest}.}\\
+
 \section{Test de performance}
 
 \rem{Pour des tests de performances cross version}{On peut utiliser la bibliothèque \keyref{https://benchmarkdotnet.org/}{benchmarkdotnet}. Voir \url{https://benchmarkdotnet.org/articles/guides/getting-started.html} pour un guide de démarrage. Il semble qu'il faille utiliser une console App pour ce genre de test.}\\
 
 \note{Il vaut mieux être dans les même conditions que dans la production pour faire des tests de performances. Par contre il ne faut pas être dans la prod en elle même mais sur un environnement iso-prod (en terme de code mais aussi en terme d'architecture logiciel et infrastructure).}\\
 
-\rem{Sur l'attribut \keyref{https://benchmarkdotnet.org/articles/features/setup-and-cleanup.html}{GlobalSetup}}{Permet de donner un environnement global aux tests de performance. La méthode marqué par cette attribut sera appelée une seule , avant l'excécution de tt les tests marqués \keyref{https://benchmarkdotnet.org/articles/features/baselines.html}{Benchmark} qui marque une méthode comme à 'benchmarker'.}\\
+\rem{Sur l'attribut \keyref{https://benchmarkdotnet.org/articles/features/setup-and-cleanup.html}{GlobalSetup}}{Permet de donner un environnement global aux tests de performance. La méthode marqué par cette attribut sera appelée une seule , avant l'excécution de tt les tests marqués \keyref{https://benchmarkdotnet.org/articles/features/baselines.html}{Benchmark} qui marque une méthode comme à 'benchmarker'. Ce test la permet de comparer les performancances de différents algorythme.}\\
 
 \note{Il faut penser à passer la génération en mode release pour les tests de performances.}\\
 
@@ -200,6 +210,8 @@ Sur les types de test, voir \url{https://blog.octo.com/la-pyramide-des-tests-par
 \rem{Pour faire du Parallel}{On doit passer par la bibliothèque parallel.}\\
 
 \rem{Pour tester les performance de l'API}{On peut passer par la bibliothèque \keyref{https://gatling.io/}{Gatling}. C'est plutôt un outil Java, même si on peut l'utiliser dans dotnet en passant par du Scala (encore un nouveau language). On passera plutôt par \keyref{https://nbomber.com/}{NBomber}. NBomber fournit un .html à la fin des tests qui résume les tests.}\\
+
+\rem{Sur Test de charge et test de performance}{Avec Nbomber on test la performance d'une API (on est donc proche du test end-to-end ou d'intégration). Benchmark Dotnet lui sert plutôt à comparer plusieurs algorythme en terme de performance (proche du test unitaire).}
 
 \rem{Sur le ScenarioBuilder}{Cela permet de configurer les conditions de tests.}\\
 
@@ -221,9 +233,25 @@ Sur les types de test, voir \url{https://blog.octo.com/la-pyramide-des-tests-par
 
 \rem{Sur les tests en WPF}{On passe par ce drivers : \keyref{https://github.com/microsoft/WinAppDriver}{WinAppDriver} (Exe à récupérer, à installer puis lancer au click ou en ligne de commande [penser à l'ajouter au path]). Une fois mis dans le path on peut le lancer en ligne de commande via WinAppDriver Nport ou Nport est le port à donner. Il faut ensuite dans les package nugget passer par Appium.Webdriver (dans visual studio) et utiliser une classe de configuration (voir exemple de nico) dans lequel on indique le Nport également (il faut être cohérent avec celui donné lors du lancement du driver). A partir de la on crée des classes de test.}\\
 
-\rem{Sur la différence entre un test unitaire et un test d'intégration}{Un test unitaire ne peut pas planter (jamais, sauf problème de code) car il n'est relié à aucun système tier. On ne test qu'une logique de code (d'ou les mocks!). Un test d'intégration lui test avec les système tiers branché. Il peut donc planter.}\\
+\section{Divers}
 
-\rem{Sur la différence entre test de Composant et test d'intégration}{Le test de composant ne test qu'une seule fonctionnalité alors qu'un test d'intégration test l'ensemble des composants (c'est à dire des fonctionnalités).}
+\rem{Sur la philosophie de test}{Lorsque l'on galère à faire les tests unitaire c'est qu'il y a un problème de conception dans le code. Souvent car les logiques ne sont pas séparés. C'est l'un des intêret des test. Il ne faut pas non plus changer le code pour les test, mais les tests permettent de mettre en lumière des problèmes de conception}\\
+
+\note{Si l'on veut faire du SQLite (base de donné dans un fichier .db) il suffit d'ajouter :memory après le Data Source = MaBase.db.}\\
+
+\rem{Sur le "Data Source"}{On peut donner un path relative (../MonDbContext pour remonter ailleurs) ou bien un path absolue. Par défaut le relatif est sous entendu : Demo.db est équivalent à ./Demo.db.}\\
+
+\rem{Sur le suffixe Async}{La bonne pratique était de suffixer les méthodes avec Async mais au final cela n'est utile que lorque l'on à les deux (sync et async).}\\
+
+\rem{Sur une alternative à Autofixture}{Voir \keyref{https://github.com/bchavez/Bogus}{Bogus}. Semble plus simple à configurer.}\\
+
+\rem{Sur le mapping d'exceptions}{Il est interessant de mapper des Type d'exceptions aux codes de retour Http.}\\
+
+\rem{Sur une bonne source d'information}{Voir le github \keyref{https://github.com/dotnet-architecture}{dotnet-architecture}.}\\
+
+\rem{Sur l'interet du repository}{L'interet est de séparer la logique de la base de donnée de la logique des controller (gestion des http).}\\
+
+\rem{Une discussion interessante sur la différence entre Mock et Stub}{voir \url{https://martinfowler.com/articles/mocksArentStubs.html}.}\\
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
