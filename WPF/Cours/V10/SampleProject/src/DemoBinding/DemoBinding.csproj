@@ -1,0 +1,66 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\Image1.jpg" />
+    <None Remove="Images\Image2.jpg" />
+    <None Remove="Images\Image3.jpg" />
+    <None Remove="Images\Image4.jpg" />
+    <None Remove="Images\Image5.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.4.0-ci65" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.2-mauipre.1.22054.8" />
+    <PackageReference Include="Polly" Version="7.2.3" />
+    <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DemoBinding.ApiData\DemoBinding.ApiData.csproj" />
+    <ProjectReference Include="..\DemoBinding.Dtos\DemoBinding.Dtos.csproj" />
+    <ProjectReference Include="..\DemoBinding.Entities\DemoBinding.Entities.csproj" />
+    <ProjectReference Include="..\DemoBinding.Persistance\DemoBinding.Persistance.csproj" />
+    <ProjectReference Include="..\DemonBinding.Models\DemonBinding.Models.csproj" />
+    <ProjectReference Include="..\DemonBinding.Wpf.CustomControls\DemonBinding.Wpf.CustomControls.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\Image1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Image2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Image3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Image4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Trad.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Trad.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Trad.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Trad.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
