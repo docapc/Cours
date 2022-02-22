@@ -158,9 +158,7 @@ see = [Glossaire:]{gl-dip}
 
 \rem{L'annotation authorize}{Au niveau d'un controller permet de demander l'authentification pour avoir accès à un endpoint donné. Pour faire cela il faut installer micorsoft.AspNetCore.Authentification.JwtBearer. Puis builder.services.AddAuthentification(JwtBearerDefault.AuthenticationScheme)..AddJwtBearer (options => options.Authority = "domainDeAuth0"; options.Audience ="adressDeLAPI"; options.TokenValidationParamaters = new ToeknValidationParameters\{ NameClaimType = ClaimTypes.NameIdentifier\}). On peut utiliser une annotation [AllowAnonymous] pour bypasser l'authorisation. Si ce système est activé il faut spécifier à angular d'utiliser un httpInterceptor : \{allowedList : \{uri ="apiUrl*", tokenOptions \{audience : "adressAPI", scope : "read:current_user" \}\}\}. L'étoile demande une injection de token via header et le scope?=. Attention ces tokesn options ne semblent pas fonctionner correctement. }\\
 
-\note{l'audience dans un token est la liste des appel possibles}
-
-Finalement pour l'API puisse discuter avec un systême elle a aussi besoin d'être passé sous forme d'app dans Auth0. Ici c'est uniquement pour autoriser la validation des tokens par l'api.\\
+Finalement pour l'API puisse discuter avec un systême elle a aussi besoin d'être passé sous forme d'app dans Auth0.
 
 
 

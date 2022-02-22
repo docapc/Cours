@@ -340,8 +340,11 @@ Dans un prjet complet on a ensuite un program.cs qui s'occupe du npm install et 
 
 \rem{Le truc à comprendre}{Le lazy loading des modules! Lorsque l'on déclare une route, angular lit les fichiers js et cherche les liaisons. En remonatnt d'une liaison à l'autre il construit ensuite un énorme fichier js. Au lieu de faire sa on peut faire du lazy loading, c'est à dire importer un module spécifique pour un path donné si ce module est utilisé. Au lieu de mettre path component on peut passer par children : [\{ loadChildren : () => import... \},...] (dans le app-routing.module.ts). Dans ce cas on aura un fichier js spécifique par children loadé au lieu d'un énorme fichier commun à tt l'appli. $\to$ très important à gérer.}\\
 
+\section{Divers}
 
+\rem{Sur les \keyref{https://guide-angular.wishtack.io/angular/callback-hell-vs.-promise-vs.-async-await/promise}{Promise}}{C'est en fait l'équivalent d'une Task. Cela permet de faire async await.}\\
 
+\rem{Sur la notion de Guard}{Ce sont des objets qui permettent de bloquer la navigation selon certain critères.}\\
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
