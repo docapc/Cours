@@ -211,6 +211,13 @@ see = [Glossaire:]{gl-dip}
 
 \rem{Sur un exemple pour ajouter CreatedAt et LastModificationDate}{voir l'exemple suivant \url{https://github.com/jhipster/jhipster-sample-app-dotnetcore/blob/main/src/Jhipster.Infrastructure/Data/ApplicationDatabaseContext.cs#L96}.}\\
 
+\section{Divers}
+
+\rem{Sur comment gérer les Cors}{Il faut commencer par service.AddCors(a => a.AddPolicy()) en définissant une police ou en pasant la police par défaut. On peut faire sa via le builder (b.WithOrigin("localhist:unport") par exemple). Ne pas oublier d'appliquer les Cors via un service.UseCors().}\\
+
+
+
+
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires

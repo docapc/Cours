@@ -291,7 +291,7 @@ Pour un tuto complet sur angular : \url{https://angular.io/tutorial}.\\
 
 \rem{Sur keyref{}{Undefined}}{ TYpe à associer à une variable qui représente une variable nulle.}\\
 
-\note{Quand on fait ma\_variable : IPokemon|Undefined on déclare une variable de type IPokemon ou Undefined (nulle). Sa à l'air légèrement différent des pipes qui permettent les filtre mais pas tt à fait non plus $\to Subtilité à creuser.}\\
+\note{Quand on fait ma\_variable : IPokemon|Undefined on déclare une variable de type IPokemon ou Undefined (nulle). Sa à l'air légèrement différent des pipes qui permettent les filtre mais pas tt à fait non plus $\to$ Subtilité à creuser.}\\
 
 \section{Les formulaires}
 
@@ -327,7 +327,7 @@ Pour un tuto complet sur angular : \url{https://angular.io/tutorial}.\\
 
 \rem{Dans le html}{[formControlName] est l'équivalent du [(ngModel)] des formulaire par template.}\\
 
-\rem{Sur \incode{attribut != qq_chose}}{le ! permet de déclarer une variable comme n'étant jamais null même si pas encore initialisé (assertion). voir : \url{https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html} et \url{https://www.typescriptlang.org/docs/handbook/2/everyday-types.html}.}\\
+\rem{Sur \incode{attribut != qq\_chose}}{le ! permet de déclarer une variable comme n'étant jamais null même si pas encore initialisé (assertion). voir : \url{https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html} et \url{https://www.typescriptlang.org/docs/handbook/2/everyday-types.html}.}\\
 
 \note{Si la classe est le formulaire correspondent on peut pour l'assignation faire directement this.User = this.FormGroup.value au lieux de retapper la correspondance attribut par attribut (ou prop par prop).}\\
 
@@ -340,6 +340,9 @@ Dans un prjet complet on a ensuite un program.cs qui s'occupe du npm install et 
 
 \rem{Le truc à comprendre}{Le lazy loading des modules! Lorsque l'on déclare une route, angular lit les fichiers js et cherche les liaisons. En remonatnt d'une liaison à l'autre il construit ensuite un énorme fichier js. Au lieu de faire sa on peut faire du lazy loading, c'est à dire importer un module spécifique pour un path donné si ce module est utilisé. Au lieu de mettre path component on peut passer par children : [\{ loadChildren : () => import... \},...] (dans le app-routing.module.ts). Dans ce cas on aura un fichier js spécifique par children loadé au lieu d'un énorme fichier commun à tt l'appli. $\to$ très important à gérer.}\\
 
+\section{Divers}
+
+\rem{Sur les \keyref{https://guide-angular.wishtack.io/angular/callback-hell-vs.-promise-vs.-async-await/promise}{Promise}}{C'est en fait l'équivalent d'une Task. Cela permet de faire async await.}\\
 
 
 
