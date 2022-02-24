@@ -297,6 +297,49 @@ Cela va créer un installer qui va embarquer tt ce que l'on peut trouver dans le
 
 \rem{Sur les dépendance}{Il est possible de spécifier les dépendances (comme dotnet framework ou dotnet core). Sinon on peut packager les dépendances dans un seul fichier.}\\
 
+\note{Pour faire des applis standalone il ne faut pas passer par l'installer mais simplement publier un build release en utilisant l'option ``produire un seul fichier''.}\\
+
+\section{Passe de Nico sur le déploiment}
+
+\rem{Exemple de Docker File}{voir ce lien \url{https://dev.to/alrobilliard/deploying-net-core-to-heroku-1lfe}, puis voir \keyref{https://id.heroku.com/login}{heroku} pour du déploiement en ligne}\\
+
+\rem{Sur le sdk/runtime}{Le Sdk est le kit de développement. Il contient le nécessair epour build et run. Le runtime lui ne contient que ce qu'il faut pour run une application}
+
+\rem{Sur l'emplacement des dockerfiles}{On peut en avoir un pour chaque projet mais également/ou un à la racine du projet (un niveau au dessus des sources)}
+
+\note{Dans Visual Studio on peut générer des dockerfile à la volé en cliquant droit. Pour lancer : docker build  -f ./DemonBinding.Api/Dockerfile -t demobinding:latest .
+docker run -it -p 8081:80 --name Testdemo demobinding:latest (le demobinding:latest est un tag de l'image)}
+
+\rem{Sur un tour d'horizon de qq nugets}{Voir \url{https://www.syncfusion.com/blogs/post/10-best-c-nuget-packages-to-improve-your-productivity-in-2022.aspx}. Attention dans la list NUnit devrait êtrre remplacé par MSTest ou bien XUnit, Nunit est aujourd'hui un peu dépassé.}\\
+
+\rem{Sur \keyref{https://restsharp.dev/}{RestSharp}}{Bibliothèque qui permet de simplifier les appelles à l'API. Permet de ne pas avoir à tt gérer soit même comme la sérialisation ou le formattage des requêtes.}\\
+
+\rem{Sur \keyref{https://github.com/jonwagner/Insight.Database/wiki}{InsightDatabase}}{MicroOrm moins lourd qu'ef core. Voir également \keyref{https://github.com/DapperLib/Dapper}{dapper} pour une alternative.}\\
+
+\rem{\keyref{https://docs.fluentvalidation.net/en/latest/}{FluentValidation}}{Comme FluentAssertions mais pour faire de la validation.}\\
+
+\rem{Manipulation du temps avec \keyref{https://nodatime.org/}{NodaTime}}{Pour simplifier le problèmes de la gestions du temps. Pour une alternative voir \keyref{https://github.com/Humanizr/Humanizer}{Humanizer} qui en plus permet de manipuler enum, string,...}\\
+
+\rem{Pour faire des taches en background}{\keyref{https://www.hangfire.io/}{hangfire} : pratique pour la plannification, l'éxécution, les rapports...}\\
+
+\rem{Pour faire du Cache}{\keyref{https://github.com/alastairtree/LazyCache}{LazyCache} orientée pour de la DataBase. Permet de lisser la charge de travail.}\\
+
+\rem{Pour éviter d'avoir des constructeurs polués par des \incode{if throw}}{\keyref{https://github.com/safakgur/guard}{Guard} pour faire de la validation de manière un peu plus \textit{fluent}.}\\
+
+\rem{Pour faire des jeux}{Unity bien sur mais également \keyref{https://www.monogame.net/}{monogame} (peut tourner sur modbil et même sur Switch).}\\
+
+\rem{Sur le reste du .dotnet}{Voir tt simplement tt les technos associées. Voir le CLoud, le mobile, l'IoT, l'AI (via ML.NET). Sur du Desktop/Mobile voir MAUI (pas encore sortie).}\\
+
+\rem{Pour avoir des stats de perf sur les framework}{voir \keyref{https://www.techempower.com/benchmarks/}{techempower}.}\\
+
+\rem{A creuser également}{Tt ce qui est validation en ASP .NET : \url{https://docs.microsoft.com/fr-fr/aspnet/core/mvc/models/validation?view=aspnetcore-6.0}. Important les attributs custom : \url{https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/attributes/creating-custom-attributes}.}\\
+
+\rem{Sur les Infrastructure as Code}{Voir \keyref{https://www.terraform.io/}{Terraform} et \keyref{https://docs.ansible.com/ansible/latest/index.html}{Ansible}. Permet de créer un environnement de production en passant par du code $\to$ forme d'automatisation.}\\
+
+\rem{De manière générale pour progresser en C\#}{Commencer les certifications : \url{https://docs.microsoft.com/en-us/learn/certifications/}.}\\
+
+
+
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
 

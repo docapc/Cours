@@ -210,7 +210,7 @@ Au finale le principe du Cloud est d'automatisé tt ces services (depuis une int
 
 \note{Pour faire du microservice il faut à tt prix être bien outillé. L'automatisation est essentielle (déploiement, mise à jour, test). De plus il faut éviter le monolityque distribué également.}\\
 
-\rem{Sur les microservices}{Un micro Service $=$ un process cad gère un métier (dans l'idéal). Dans un application en microservice cela permet de réutiliser des microservices déjà implémenter. Le Trick est de les rendre suffisemment générique. Faire du micro service c'est passer par de l'itération continue. Pour des outils \keyref{https://developer.okta.com/blog/2020/01/22/kafka-microservices}{kafka} (payant) ou bien \keyref{https://www.rabbitmq.com/}{RabittMq} (gratuit).}\\
+\rem{Sur les microservices}{Un micro Service $=$ un process cad gère un métier (dans l'idéal). Dans un application en microservice cela permet de réutiliser des microservices déjà implémenter. Le Trick est de les rendre suffisemment générique. Faire du micro service c'est passer par de l'itération continue. Pour des outils \keyref{}{kafka} (payant) ou bien \keyref{}{RabitMq} (gratuit).}\\
 
 \defi{Sur le signe SGBD}{\keyref{https://fr.wikipedia.org/wiki/Syst%C3%A8me_de_gestion_de_base_de_donn%C3%A9es}{Système de Gestiond e Base de Donnée}.}\\
 
