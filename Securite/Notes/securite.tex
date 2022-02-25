@@ -162,7 +162,29 @@ see = [Glossaire:]{gl-dip}
 
 Finalement pour l'API puisse discuter avec un systême elle a aussi besoin d'être passé sous forme d'app dans Auth0. Ici c'est uniquement pour autoriser la validation des tokens par l'api.\\
 
+\section{Sur la gestion des Roles}
 
+\rem{Pour bien gérer les roles}{Il faut passer par une matrice de Role qui lie un role à différente permission sur différente fonctions. Cela force tt de même à gérer les rôles un peu partout dans l'application.}\\
+
+\rem{sur la gestion des dépendances dans angular}{Il est possible de faire un npx npkill (package à installer) pour nettoyer tt les choses installer par un npm install. Cela permet de ne pas laisser node prendre trop de place lorque l'on utlise pas les projets angular.}\\
+
+\rem{Sur les permissions}{Pour gérer les droit d'accès à l'api on passe par les permissions dans les settings de l'API Auth0.}\\
+
+\rem{Pour faire de l'authentification basée sur les Roles}{Dans les settings il faut activer les RBAC dans les Settings de l'API sur Auth0. Puis pour passer automatiquement les permissions lors de la connection (que l'on définit du coté  de l'appli) on doit cocher la case du dessous (Add Permissions in the Access Token). Cela va modifier le scope dans le token d'identification et ajouter un champ permissions qui va contenir les permissions (au lieu d'être dans le scope).}\\
+
+\rem{Sur la gestion des permissions au niveau de l'API}{Il faut dans le builder.Service ajouter un AddAuthorization(o => o.AddPolicy("NomDePolice", policyBuilder => policyBuilder.RequiredAssertion(c => c.User.Identity...))) ou c est le context d'authorisation de la requête. Ici on peut faire un User.HasClaim("permissions", "NomDePermission"). Le context contient égalemenr un champs Ressource qui contien la requête http et donc le path. Si on est restfull on peut extraire le nom de la ressource pour s'en servir lors du check du nom de permission. Il est possible au niveau du builder de donner un AddRequirements pour ajouter en cascade des classes de Requirements spécifique. Attention contrairement à RequiredAssertion on ne peut pas faire de choses génériques avec sa.}\\
+
+\rem{Sur les claim}{Lors de la config de l'autorisation, on peur récupérer les claims qui contiennent en fait le contenue du token d'authentification}
+
+\rem{Sur l'authentification et l'autorisation}{Dans l'API l'authentification permet de gérer quel sont les tokens nécessaire pour l'identification. L'authorisation permet de définir des polices (que l'on peut ensuite appliquer aux controllers) qui vont vérifier certaine condition dans les tokens}
+
+\rem{Sur l'attribut Authorize}{Si on décore un endpoint avec on force l'authentification. Les options que l'on peut donner à authorize permettent de demander des polices d'authorisation spécifiques pour accéder au endpoint (via Authorize(Policy = "MaPoliceAMoi")). Attention tt sa se joue dans le program.cs. Il faut déclarer les UseAuthtentication UseAuthorization dans le bonne ordre (d'abord autentification puis authorisation).}\\
+
+\rem{Sur le type \keyref{https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/params}{params}}{Pour définir un argument de fonction. Cela permet de passer à la suite de params une Array d'un type donnée sans avoir à la passer comme une vrai liste. On peut passer les composants de la liste les uns après les autres dans l'appel de la fonction au lieu d'avoir à construire la liste avant de la passer.}\\
+
+\rem{Sur le AddRequirements}{Il faut lui passer des objets qui implémentent IAuthorizationRequirement. Pour que cette classe fonctionne il faut qu'elle soit accompagné d'une AutorizationHandler<T (T est la classe de Requirement) qui doit implémenter un handle Requirement. Le handler va gérer l alogique de validation. La classe de requirement est là pour recevoir des paramètres au besoin.  Il faut ensuite passer le Handler au service via un AddSingleton ou AddScoped. Attention par défaut si l'on n emet pas de Context.Succeed(requirement) dans le handler le comportement par défaut et d'utiliser un Context.Fail() avant le return Task.Completed. C'est lourd comme méthode mais en définissant un constructeur on peut aussi récupérer via DI la même chose que dans les controlleurs et donc faire de la validation dessus. ATtention à ne pas faire du singleton dans ce cas là.}\\
+
+\rem{Sur l'id et l'acces token}{Access Token : Token qui n'est la que pour gérer le dialog avec une api (avec audience). C'est celui qui est envoyé pour communiquer avec une api. id\_token est à destination des applis. C'est là que l'on a les informations sur les User par exemple (attention ce n'est pas sa qui correspond au raw json que l'on peut voir sur Auth0). Il existe également le refresh toekn qui permet de rerécupérer un access token sur le point d'expirer.}\\
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires

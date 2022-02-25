@@ -200,7 +200,7 @@ Au finale le principe du Cloud est d'automatisé tt ces services (depuis une int
 
 \rem{Sur a notion de \keyref{https://fr.wikipedia.org/wiki/Daemon_(informatique)}{Daemon}}{Il s'agit d'un process qui se lance puis continue de tourner. C'est l'inverse du script à usage unique.}\\
 
-\note{Pour faire du CLoud gratuitement voir \keyref{https://fr.wikipedia.org/wiki/OpenStack}{OpenStack}.}\\
+\note{Pour faire du Cloud gratuitement voir \keyref{https://fr.wikipedia.org/wiki/OpenStack}{OpenStack}.}\\
 
 \rem{Pour un peu plus d'infos sur un modèle en réseau}{Voir : \keyref{https://fr.wikipedia.org/wiki/Mod\%C3\%A8le\_OSI}{OSI} (un peu daté mais toujours pertinent).}\\
 
@@ -210,13 +210,18 @@ Au finale le principe du Cloud est d'automatisé tt ces services (depuis une int
 
 \note{Pour faire du microservice il faut à tt prix être bien outillé. L'automatisation est essentielle (déploiement, mise à jour, test). De plus il faut éviter le monolityque distribué également.}\\
 
-\rem{Sur les microservices}{Un micro Service $=$ un process cad gère un métier (dans l'idéal). Dans un application en microservice cela permet de réutiliser des microservices déjà implémenter. Le Trick est de les rendre suffisemment générique. Faire du micro service c'est passer par de l'itération continue. Pour des outils \keyref{https://developer.okta.com/blog/2020/01/22/kafka-microservices}{kafka} (payant) ou bien \keyref{https://www.rabbitmq.com/}{RabittMq} (gratuit).}\\
+\rem{Sur les microservices}{Un micro Service $=$ un process cad gère un métier (dans l'idéal). Dans un application en microservice cela permet de réutiliser des microservices déjà implémenter. Le Trick est de les rendre suffisemment générique. Faire du micro service c'est passer par de l'itération continue. Pour des outils \keyref{https://developer.okta.com/blog/2020/01/22/kafka-microservices}{kafka} (payant) ou bien \keyref{https://www.rabbitmq.com/}{RabittMq} (gratuit). Attention : il n'y a aucune raison de faire du microservices si ces derniers ne sont pas indépendants les uns des autres (le plus possible en tout cas).}\\
 
 \defi{Sur le signe SGBD}{\keyref{https://fr.wikipedia.org/wiki/Syst\%C3\%A8me\_de\_gestion\_de\_base\_de\_donn\%C3\%A9es}{Système de Gestion de Base de Donnée}.}\\
 
 \note{NoSql signifie Not Only Sql.}\\
 
 \rem{Sur la notion de Canary Deployment}{Il s'agit en fait de ne déployer une version d'une appli que chez un certains pourcentages d'utilisateur. Les micro services permettent de faire du canary déployment sur de nombreuse feature.}\\
+
+\rem{Sur la relation entre base de donnée et containrisation}{Il n'est en générale par recommandé d'avoir une base de donnée dans un microservice. La base à tendance à prendre tt la place que l'on lui donne, si l'on veut le containeriser il vaut mieux le séparer dans son propre container qui doit être un container spécialisé dans la base de donnée (pour des raisons de performances, sur les IOPS (Input Output Per Second)). Le mieux au final est d'avoir une base de donnée en externe, à laquel les microservices vont venir se connecter en récupérant simplement une configuration.}\\
+
+
+
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
