@@ -186,6 +186,68 @@ Finalement pour l'API puisse discuter avec un systême elle a aussi besoin d'êt
 
 \rem{Sur l'id et l'acces token}{Access Token : Token qui n'est la que pour gérer le dialog avec une api (avec audience). C'est celui qui est envoyé pour communiquer avec une api. id\_token est à destination des applis. C'est là que l'on a les informations sur les User par exemple (attention ce n'est pas sa qui correspond au raw json que l'on peut voir sur Auth0). Il existe également le refresh toekn qui permet de rerécupérer un access token sur le point d'expirer.}\\
 
+\section{Chiffrement}
+
+\rem{Sur la différence entre chiffrer et hasher}{Le hasshage est irréversible. On ne peut pas retrouver la valeur d'origine à partir du hash. Le chiffrement est un processus réversible.}\\
+
+\rem{Dans tt chiffrement}{Il y a forcément une clef secrète, un système de chiffrement, et un système de déchiffrage. Pour un peu plus voir \url{https://www.crypto-sous.fr/blockchain-fonctionnement/cryptographie/}}\\
+
+\rem{Chiffrement symétrique}{La clef secrète est partagé entre chiffrage et déchiffrache (pas de clef publique). Utilisé pour de gros volume de donnés. En terme de taille de clef on a des chose allant de 128 à 256 (bit $\to$ à transposer en nombre de caractère). En terme d'algorythme le plus connue est \keyref{https://fr.wikipedia.org/wiki/Advanced\_Encryption\_Standard}{AES}, \keyref{https://fr.wikipedia.org/wiki/Data\_Encryption\_Standard}{DES} ou bien \keyref{https://fr.wikipedia.org/wiki/Triple_DES}{3DES}}\\
+
+\rem{Chiffrement asymétrique}{C'est le plus utilisé des deux. L eprincipe est d'avoir une clef secrète associer à une clef publique. La clef publique permet le chiffrement, la clef privée permet le chiffrage. Un exemple est celui des certificat qui chiffre avec une clef publique et déchiffre avec une clef privée. Ce type de chiffrement est plus gourmand en ressource que la version symétrique. Il est donc utilisé pour des petits volumes de donnés. En terme de taille de clef on va de 256 à 2048 (voir plus car la donnée à chiffrer est plus petite). La clef publique est généré à partir de la clef privé, et il est possible de générer plusieurs clef publique à partir d'une seule clef privée. L'algo le plus utilisé est \keyref{https://en.wikipedia.org/wiki/RSA\_(cryptosystem)}{RSA} ou \keyref{https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman\_key\_exchange}{Diffie Hellman}.}\\
+
+\rem{Sur les \keyref{https://en.wikipedia.org/wiki/Key_(cryptography)}{clefs}}{La première sécurité est de garder la clef en sécurité avec des outils dédiés comme keypass, Azure key vault, Bitwarde, Remote Desktop Manager. La clef doit toujours être protégé par un accès mot de passe.}\\
+
+\rem{Pour faire du chiffrement en C\#}{Voir : \url{https://docs.microsoft.com/en-us/dotnet/standard/security/cross-platform-cryptography} pour une référence sur les type de chiffrement pris en charge. Il faut utiliser le package System.Security.Cryptography}\\
+
+\rem{Sur les string}{En générale on utilise peu les string mais plutôt les bytes. Pour transformer des string en bytes on passe par la classe \incode{Encoding.UTF8.GetBytes()}. Pour faire l'opération inverse on peut utiliser \incode{Convert.ToBase64String(bytes)}. La base 64 est un standart pour les string correspondant à des bytes (ce n'est qu'un encodage).}\\
+
+\rem{Sur l'\keyref{https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.symmetricalgorithm.iv?view=net-6.0#system-security-cryptography-symmetricalgorithm-iv}{Iv}}{Initialisation vector. Permet de donner des valeurs d'initialisations pour l'algo de chiffrement. Pour chiffrer et déchiffrer, en plus d'avoir la même clefs il faut donner le même IV! La taille de ce vecteur est particulière et dépend de la taille de la clef.}\\
+
+\rem{Sur les stream}{En général les lirbairies de chiffrement travail en stream pour éviter de faire remonter des choses dans la mémoire. Il faut donc faire attention au fait que ces objets soient des IDisposable (donc ne pas oublier les using).}\\
+
+\rem{Sur la notion de secret dans VS}{Lorsque l'on passe par l'option manage user secret on peut écrire un .json qui sera ensuite stocker dans le Roaming de la machine local (et ne passera donc pas dans git).}\\
+
+\note{Le premier exemple de Thomas se base sur la classe \keyref{https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes?view=net-6.0}{AES} qui fait du chiffrement symétrique. Il faut une clef, un vecteur d'initialisation, un encryptor qui prend ces deux valeurs (ICryptoTransform). La classe Aes est un Disposable qui permet la création du Encryptor/Decryptor. Le MemoryStream crée un stream dans la mémoire. Dans ce stream on crée un CryptoStream(MomoryStream, Encryptor/Decryptor, CryptoStreamMode). Le stream Writer Reader permet ensuite décrire ou de lire.}\\
+
+\rem{Sur ce qu'il est possible de chiffrer}{On peut chiffrer tt ce qui peut se sérialiser.}\\
+
+\rem{Sur la notion de sel (salt)}{Il s'agit d'un ajout à un mot de passe pour le complexifier. Ex : azertylzkehfzefze68fz6e5f4 ou lzkehfzefze68fz6e5f4 est le sel. Lors du hashage cela altère la valeur finale par rapport à la valeur attendue avec juste le mdp sans le sel. L'idée des Initialisation Vector (IV) est la même que celle du sel.}\\
+
+\note{pour un générateur de clef : \url{https://www.allkeysgenerator.com/Random/Security-Encryption-Key-Generator.aspx}.}\\
+
+\rem{RSACryptoServiceProvider}{Est un provider de cryptoService. On peut récupérer les public et private key avec les méthodes ExportRSAPrivate/PublicKey. On peut lui donner la taille (en bit) des clefs que l'on veut utiliser}\\
+
+\note{Pour générer des clefs RSA on peut passer par \keyref{https://www.openssl.org/}{open ssl}. Dans un terminal \incode{openssl genrsa -out my-app.pem 2048} my-app est le nom de la clef, 2048 la force de chiffrement (en bit). On récupère la la clef privée (accompagné d'une clef privé). Pour la clef public on fait \incode{openssl rsa -in my-app.pem -outform PEM -pubout -out my-app.public.pem
+writing RSA key} . Voir \url{https://developers.yubico.com/PIV/Guides/Generating_keys_using_OpenSSL.html} pour un peu plus de détail. Attention cela ne fonctionne que sur les terminal linux. Si l'on veut créer de nouvelle clefs public en tuilisant qq options dans la commandes.}\\
+
+\rem{Sur les secrets}{Une fois un secret généré avec l'objet RSA il es très fréquent de ne pas pouvoir le récupérer via cet objet.}\\
+
+\rem{Sur le ImportFromPem}{Permet de récupérer une clef depuis un fichier ou depuis une variable.}\\
+
+\section{Divers}
+
+\rem{Sur le formattage des commits git}{Voir \url{https://www.conventionalcommits.org/en/v1.0.0/} pour une organisation propre des commits.}\\
+
+\rem{Sur l'interêt des classes partielles}{Cela permet d'éclater une classe qui autrement serait potentiellement trop grosses. Pour faire des classes partielles on doit avoir un nom du type nomCommun.nomDeSousclasse.extesionCommune.}\\
+
+\note{Pour un shell linux sous windows : voir également \keyref{https://cmder.net/}{Cmder} qui émule un linux (pas besoin d'installer quoi que ce soit).}\\
+
+\rem{Différence entre Structure et Class}{Dans une structure tt les valeurs doivent être initialisé. D'un point de vue mémoire une classe est sur le tas (heap) et la structure sur la pile (stack). De plus une Structure est un type valeur. Voir un exemple avec le \keyref{https://docs.microsoft.com/en-us/dotnet/api/system.span-1?view=net-6.0}{span}, très performant et sécurisé.}\\
+
+\rem{La pile et le tas}{La pile (stack) est l'espace mémoire réservé à une application. Il n'est pas dynamique mais très rapide. Le tas (heap) est le l'espace mémoire qu'un programme va allouer dynamiquement lors de l'éxécution.}\\
+
+\note{Par design, tt les classes qui touchent à la sécurité sont scellé (sealed) $\to$ pas d'héritage.}\\
+
+\rem{Sur les clefs ssh}{Clef d'authentification qui comporte une private key.}\\
+
+\rem{Pour une bibliothèque d'outils}{Voir \keyref{https://docs.microsoft.com/en-us/sysinternals/}{Sysinternals}}\\
+
+\note{Voir les \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.security.securestring?view=net-6.0}{secure string} pour des string qui ne peuvent pas être lus par des outils tiers.}\\
+
+
+
+
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires
 
