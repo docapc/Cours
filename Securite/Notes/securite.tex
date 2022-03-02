@@ -245,8 +245,15 @@ writing RSA key} . Voir \url{https://developers.yubico.com/PIV/Guides/Generating
 
 \note{Voir les \keyref{https://docs.microsoft.com/fr-fr/dotnet/api/system.security.securestring?view=net-6.0}{secure string} pour des string qui ne peuvent pas être lus par des outils tiers.}\\
 
+\section{Sur l'automatisation de l'Iaas}
 
+L'automatisation est primordiale dans le cloud. Il faut donc passer du temps sur des scripts d'automatisation. \\
 
+Il faut commencer par créer les ressources. Pour cela on peut utiliser \keyref{https://www.terraform.io/}{terraform}. Il permet de décrire des besoins via des ressources (qui peuvent être des images, des donnée, des images d'environnement, ...) dans un fichier \incode{.tf} qui va s'occuper de la création de ces ressources. On passe par le language \keyref{https://www.terraform.io/language/syntax/configuration}{HCL} (HashiCorpLangage). Voir également \url{https://registry.terraform.io/providers/ovh/ovh/latest/docs}.\\
+
+\note{Terraform est aujourd'hui l'outil standart du pilotage (au sens de création, pas de pilotage réellement) de Cloud Natif.}\\
+
+\note{Important : Dans le Cloud tt est pilotable par des API.}\\
 
 %%--------------------------------------------------------------------------------------------------------------------------------1
 %% Glossaires

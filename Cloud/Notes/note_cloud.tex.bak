@@ -170,9 +170,11 @@ Au finale le principe du Cloud est d'automatisé tt ces services (depuis une int
 \item Disposability : Le code est jetable. Il ne faut pas hésiter à faire, refaire, jeter, recommencer, patcher pour ensuite nettoyer. De plus le process correspondant doit démarer vite, à volonté et s'arréter correctement sans problème.
 \item Dev/Prod Parity : on se doit d'être au plus proche de la production lors du développement. Ex : si en prod on utilise du MySql pour la base en v5, on doit utiliser la même chose en local lors du développement. Pour cela \keyref{https://docs.docker.com/compose/}{docker compose} peut aider : cela permet de monter plusieurs containers avec des spec spécifiques (on passe par un fichier docker-compose.yml). Il faut faire attention au Mock dans ces cas là par exemple. Il faut aussi faire attention aux dépendances utilisées lors du dev.
 \item Logging : il faut des logs sur différents niveaux. Voir remarque en dessous.
-\item Admin Processes : Si une opération d'administration est nécessaire (migrations, purge, bash d'insertion) il faut développer un process spécifique qui va s'occuper de sa et le séparer de l'application en elle même. Il faut donc un/des services dédiés à ce genre de chose. Les opérations de maintenances doivent également être traité de cette manière.\\
+\item Admin Processes : Si une opération d'administration est nécessaire (migrations, purge, bash d'insertion) il faut développer un process spécifique qui va s'occuper de sa et le séparer de l'application en elle même. Il faut donc un/des services dédiés à ce genre de chose. Les opérations de maintenances doivent également être traité de cette manière. Important ces opérations doivent être automatisé (voir Terraform un peu plus bas).\\
 \end{enumerate}
 }
+
+L'idée est également déviter au maximum de cumuler de la dette technique.\\ 
 
 \rem{Sur le versionning}{Pour accompagner les bonnes pratiques sur le Code Base et les Dependancies : voir le \keyref{https://semver.org/lang/fr/}{semantic versionning} (SEMVER). Par exemple le systeme version =  Major.Minor.Patch. Une mise à jour de patch est juste un update de type fix qui n'affecte pas le fonctionnement de l'application. Si l'on fait une update Du Minor (en ajoutant une fonctionnalité) il faut garder la rétrocompatibilité avec les mineurs précédentes (engament dans le SEMVER). Cette rétrocompatibilité n'est pas obligatoire lors d'un bump de la Major.}\\
 
@@ -218,7 +220,23 @@ Au finale le principe du Cloud est d'automatisé tt ces services (depuis une int
 
 \rem{Sur la notion de Canary Deployment}{Il s'agit en fait de ne déployer une version d'une appli que chez un certains pourcentages d'utilisateur. Les micro services permettent de faire du canary déployment sur de nombreuse feature.}\\
 
-\rem{Sur la relation entre base de donnée et containrisation}{Il n'est en générale par recommandé d'avoir une base de donnée dans un microservice. La base à tendance à prendre tt la place que l'on lui donne, si l'on veut le containeriser il vaut mieux le séparer dans son propre container qui doit être un container spécialisé dans la base de donnée (pour des raisons de performances, sur les IOPS (Input Outpu Per Second)). Le mieux au final est d'avoir une base de donnée en externe, à laquel les microservices vont venir se connecter en récupérant simplement une configuration.}\\
+\section{Sur l'automatisation de l'Iaas}
+
+L'automatisation est primordiale dans le cloud. Il faut donc passer du temps sur des scripts d'automatisation. \\
+
+Il faut commencer par créer les ressources. Pour cela on peut utiliser \keyref{https://www.terraform.io/}{terraform}. Il permet de décrire des besoins via des ressources (qui peuvent être des images, des donnée, des images d'environnement, ...) dans un fichier \incode{.tf} qui va s'occuper de la création de ces ressources. On passe par le language \keyref{https://www.terraform.io/language/syntax/configuration}{HCL} (HashiCorpLangage). Voir également \url{https://registry.terraform.io/providers/ovh/ovh/latest/docs}.\\
+
+\note{Terraform est aujourd'hui l'outil standart du pilotage (au sens de création, pas de pilotage réellement) de Cloud Natif.}\\
+
+\note{Important : Dans le Cloud tt est pilotable par des API.}\\
+
+\rem{Sur la relation entre base de donnée et containrisation}{Il n'est en générale par recommandé d'avoir une base de donnée dans un microservice. La base à tendance à prendre tt la place que l'on lui donne, si l'on veut le containeriser il vaut mieux le séparer dans son propre container qui doit être un container spécialisé dans la base de donnée (pour des raisons de performances, sur les IOPS (Input Output Per Second)). Le mieux au final est d'avoir une base de donnée en externe, à laquel les microservices vont venir se connecter en récupérant simplement une configuration.}\\
+
+\rem{Sur un autre avantage de l'automatisation ET de la standardisation}{En plus de gagner du temps et donc d'en libérer pour des choses plus pointus que du simple déploiment, cela permet d'inclure un nouveau membre dans l'équipe plus facilement puisque tt est standardisé.}\\
+
+\rem{Sur un autre outils d'automatisation : \keyref{https://docs.ansible.com/ansible/latest/index.html}{Ansible}}{Permet de décrire des configurations via un système de Task (installation de package, mise à jour, automatisation). On passe par des scripts \incode{yaml}. Le système se base sur un \textit{inventory} pour décrire le parc de machine (groupe d'utilisateur/serveur). Pour chaque type d'utilisateur/serveur on a un \textit{playbook} qui définit différent \textit{play} qui sont eux même constitué de \textit{task} (que l'on peut encore découper en sous Task). Le rincipe est de décrire les actions à effectuer en yaml (installer ci, mettre à jour sa,...).}\\
+
+\rem{Pour une alternative à Terraform en local}{Voir \keyref{https://www.vagrantup.com/}{Vagrant} qui permet de créer des machines virtuelles via un fichier de config.}\\
 
 
 

@@ -1,0 +1,26 @@
+Intitulé : Qu'est-ce que le Cloud Native, pourquoi en faire et comment en faire?
+
+Le Cloud (terme marketing) fait référence à l'hébergement massif et centralisé de serveurs destinés à la location. Contrairement à l'ancienne manière, le serveur n'est pas monté en physique chez un client mais un accès distant à ce dernier est loué prêt à l'emploi. Le Cloud fournit via des API des ressources utilisables pour le déploiment d'une infrastructure et/ou d'un ensemble de services. Ces services sont nombreux et partage en général un acronyme commun "aas" pour as a service (Infrastructure aas, Software aas, Network aas...). Ces services tournent sur des machines virtuelles qui ont pour intêret de pouvoir être déplacé de serveur en serveur sans couper le service ainsi d'être isolé les unes des autres (en terme de système pas de réseaux). Au finale le principe du Cloud est d'automatiser et de mettre à disposition tous ces services.
+
+Une application est dite Cloud Native si elle est concue pour tourner dans le Cloud. L'exécution de l'application dans un Cloud permet d'abord une meilleur maitrise de l'environnement d'éxécution. Le Cloud permet ensuite à l'application de profiter des services (automatisés) qu'il met à disposition afin de rendre l'application en elle même plus indépendante et plus qualitative, l'application n'a pas à embarquer les services qu'elle consomme et peut donc se débrasser de la dépendance qu'elle peut avoir avec un environnement d'éxécution particulier. 
+
+Pour faire du Cloud Native on doit respecter les 12 facteurs qui visent à augmenter la qualité, la maintenabilité et la robustesse de l'application. Sans tous les citer : 
+La première règle est le Code Base qui impose un code source partageable et versionné pour des raisons de qualité et de maintenabilité. 
+Ensuite la Dependencies qui recommande de déclarer explicitement et d'isoler les dépendance de l'application de son code source (via des gestionnaires dédiés). Cela permet d'auditer les dépendances mais aussi d'assurer la robustesse du code source (puisque personne n'est sensé modifier le code source des dépendances grace à son isolation). 
+Configurations : tout ce qui peux varier entre différents déploiement ne doit pas être harcodé dans le code source de l'application, mais isolé dans une configuration (fichier ou variable d'environnement). L'intérêt principale est de rendre le code source indépendant de son environnement mais aussi plus sécurisé (en stockant les secret dans un service tier par exemple).
+Backing Service : tout ce dont la base à besoin doit être considéré comme un système externe (I/O, base de doonnée...), pou rdes raisons d'indépendances et de sécurité encore une fois.
+Process : Plusieurs instances d'une application doivent s’éxécuter en différents process in-
+dépendant les uns des autres (par instance). ’idée est de sécuriser sa machine par rapport
+à une possible défaillance d’une des instances de l’application (ou une CVE exploitable selon
+les technologies utilisées dans l’application).
+Concurrency : Il faut pouvoir déployer l’application plusieurs fois sans que les différentes
+instances ne bloque l’accès aux données des autres. Cela permet de scaler horizontalement l'application lors d'une montée en charge, ce qui est moins limitant que le scaling vertical (fait sur une seule instance de l'application).
+Admin Process : Si une opération d'administration est nécessaire (migrations, purge, bash
+d'insertion) il faut développer un process spécifique qui va s’occuper de sa et le séparer de
+l'application en elle même. L'intrêt est de pouvoir par la suite automatiser ces opérations (pour faciliter un déploiment ou une mise à jour).I
+
+
+
+
+
+
